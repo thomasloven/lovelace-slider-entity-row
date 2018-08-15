@@ -39,10 +39,6 @@ class SliderEntityRowSlider extends Polymer.Element {
 customElements.define('slider-entity-row-slider', SliderEntityRowSlider);
 
 class SliderEntityRow extends HTMLElement {
-  static get template() {
-    console.log("Template");
-  }
-
   constructor() {
     super();
     this.attachShadow({mode:'open'});
