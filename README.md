@@ -25,3 +25,10 @@ views:
         type: custom:slider-entity-row
 ```
 ![slider-entity-row](https://user-images.githubusercontent.com/1299821/44172580-e7161200-a0dd-11e8-8042-19199ad5d5ac.png)
+
+
+### Other options
+
+`hide_control: true` - Remove toggle
+
+`break_slider: true` - Put slider on separate row

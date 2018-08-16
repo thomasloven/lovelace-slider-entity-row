@@ -8,11 +8,23 @@ class SliderEntityRow extends Polymer.Element {
       paper-slider {
         margin-left: auto;
       }
+      .second-line paper-slider {
+        width: 100%;
+      }
     </style>
     <hui-generic-entity-row config="[[_config]]" hass="[[_hass]]">
+      <template is='dom-if' if='{{!breakSlider}}'>
       <paper-slider min="[[min]]" max="[[max]]" value="{{value}}" on-change="selectedValue" on-click="stopPropagation"></paper-slider>
+      </template>
+      <template is='dom-if' if='{{!hideControl}}'>
       <ha-entity-toggle state-obj="[[stateObj]]" hass="[[_hass]]"></ha-entity-toggle>
+      </template>
       </hui-generic-entity-row>
+      <template is='dom-if' if='{{breakSlider}}'>
+      <div class="second-line">
+      <paper-slider min="[[min]]" max="[[max]]" value="{{value}}" on-change="selectedValue" on-click="stopPropagation"></paper-slider>
+      </div>
+      </template>
     `
   }
 
@@ -20,6 +32,14 @@ class SliderEntityRow extends Polymer.Element {
     return {
       _hass: Object,
       _config: Object,
+      hideControl: {
+        type: Boolean,
+        value: false,
+      },
+      breakSlider: {
+        type: Boolean,
+        value: false,
+      },
       stateObj: {
         type: Object,
         value: null,
@@ -43,6 +63,10 @@ class SliderEntityRow extends Polymer.Element {
   setConfig(config)
   {
     this._config = config;
+    if('hide_control' in config && config.hide_control)
+      this.hideControl = true;
+    if('break_slider' in config && config.break_slider)
+      this.breakSlider = true;
   }
 
   set hass(hass) {
