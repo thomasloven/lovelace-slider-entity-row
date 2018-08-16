@@ -1,78 +1,76 @@
-class SliderEntityRowSlider extends Polymer.Element {
-
+class SliderEntityRow extends Polymer.Element {
   static get template() {
     return Polymer.html`
     <style>
-      :host {
+      hui-generic-entity-row {
         margin: var(--ha-themed-slider-margin, initial);
       }
-    paper-slider {
-      margin: 4px 0;
-      max-width: 100%;
-      min-width: 100%;
-      width: var(--ha-paper-slider-width, 200px);
-    }
+      paper-slider {
+        margin-left: auto;
+      }
     </style>
-    <paper-slider min=0 max=255 value="{{value}}" on-change="valueChanged"></paper-slider>
-    `;
+    <hui-generic-entity-row config="[[_config]]" hass="[[_hass]]">
+      <paper-slider min="[[min]]" max="[[max]]" value="{{value}}" on-change="selectedValue" on-click="stopPropagation"></paper-slider>
+      <ha-entity-toggle state-obj="[[stateObj]]" hass="[[_hass]]"></ha-entity-toggle>
+      </hui-generic-entity-row>
+    `
   }
 
-  ready() {
-    super.ready();
-    this.addEventListener('click', ev => ev.stopPropagation());
-  }
-
-  valueChanged(ev) {
-    const value = parseInt(this.value, 10);
-    const param = {entity_id: this.stateObj.entity_id };
-    if(Number.isNaN(value)) return;
-    if(value === 0) {
-      this.hass.callService('light', 'turn_off', param);
-    } else {
-      param['brightness'] = value;
-      this.hass.callService('light', 'turn_on', param);
-    }
-  }
-
-}
-
-customElements.define('slider-entity-row-slider', SliderEntityRowSlider);
-
-class SliderEntityRow extends HTMLElement {
-  constructor() {
-    super();
-    this.attachShadow({mode:'open'});
-    this.base = document.createElement('hui-generic-entity-row');
-
-    this.slider = document.createElement('slider-entity-row-slider');
-    this.toggle = document.createElement('ha-entity-toggle');
-
-    this.base.appendChild(this.slider);
-    this.base.appendChild(this.toggle);
-    this.shadowRoot.appendChild(this.base);
+  static get properties() {
+    return {
+      _hass: Object,
+      _config: Object,
+      stateObj: {
+        type: Object,
+        value: null,
+      },
+      min: {
+        type: Number,
+        value: 0,
+      },
+      max: {
+        type: Number,
+        value: 255,
+      },
+      attribute: {
+        type: String,
+        value: 'brightness',
+      },
+      value: Number,
+    };
   }
 
   setConfig(config)
   {
-    this.base.config = config;
-    this.entity = config.entity;
-    console.log(this.base);
+    this._config = config;
   }
 
   set hass(hass) {
-    this.base.hass = hass;
-    this.toggle.hass = hass;
-    this.slider.hass = hass;
-    let stateObj = hass.states[this.entity];
-    this.toggle.stateObj = stateObj;
-    this.slider.stateObj = stateObj;
-    this.slider.value = this.isOn(stateObj) ? stateObj.attributes['brightness']: 0;
+    this._hass = hass;
+    this.stateObj = this._config.entity in hass.states ? hass.states[this._config.entity] : null;
+    if(this.stateObj) {
+      if(this.stateObj.state === 'on')
+        this.value = this.stateObj.attributes[this.attribute];
+      else
+        this.value = this.min;
+    }
   }
 
-  isOn(stateObj) {
-    return stateObj && stateObj.state === 'on';
+  selectedValue(ev) {
+    const value = parseInt(this.value, 10);
+    const param = {entity_id: this.stateObj.entity_id };
+    if(Number.isNaN(value)) return;
+    if(value === 0) {
+      this._hass.callService('light', 'turn_off', param);
+    } else {
+      param[this.attribute] = value;
+      this._hass.callService('light', 'turn_on', param);
+    }
   }
 
+  stopPropagation(ev) {
+    ev.stopPropagation();
+  }
 }
 
 customElements.define('slider-entity-row', SliderEntityRow);
