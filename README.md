@@ -32,3 +32,5 @@ views:
 `hide_control: true` - Remove toggle
 
 `break_slider: true` - Put slider on separate row
+
+`hide_when_off: true` - Hide the slider when the light is off

@@ -1,5 +1,8 @@
 class SliderEntityRow extends Polymer.Element {
   static get template() {
+    let slider = Polymer.html`
+      <paper-slider min="[[min]]" max="[[max]]" value="{{value}}" on-change="selectedValue" on-click="stopPropagation"></paper-slider>
+      `
     return Polymer.html`
     <style>
       hui-generic-entity-row {
@@ -13,16 +16,16 @@ class SliderEntityRow extends Polymer.Element {
       }
     </style>
     <hui-generic-entity-row config="[[_config]]" hass="[[_hass]]">
-      <template is='dom-if' if='{{!breakSlider}}'>
-      <paper-slider min="[[min]]" max="[[max]]" value="{{value}}" on-change="selectedValue" on-click="stopPropagation"></paper-slider>
+      <template is='dom-if' if='{{showTop}}'>
+      ${slider}
       </template>
       <template is='dom-if' if='{{!hideControl}}'>
       <ha-entity-toggle state-obj="[[stateObj]]" hass="[[_hass]]"></ha-entity-toggle>
       </template>
       </hui-generic-entity-row>
-      <template is='dom-if' if='{{breakSlider}}'>
+      <template is='dom-if' if='{{showBottom}}'>
       <div class="second-line">
-      <paper-slider min="[[min]]" max="[[max]]" value="{{value}}" on-change="selectedValue" on-click="stopPropagation"></paper-slider>
+      ${slider}
       </div>
       </template>
     `
@@ -32,30 +35,14 @@ class SliderEntityRow extends Polymer.Element {
     return {
       _hass: Object,
       _config: Object,
-      hideControl: {
-        type: Boolean,
-        value: false,
-      },
-      breakSlider: {
-        type: Boolean,
-        value: false,
-      },
-      stateObj: {
-        type: Object,
-        value: null,
-      },
-      min: {
-        type: Number,
-        value: 0,
-      },
-      max: {
-        type: Number,
-        value: 255,
-      },
-      attribute: {
-        type: String,
-        value: 'brightness',
-      },
+      hideControl: { type: Boolean, value: false },
+      breakSlider: { type: Boolean, value: false },
+      hideWhenOff: { type: Boolean, value: false },
+      isOn: { type: Boolean },
+      stateObj: { type: Object, value: null },
+      min: { type: Number, value: 0 },
+      max: { type: Number, value: 255 },
+      attribute: { type: String, value: 'brightness' },
       value: Number,
     };
   }
@@ -67,16 +54,34 @@ class SliderEntityRow extends Polymer.Element {
       this.hideControl = true;
     if('break_slider' in config && config.break_slider)
       this.breakSlider = true;
+    if('hide_when_off' in config && config.hide_when_off)
+      this.hideWhenOff = true;
+  }
+
+  updateSliders()
+  {
+    this.showTop = false;
+    this.showBottom = false;
+    if(!(this.hideWhenOff && !this.isOn)) {
+      if(this.breakSlider)
+        this.showBottom = true;
+      else
+        this.showTop = true;
+    }
   }
 
   set hass(hass) {
     this._hass = hass;
     this.stateObj = this._config.entity in hass.states ? hass.states[this._config.entity] : null;
     if(this.stateObj) {
-      if(this.stateObj.state === 'on')
+      if(this.stateObj.state === 'on') {
         this.value = this.stateObj.attributes[this.attribute];
-      else
+        this.isOn = true;
+      } else {
         this.value = this.min;
+        this.isOn = false;
+      }
+      this.updateSliders();
     }
   }
 
