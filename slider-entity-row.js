@@ -39,6 +39,11 @@ class SliderEntityRow extends Polymer.Element {
             hass="[[_hass]]"
           ></ha-entity-toggle>
         </template>
+        <template is='dom-if' if='{{displayStatus}}'>
+          <div>
+            [[statusString(stateObj)]]
+          </div>
+        </template>
       </div>
     </hui-generic-entity-row>
     <template is='dom-if' if='{{displayBottom}}'>
@@ -74,6 +79,17 @@ class SliderEntityRow extends Polymer.Element {
     this.breakSlider = config.break_slider || false;
     this.hideWhenOff = config.hide_when_off || false;
     this.showValue = config.show_value || false;
+  }
+
+  statusString(stateObj) {
+    let l18n = this._hass.resources[this._hass.language];
+    if(stateObj.state === 'on') {
+      return Math.ceil(stateObj.attributes[this.attribute]/2.55).toString(10);
+    } else if (stateObj.state === 'off') {
+      return l18n['state.default.off'];
+    } else {
+      return l18n['state.default.unavailable'];
+    }
   }
 
   updateSliders()
