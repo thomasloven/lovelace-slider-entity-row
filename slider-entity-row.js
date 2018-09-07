@@ -30,10 +30,10 @@ class SliderEntityRow extends Polymer.Element {
       hass="[[_hass]]"
       >
       <div class="flex">
-        <template is='dom-if' if='{{showTop}}'>
+        <template is='dom-if' if='{{displayTop}}'>
           ${slider}
         </template>
-        <template is='dom-if' if='{{!hideControl}}'>
+        <template is='dom-if' if='{{displayToggle}}'>
           <ha-entity-toggle
             state-obj="[[stateObj]]"
             hass="[[_hass]]"
@@ -41,7 +41,7 @@ class SliderEntityRow extends Polymer.Element {
         </template>
       </div>
     </hui-generic-entity-row>
-    <template is='dom-if' if='{{showBottom}}'>
+    <template is='dom-if' if='{{displayBottom}}'>
       <div class="second-line">
         ${slider}
       </div>
@@ -53,9 +53,10 @@ class SliderEntityRow extends Polymer.Element {
     return {
       _hass: Object,
       _config: Object,
-      hideControl: { type: Boolean, value: false },
+      hideToggle: { type: Boolean, value: false },
       breakSlider: { type: Boolean, value: false },
       hideWhenOff: { type: Boolean, value: false },
+      showValue: { type: Boolean, value: false },
       isOn: { type: Boolean },
       stateObj: { type: Object, value: null },
       min: { type: Number, value: 0 },
@@ -69,30 +70,43 @@ class SliderEntityRow extends Polymer.Element {
   setConfig(config)
   {
     this._config = config;
-    if('hide_control' in config && config.hide_control)
-      this.hideControl = true;
-    if('break_slider' in config && config.break_slider)
-      this.breakSlider = true;
-    if('hide_when_off' in config && config.hide_when_off)
-      this.hideWhenOff = true;
+    this.hideToggle = config.hide_control || config.hide_toggle || false;
+    this.breakSlider = config.break_slider || false;
+    this.hideWhenOff = config.hide_when_off || false;
+    this.showValue = config.show_value || false;
   }
 
   updateSliders()
   {
-    this.showTop = false;
-    this.showBottom = false;
+    this.displayTop = false;
+    this.displayBottom = false;
+    this.displayToggle = true;
+    this.displayStatus = false;
+
+    if(this.hideToggle) this.displayToggle = false;
+
+    if(this.showValue) {
+      this.displayToggle = false;
+      this.displayStatus = true;
+    }
+
+    if(!(this.stateObj.state === 'on' || this.stateObj.state === 'off')) {
+      this.displayToggle = false;
+      this.displayStatus = true;
+    }
+
+    if(this.stateObj.state === 'on' || !this.hideWhenOff) {
+      this.displayBottom = this.breakSlider;
+      this.displayTop = !this.breakSlider;
+    }
+
     if(!(this.attribute in this.stateObj.attributes)) {
       if(!('supported_features' in this.stateObj.attributes) ||
         !(this.stateObj.attributes['supported_features'] & 1)) {
-          return;
+          this.displayTop = this.displayBottom = false;
       }
     }
-    if(!(this.hideWhenOff && !this.isOn)) {
-      if(this.breakSlider)
-        this.showBottom = true;
-      else
-        this.showTop = true;
-    }
+
   }
 
   set hass(hass) {
