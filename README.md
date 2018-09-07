@@ -29,8 +29,10 @@ views:
 
 ### Other options
 
-`hide_control: true` - Remove toggle
+`hide_toggle: true` - Remove toggle
 
 `break_slider: true` - Put slider on separate row
 
 `hide_when_off: true` - Hide the slider when the light is off
+
+`show_value: true` - Show the current dimmer value instead of toggle.
