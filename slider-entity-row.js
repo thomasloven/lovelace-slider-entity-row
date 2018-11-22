@@ -11,6 +11,9 @@ class SliderEntityRow extends Polymer.Element {
           min-width: 45px;
           text-align: center;
         }
+        .toggle {
+          margin-left: 8px;
+        }
       </style>
       <template is="dom-if" if="{{!displayRow}}">
         <style>
@@ -23,8 +26,8 @@ class SliderEntityRow extends Polymer.Element {
 
     const input = Polymer.html`
       <div>
-        <template is="dom-if" if="{{displaySlider}}">
           <div class="flex">
+        <template is="dom-if" if="{{displaySlider}}">
             <ha-slider
               min="0"
               max="100"
@@ -35,19 +38,22 @@ class SliderEntityRow extends Polymer.Element {
               on-click="stopPropagation"
               ignore-bar-touch
             ></ha-slider>
-            <span class="state" on-click="stopPropagation">
-              <template is="dom-if" if="{{displayValue}}">
+            <template is="dom-if" if="{{displayValue}}">
+              <span class="state" on-click="stopPropagation">
                 [[statusString(stateObj)]]
-              </template>
-              <template is="dom-if" if="{{displayToggle}}">
+              </span>
+            </template>
+        </template>
+            <template is="dom-if" if="{{displayToggle}}">
+              <span class="toggle" on-click="stopPropagation">
                 <ha-entity-toggle
                   state-obj="[[stateObj]]"
                   hass="[[_hass]]"
                 ></ha-entity-toggle>
-              </template>
+                </span>
+            </template>
             </span>
           </div>
-        </template>
       </div>
     `;
 
@@ -83,6 +89,7 @@ class SliderEntityRow extends Polymer.Element {
           return (stateObj.state === 'on')?Math.ceil(stateObj.attributes.brightness*100.0/255):0;
         },
         supported: (stateObj) => {
+          if(stateObj.state === 'off' && this._config.hide_when_off) return false;
           if('brightness' in stateObj.attributes) return true;
           if(('supported_features' in stateObj.attributes) &&
             (stateObj.attributes.supported_features & 1)) return true;
