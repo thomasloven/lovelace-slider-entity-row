@@ -32,7 +32,7 @@ class SliderEntityRow extends Polymer.Element {
               min="0"
               max="100"
               value="{{value}}"
-              step="5"
+              step="[[stepSize]]"
               pin
               on-change="selectedValue"
               on-click="stopPropagation"
@@ -153,6 +153,7 @@ class SliderEntityRow extends Polymer.Element {
     this.displayToggle = config.toggle && domain === 'light';
     this.displayValue = !this.displayToggle;
     this.displaySlider = false;
+    this.stepSize = config.step_size || 5;
   }
 
   statusString(stateObj) {
