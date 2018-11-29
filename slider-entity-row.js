@@ -52,7 +52,6 @@ class SliderEntityRow extends Polymer.Element {
                 ></ha-entity-toggle>
                 </span>
             </template>
-            </span>
           </div>
       </div>
     `;
