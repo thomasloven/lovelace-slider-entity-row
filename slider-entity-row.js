@@ -29,10 +29,10 @@ class SliderEntityRow extends Polymer.Element {
           <div class="flex">
         <template is="dom-if" if="{{displaySlider}}">
             <ha-slider
-              min="0"
-              max="100"
+              min="[[min]]"
+              max="[[max]]"
               value="{{value}}"
-              step="5"
+              step="[[step]]"
               pin
               on-change="selectedValue"
               on-click="stopPropagation"
@@ -152,6 +152,10 @@ class SliderEntityRow extends Polymer.Element {
     this.displayToggle = config.toggle && domain === 'light';
     this.displayValue = !this.displayToggle;
     this.displaySlider = false;
+
+    this.min = config.min || 0;
+    this.max = config.max || 100;
+    this.step = config.step || 5;
   }
 
   statusString(stateObj) {
