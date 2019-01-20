@@ -77,3 +77,12 @@ Add a slider to adjust brightness of lights, volume of media players or position
             entity: cover.hall_window
             full_row: true
 ```
+
+### Extra options
+`hide_state` - (default: false) Set to true to hide the percentage display.
+
+`min` - (default: 0) Minimum value of slider
+`max` - (default: 100) Maximum value of slider
+`step` - (default: 5) Step size of slider
+Note that slider values are in percent and will be rescaled e.g. for lights which require a brightness setting between 0 and 255.
+
