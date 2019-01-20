@@ -125,7 +125,7 @@ class SliderEntityRow extends Polymer.Element {
             this._hass.callService('cover', 'close_cover', { entity_id: stateObj.entity_id });
         },
         get: (stateObj) => {
-          return (stateObj.state === 'open')?stateObj.attributes.current_position:0;
+          return (stateObj.state === 'open')?Math.ceil(stateObj.attributes.current_position):0;
         },
         supported: (stateObj) => {
           if('current_position' in stateObj.attributes) return true;
