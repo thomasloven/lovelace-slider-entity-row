@@ -1,8 +1,6 @@
 class SliderEntityRow extends Polymer.Element {
 
   static get template() {
-    if(!this._hass || !this._config)
-      return Polymer.html``;
     const style = Polymer.html`
       <style>
         .flex {
