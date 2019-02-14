@@ -161,7 +161,7 @@ class SliderEntityRow extends Polymer.Element {
     this.step = config.step || 5;
 
     if(this._hass && this._config) {
-      this.stateObj = this._config.entity in hass.states ? hass.states[this._config.entity] : null;
+      this.stateObj = this._config.entity in this._hass.states ? this._hass.states[this._config.entity] : null;
       if(this.stateObj) {
         this.value = this.controller.get(this.stateObj);
         this.displaySlider = this.controller.supported(this.stateObj);
