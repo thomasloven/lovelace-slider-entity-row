@@ -158,7 +158,7 @@ class SliderEntityRow extends Polymer.Element {
           else
             this._hass.callService('fan', 'turn_off', { entity_id: stateObj.entity_id });
         },
-        get: (stateObj) => (stateObj.state !== 'off')?stateObj.attributes.speed:0,
+        get: (stateObj) => (stateObj.state !== 'off')?stateObj.attributes.speed_list.indexOf(stateObj.attributes.speed)+1:0,
         supported: {
           slider: (stateObj) => !(stateObj.state === 'off' && this._config.hide_when_off) && stateObj.attributes.hasOwnProperty('speed'),
           toggle: () => true,
@@ -177,7 +177,7 @@ class SliderEntityRow extends Polymer.Element {
           if (value in stateObj.attributes.options)
             this._hass.callService('input_select', 'select_option', { entity_id: stateObj.entity_id, option: stateObj.attributes.options[value] });
         },
-        get: (stateObj) => stateObj.state,
+        get: (stateObj) => stateObj.attributes.options.indexOf(stateObj.state),
         supported: {
           slider: (stateObj) => stateObj.attributes.hasOwnProperty('options') && stateObj.attributes.options.length > 1,
           toggle: () => false,
