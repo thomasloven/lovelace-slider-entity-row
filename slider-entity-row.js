@@ -101,6 +101,11 @@ class SliderEntityRow extends Polymer.Element {
           if(stateObj.state === 'off') return l18n['state.default.off'];
           return `${this.controller.get(stateObj)} %`;
         },
+        config: () => ({
+          min: 0,
+          max: 100,
+          step: 5,
+        }),
       },
 
       media_player: {
@@ -119,6 +124,11 @@ class SliderEntityRow extends Polymer.Element {
           if (stateObj.attributes.is_volume_muted) return '-';
           return `${this.controller.get(stateObj)} %`;
         },
+        config: () => ({
+          min: 0,
+          max: 100,
+          step: 5,
+        }),
       },
 
       cover: {
@@ -145,18 +155,29 @@ class SliderEntityRow extends Polymer.Element {
           if (stateObj.state === 'closed') return l18n['state.cover.closed'];
           return `${this.controller.get(stateObj)} %`;
         },
+        config: () => ({
+          min: 0,
+          max: 100,
+          step: 5,
+        }),
       },
 
       fan: {
         set: (stateObj, value) => {
-          value = Math.round(value/100.0*stateObj.attributes.speed_list.length)-1
+          if (stateObj.attributes.speed_list.some(isNaN))
+            value = Math.round(value/100.0*stateObj.attributes.speed_list.length)
+          --value;
           if (value in stateObj.attributes.speed_list)
             this._hass.callService('fan', 'turn_on', { entity_id: stateObj.entity_id, speed: stateObj.attributes.speed_list[value] });
           else
             this._hass.callService('fan', 'turn_off', { entity_id: stateObj.entity_id });
         },
         get: (stateObj) => {
-          return (stateObj.state === 'on')?Math.round((stateObj.attributes.speed_list.indexOf(stateObj.attributes.speed)+1)*100.0/stateObj.attributes.speed_list.length):0;
+          if (stateObj.state !== 'on') return 0;
+          if (stateObj.attributes.speed_list.some(isNaN))
+            return Math.round((stateObj.attributes.speed_list.indexOf(stateObj.attributes.speed)+1)*100.0/stateObj.attributes.speed_list.length);
+          else
+            return stateObj.attributes.speed;
         },
         supported: {
           slider: (stateObj) => {
@@ -170,17 +191,34 @@ class SliderEntityRow extends Polymer.Element {
           if(stateObj.state === 'off') return l18n['state.default.off'];
           return stateObj.attributes.speed;
         },
-        step: 0,
+        config: (stateObj) => {
+          if (!stateObj.attributes.speed_list.some(isNaN))
+            return {
+              min: Number(Math.min(...stateObj.attributes.speed_list)-1),
+              max: Number(Math.max(...stateObj.attributes.speed_list)),
+              step: 1,
+            }
+          else
+            return {
+              min: 0,
+              max: 100,
+              step: Math.round(100/(stateObj.attributes.speed_list.length)),
+            }
+        },
       },
 
       input_select: {
         set: (stateObj, value) => {
-          value = Math.round(value/100.0*(stateObj.attributes.options.length-1))
+          if (stateObj.attributes.options.some(isNaN))
+            value = Math.round(value/100.0*(stateObj.attributes.options.length-1))
           if (value in stateObj.attributes.options)
             this._hass.callService('input_select', 'select_option', { entity_id: stateObj.entity_id, option: stateObj.attributes.options[value] });
         },
         get: (stateObj) => {
-          return Math.round(stateObj.attributes.options.indexOf(stateObj.state)*100.0/(stateObj.attributes.options.length-1));
+          if (stateObj.attributes.options.some(isNaN))
+            return Math.round(stateObj.attributes.options.indexOf(stateObj.state)*100.0/(stateObj.attributes.options.length-1));
+          else
+            return stateObj.state
         },
         supported: {
           slider: (stateObj) => {
@@ -192,7 +230,20 @@ class SliderEntityRow extends Polymer.Element {
         string: (stateObj, l18n) => {
           return stateObj.state;
         },
-        step: 0,
+        config: (stateObj) => {
+          if (!stateObj.attributes.options.some(isNaN))
+            return {
+              min: Number(Math.min(...stateObj.attributes.options)),
+              max: Number(Math.max(...stateObj.attributes.options)),
+              step: 1,
+            }
+          else
+            return {
+              min: 0,
+              max: 100,
+              step: Math.round(100/(stateObj.attributes.options.length-1)),
+            }
+        },
       },
     };
 
@@ -211,11 +262,15 @@ class SliderEntityRow extends Polymer.Element {
 
     this.min = config.min || 0;
     this.max = config.max || 100;
-    this.step = config.step || this.controller.step || 5;
+    this.step = config.step || 5;
 
     if(this._hass && this._config) {
       this.stateObj = this._config.entity in this._hass.states ? this._hass.states[this._config.entity] : null;
       if(this.stateObj) {
+        let controllerConfig = this.controller.config(this.stateObj);
+        this.min = this._config.min || controllerConfig.min;
+        this.max = this._config.max || controllerConfig.max;
+        this.step = this._config.step || controllerConfig.step;
         this.value = this.controller.get(this.stateObj);
         this.displaySlider = this.controller.supported.slider(this.stateObj);
       }
@@ -234,6 +289,10 @@ class SliderEntityRow extends Polymer.Element {
     if(hass && this._config) {
       this.stateObj = this._config.entity in hass.states ? hass.states[this._config.entity] : null;
       if(this.stateObj) {
+        let controllerConfig = this.controller.config(this.stateObj);
+        this.min = this._config.min || controllerConfig.min;
+        this.max = this._config.max || controllerConfig.max;
+        this.step = this._config.step || controllerConfig.step;
         this.value = this.controller.get(this.stateObj);
         this.displaySlider = this.controller.supported.slider(this.stateObj);
       }
