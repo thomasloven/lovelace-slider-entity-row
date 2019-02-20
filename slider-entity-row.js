@@ -164,7 +164,7 @@ class SliderEntityRow extends Polymer.Element {
 
       fan: {
         set: (stateObj, value) => {
-          if (stateObj.attributes.speed_list.some(isNaN))
+          if (!this.numeric)
             value = Math.round(value/100.0*stateObj.attributes.speed_list.length)
           --value;
           if (value in stateObj.attributes.speed_list)
@@ -174,7 +174,7 @@ class SliderEntityRow extends Polymer.Element {
         },
         get: (stateObj) => {
           if (stateObj.state !== 'on') return 0;
-          if (stateObj.attributes.speed_list.some(isNaN))
+          if (!this.numeric)
             return Math.round((stateObj.attributes.speed_list.indexOf(stateObj.attributes.speed)+1)*100.0/stateObj.attributes.speed_list.length);
           else
             return stateObj.attributes.speed;
@@ -192,30 +192,33 @@ class SliderEntityRow extends Polymer.Element {
           return stateObj.attributes.speed;
         },
         config: (stateObj) => {
-          if (!stateObj.attributes.speed_list.some(isNaN))
+          if (!stateObj.attributes.speed_list.some(isNaN)) {
+            this.numeric = true
             return {
               min: Number(Math.min(...stateObj.attributes.speed_list)-1),
               max: Number(Math.max(...stateObj.attributes.speed_list)),
               step: 1,
             }
-          else
+          } else {
+            this.numeric = false
             return {
               min: 0,
               max: 100,
               step: Math.round(100/(stateObj.attributes.speed_list.length)),
             }
+          };
         },
       },
 
       input_select: {
         set: (stateObj, value) => {
-          if (stateObj.attributes.options.some(isNaN))
+          if (!this.numeric)
             value = Math.round(value/100.0*(stateObj.attributes.options.length-1))
           if (value in stateObj.attributes.options)
             this._hass.callService('input_select', 'select_option', { entity_id: stateObj.entity_id, option: stateObj.attributes.options[value] });
         },
         get: (stateObj) => {
-          if (stateObj.attributes.options.some(isNaN))
+          if (!this.numeric)
             return Math.round(stateObj.attributes.options.indexOf(stateObj.state)*100.0/(stateObj.attributes.options.length-1));
           else
             return stateObj.state
@@ -231,18 +234,21 @@ class SliderEntityRow extends Polymer.Element {
           return stateObj.state;
         },
         config: (stateObj) => {
-          if (!stateObj.attributes.options.some(isNaN))
+          if (!stateObj.attributes.options.some(isNaN)) {
+            this.numeric = true
             return {
               min: Number(Math.min(...stateObj.attributes.options)),
               max: Number(Math.max(...stateObj.attributes.options)),
               step: 1,
             }
-          else
+          } else {
+            this.numeric = false
             return {
               min: 0,
               max: 100,
               step: Math.round(100/(stateObj.attributes.options.length-1)),
             }
+          };
         },
       },
     };
