@@ -156,7 +156,7 @@ class SliderEntityRow extends Polymer.Element {
             this._hass.callService('fan', 'turn_off', { entity_id: stateObj.entity_id });
         },
         get: (stateObj) => {
-          return (stateObj.state === 'on')?Math.round(stateObj.attributes.speed*100.0/stateObj.attributes.speed_list.length):0;
+          return (stateObj.state === 'on')?Math.round((stateObj.attributes.speed_list.indexOf(stateObj.attributes.speed)+1)*100.0/stateObj.attributes.speed_list.length):0;
         },
         supported: {
           slider: (stateObj) => {
@@ -168,7 +168,7 @@ class SliderEntityRow extends Polymer.Element {
         },
         string: (stateObj, l18n) => {
           if(stateObj.state === 'off') return l18n['state.default.off'];
-          return this.controller.get(stateObj);
+          return stateObj.attributes.speed;
         },
         step: 0,
       },
