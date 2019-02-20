@@ -172,6 +172,28 @@ class SliderEntityRow extends Polymer.Element {
         },
         step: 0,
       },
+
+      input_select: {
+        set: (stateObj, value) => {
+          value = Math.round(value/100.0*(stateObj.attributes.options.length-1))
+          if (value in stateObj.attributes.options)
+            this._hass.callService('input_select', 'select_option', { entity_id: stateObj.entity_id, option: stateObj.attributes.options[value] });
+        },
+        get: (stateObj) => {
+          return Math.round(stateObj.attributes.options.indexOf(stateObj.state)*100.0/(stateObj.attributes.options.length-1));
+        },
+        supported: {
+          slider: (stateObj) => {
+            if('options' in stateObj.attributes && stateObj.attributes.options.length > 1) return true;
+            return false;
+          },
+          toggle: () => false,
+        },
+        string: (stateObj, l18n) => {
+          return stateObj.state;
+        },
+        step: 0,
+      },
     };
 
 
