@@ -87,12 +87,15 @@ class SliderEntityRow extends Polymer.Element {
         get: (stateObj) => {
           return (stateObj.state === 'on')?Math.ceil(stateObj.attributes.brightness*100.0/255):0;
         },
-        supported: (stateObj) => {
-          if(stateObj.state === 'off' && this._config.hide_when_off) return false;
-          if('brightness' in stateObj.attributes) return true;
-          if(('supported_features' in stateObj.attributes) &&
-            (stateObj.attributes.supported_features & 1)) return true;
-          return false;
+        supported: {
+          slider: (stateObj) => {
+            if(stateObj.state === 'off' && this._config.hide_when_off) return false;
+            if('brightness' in stateObj.attributes) return true;
+            if(('supported_features' in stateObj.attributes) &&
+              (stateObj.attributes.supported_features & 1)) return true;
+            return false;
+          },
+          toggle: () => true,
         },
         string: (stateObj, l18n) => {
           if(stateObj.state === 'off') return l18n['state.default.off'];
@@ -108,8 +111,9 @@ class SliderEntityRow extends Polymer.Element {
         get: (stateObj) => {
           return (stateObj.attributes.is_volume_muted)?0:Math.ceil(stateObj.attributes.volume_level*100.0);
         },
-        supported: (stateObj) => {
-          return true;
+        supported: {
+          slider: () => true,
+          toggle: () => false,
         },
         string: (stateObj, l18n) => {
           if (stateObj.attributes.is_volume_muted) return '-';
@@ -127,17 +131,46 @@ class SliderEntityRow extends Polymer.Element {
         get: (stateObj) => {
           return (stateObj.state === 'open')?Math.ceil(stateObj.attributes.current_position):0;
         },
-        supported: (stateObj) => {
-          if('current_position' in stateObj.attributes) return true;
-          if(('supported_features' in stateObj.attributes) &&
-            (stateObj.attributes.supported_features & 4)) return true;
-          return false;
+        supported: {
+          slider: (stateObj) => {
+            if('current_position' in stateObj.attributes) return true;
+            if(('supported_features' in stateObj.attributes) &&
+              (stateObj.attributes.supported_features & 4)) return true;
+            return false;
+          },
+          toggle: () => false,
         },
         string: (stateObj, l18n) => {
           if (!this.controller.supported(stateObj)) return '';
           if (stateObj.state === 'closed') return l18n['state.cover.closed'];
           return `${this.controller.get(stateObj)} %`;
         },
+      },
+
+      fan: {
+        set: (stateObj, value) => {
+          value = Math.round(value/100.0*stateObj.attributes.speed_list.length)-1
+          if (value in stateObj.attributes.speed_list)
+            this._hass.callService('fan', 'turn_on', { entity_id: stateObj.entity_id, speed: stateObj.attributes.speed_list[value] });
+          else
+            this._hass.callService('fan', 'turn_off', { entity_id: stateObj.entity_id });
+        },
+        get: (stateObj) => {
+          return (stateObj.state === 'on')?Math.round(stateObj.attributes.speed*100.0/stateObj.attributes.speed_list.length):0;
+        },
+        supported: {
+          slider: (stateObj) => {
+            if(stateObj.state === 'off' && this._config.hide_when_off) return false;
+            if('speed' in stateObj.attributes) return true;
+            return false;
+          },
+          toggle: () => true,
+        },
+        string: (stateObj, l18n) => {
+          if(stateObj.state === 'off') return l18n['state.default.off'];
+          return this.controller.get(stateObj);
+        },
+        step: 0,
       },
     };
 
@@ -149,20 +182,20 @@ class SliderEntityRow extends Polymer.Element {
     if(!this.controller) throw new Error('Unsupported entity domain: ' + domain);
 
     this.displayRow = !config.full_row;
-    this.displayToggle = config.toggle && domain === 'light';
+    this.displayToggle = config.toggle && this.controller.supported.toggle();
     this.displayValue = !this.displayToggle;
     if(config.hide_state) this.displayValue = false;
     this.displaySlider = false;
 
     this.min = config.min || 0;
     this.max = config.max || 100;
-    this.step = config.step || 5;
+    this.step = config.step || this.controller.step || 5;
 
     if(this._hass && this._config) {
       this.stateObj = this._config.entity in this._hass.states ? this._hass.states[this._config.entity] : null;
       if(this.stateObj) {
         this.value = this.controller.get(this.stateObj);
-        this.displaySlider = this.controller.supported(this.stateObj);
+        this.displaySlider = this.controller.supported.slider(this.stateObj);
       }
     }
   }
@@ -180,7 +213,7 @@ class SliderEntityRow extends Polymer.Element {
       this.stateObj = this._config.entity in hass.states ? hass.states[this._config.entity] : null;
       if(this.stateObj) {
         this.value = this.controller.get(this.stateObj);
-        this.displaySlider = this.controller.supported(this.stateObj);
+        this.displaySlider = this.controller.supported.slider(this.stateObj);
       }
     }
   }
