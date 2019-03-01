@@ -91,10 +91,14 @@ This works for:
 `hide_state` - (default: false) Set to true to hide the percentage display.
 
 `min` - (default: 0) Minimum value of slider
+
 `max` - (default: 100) Maximum value of slider
+
 `step` - (default: 5) Step size of slider
 Note that slider values are in percent and will be rescaled e.g. for lights which require a brightness setting between 0 and 255.
 
+`hide_when_off` - Hide the slider when entity is off.
+
 
 ---
-Thanks to Gabe Cook (@gabe565) for help with fan and input_select support. 
+Thanks to Gabe Cook (@gabe565) for help with fan and input_select support.
