@@ -1,7 +1,7 @@
 slider-entity-row
 =================
 
-Add a slider to adjust brightness of lights, volume of media players or position of covers in lovelace entity cards
+Add a slider to adjust brightness of lights, volume of media players, position of covers and speed of fans in lovelace entity cards
 
 ![slider-entity-row](https://user-images.githubusercontent.com/1299821/48869222-b6303200-eddc-11e8-8b8c-7b4a9601df7a.png)
 
@@ -86,3 +86,6 @@ Add a slider to adjust brightness of lights, volume of media players or position
 `step` - (default: 5) Step size of slider
 Note that slider values are in percent and will be rescaled e.g. for lights which require a brightness setting between 0 and 255.
 
+
+---
+Thanks to Gabe Cook (@gabe565) for help with fan support. 
