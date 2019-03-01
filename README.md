@@ -1,7 +1,16 @@
 slider-entity-row
 =================
 
-Add a slider to adjust brightness of lights, volume of media players, position of covers and speed of fans in lovelace entity cards
+Add a slider to rows in lovelace entity cards
+
+This works for:
+
+- `light` - set brightness
+- `media_player` - set volume
+- `cover` - set position
+- `fan` - set speed (assumes first setting is `off`)
+- `input_number`
+- `input_select`
 
 ![slider-entity-row](https://user-images.githubusercontent.com/1299821/48869222-b6303200-eddc-11e8-8b8c-7b4a9601df7a.png)
 
@@ -88,4 +97,4 @@ Note that slider values are in percent and will be rescaled e.g. for lights whic
 
 
 ---
-Thanks to Gabe Cook (@gabe565) for help with fan support. 
+Thanks to Gabe Cook (@gabe565) for help with fan and input_select support. 
