@@ -177,10 +177,10 @@ class SliderEntityRow extends Polymer.Element {
 
       fan: {
         set: (stateObj, value) => {
-          if (value && value - this.delta in stateObj.attributes.speed_list)
+          if (value && (value - this.controller.valueDelta) in stateObj.attributes.speed_list)
             this._hass.callService('fan', 'turn_on', {
               entity_id: stateObj.entity_id,
-              speed: stateObj.attributes.speed_list[value - this.delta]
+              speed: stateObj.attributes.speed_list[value - this.controller.valueDelta]
             });
           else
             this._hass.callService('fan', 'turn_off', {
@@ -189,7 +189,7 @@ class SliderEntityRow extends Polymer.Element {
         },
         get: (stateObj) => {
           return (stateObj.state !== 'off') ?
-            stateObj.attributes.speed_list.indexOf(stateObj.attributes.speed) + this.delta :
+            (stateObj.attributes.speed_list.indexOf(stateObj.attributes.speed) + this.controller.valueDelta) :
             0;
         },
         supported: {
@@ -205,8 +205,8 @@ class SliderEntityRow extends Polymer.Element {
         },
         min: (stateObj) => 0,
         max: (stateObj) => {
-          this.delta = stateObj.attributes.speed_list[0].toLowerCase() === 'off' ? 0 : 1;
-          return stateObj.attributes.speed_list.length - 1 + this.delta;
+          this.controller.valueDelta = stateObj.attributes.speed_list[0].toLowerCase() === 'off' ? 0 : 1;
+          return stateObj.attributes.speed_list.length - 1 + this.controller.valueDelta;
         },
         step: () => 1,
       },
