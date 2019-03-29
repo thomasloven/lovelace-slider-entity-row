@@ -7,6 +7,7 @@ This works for:
 
 - `light` - set brightness
 - `media_player` - set volume
+- `climate` - set temperature
 - `cover` - set position
 - `fan` - set speed (assumes first setting is `off`)
 - `input_number`
