@@ -30,6 +30,7 @@ class SliderEntityRow extends Polymer.Element {
           <div class="flex">
         <template is="dom-if" if="{{displaySlider}}">
             <ha-slider
+              dir="{{rtl}}"
               min="{{min}}"
               max="{{max}}"
               value="{{value}}"
@@ -295,6 +296,8 @@ class SliderEntityRow extends Polymer.Element {
     this.max = config.max || 100;
     this.step = config.step || 5;
 
+    this.rtl = this._isRTL()? "rtl" : "ltr";
+
     if(this._hass && this._config) {
       this.stateObj = this._config.entity in this._hass.states ? this._hass.states[this._config.entity] : null;
       if(this.stateObj) {
@@ -315,6 +318,7 @@ class SliderEntityRow extends Polymer.Element {
 
   set hass(hass) {
     this._hass = hass;
+    this.rtl = this._isRTL()? "rtl" : "ltr";
 
     if(hass && this._config) {
       this.stateObj = this._config.entity in hass.states ? hass.states[this._config.entity] : null;
@@ -326,6 +330,14 @@ class SliderEntityRow extends Polymer.Element {
         this.displaySlider = this.controller.supported.slider(this.stateObj);
       }
     }
+  }
+
+  _isRTL() {
+    if(!this._hass) return false;
+    const lang = this._hass.language || "en";
+    if(!this._hass.translationMetadata.translations[lang]) return false;
+    const retval =  this._hass.translationMetadata.translations[lang].isRTL || false;
+    return retval;
   }
 
   selectedValue(ev) {
