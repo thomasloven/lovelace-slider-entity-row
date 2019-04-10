@@ -132,11 +132,32 @@ class SliderEntityRow extends Polymer.Element {
         },
         string: (stateObj, l18n) => {
           if (stateObj.attributes.is_volume_muted) return '-';
-          return `${this.controller.get(stateObj)} %`;
+          return !!stateObj.attributes.volume_level ? `${this.controller.get(stateObj)} %` : l18n['state.media_player.off'];
         },
         min: () => 0,
         max: () => 100,
         step: () => 5,
+      },
+
+      climate: {
+        set: (stateObj, value) => {
+          this._hass.callService('climate', 'set_temperature', {
+            entity_id: stateObj.entity_id,
+            temperature: value
+          });
+        },
+        get: (stateObj) => stateObj.attributes.temperature,
+        supported: {
+          slider: () => true,
+          toggle: () => true,
+        },
+        string: (stateObj, l18n) => {
+          if (stateObj.attributes.operation_mode === 'off') return l18n['state.climate.off'];
+          return `${this.controller.get(stateObj)} ${this._hass.config.unit_system.temperature}`;
+        },
+        min: (stateObj) => stateObj.attributes.min_temp,
+        max: (stateObj) => stateObj.attributes.max_temp,
+        step: () => 1,
       },
 
       cover: {
