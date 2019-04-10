@@ -132,7 +132,7 @@ class SliderEntityRow extends Polymer.Element {
         },
         string: (stateObj, l18n) => {
           if (stateObj.attributes.is_volume_muted) return '-';
-          return !!stateObj.attributes.volume_level ? `${this.controller.get(stateObj)} %` : l18n['state.default.off'];
+          return !!stateObj.attributes.volume_level ? `${this.controller.get(stateObj)} %` : l18n['state.media_player.off'];
         },
         min: () => 0,
         max: () => 100,
