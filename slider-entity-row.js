@@ -152,7 +152,7 @@ class SliderEntityRow extends Polymer.Element {
           toggle: () => true,
         },
         string: (stateObj, l18n) => {
-          if (stateObj.attributes.operation_mode === 'off') return l18n['state.default.off'];
+          if (stateObj.attributes.operation_mode === 'off') return l18n['state.climate.off'];
           return `${this.controller.get(stateObj)} ${this._hass.config.unit_system.temperature}`;
         },
         min: (stateObj) => stateObj.attributes.min_temp,
