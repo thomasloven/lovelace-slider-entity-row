@@ -1,0 +1,9 @@
+{
+    "lovelace-slider-entity-row": {
+      "updated_at": "2019-04-10",
+      "version": "0.1.1",
+      "remote_location": "https://raw.githubusercontent.com/thomasloven/lovelace-slider-entity-row/master/slider-entity-row.js",
+      "visit_repo": "https://github.com/thomasloven/lovelace-slider-entity-row",
+      "changelog": "https://github.com/thomasloven/lovelace-slider-entity-row"
+    }
+}
