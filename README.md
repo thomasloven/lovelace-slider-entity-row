@@ -1,105 +1,80 @@
 slider-entity-row
 =================
 
-Add a slider to rows in lovelace entity cards
+Add a slider to rows in lovelace [entities](https://www.home-assistant.io/lovelace/entities/) cards.
 
-This works for:
+For installation instructions [see this guide](https://github.com/thomasloven/hass-config/wiki/Lovelace-Plugins).
+
+Install `slider-entity-row.js` as a `module`.
+
+## Usage
+Add this to an entities card:
+
+```yaml
+type: entities
+entities:
+  - light.bed_light
+  - type: custom:slider-entity-row
+    entity: light.kitchen_lights
+```
+
+![slider-entity-row](https://user-images.githubusercontent.com/1299821/59467898-15b16600-8e31-11e9-9924-53b108572d3a.png)
+
+Currenly supported entity domains:
 
 - `light` - set brightness
 - `media_player` - set volume
 - `climate` - set temperature
 - `cover` - set position
 - `fan` - set speed (assumes first setting is `off`)
-- `input_number`
-- `input_select`
+- `input_number` - set value (only if `mode: slider`)
+- `input_select` - select option
 
-![slider-entity-row](https://user-images.githubusercontent.com/1299821/48869222-b6303200-eddc-11e8-8b8c-7b4a9601df7a.png)
+![domains](https://user-images.githubusercontent.com/1299821/59467899-1813c000-8e31-11e9-8abd-34c887a7db2a.png)
+
+### Options
+
+- `toggle: true` - Show a toggle instead of current state
+- `hide_state: true` - Do not display current state
+- `hide_when_off: true` - Hide the slider when state is `off`
+- `full_row: true` - Hide icon and name and stretch slider to full width
+- `min: <value>` - Set minimum value of slider
+- `max: <value>` - Set maximum value of slider
+- `step: <value>` - Set step size of slider
 
 ```yaml
-  - title: slider-entity-row
-    cards:
-      - type: entities
-        title: Domains
-        show_header_toggle: false
-        entities:
-          - input_number.slider
-
-          - type: section
-            label: light
-          - type: custom:slider-entity-row
-            entity: light.bed_light
-          - type: custom:slider-entity-row
-            entity: light.ceiling_lights
-          - type: custom:slider-entity-row
-            entity: light.kitchen_lights
-
-          - type: section
-            label: media_player
-          - type: custom:slider-entity-row
-            entity: media_player.bedroom
-          - type: custom:slider-entity-row
-            entity: media_player.living_room
-          - type: custom:slider-entity-row
-            entity: media_player.lounge_room
-          - type: custom:slider-entity-row
-            entity: media_player.walkman
-
-          - type: section
-            label: cover
-          - type: custom:slider-entity-row
-            entity: cover.hall_window
-          - type: custom:slider-entity-row
-            entity: cover.garage_door
-          - type: custom:slider-entity-row
-            entity: cover.living_room_window
-
-      - type: entities
-        title: Options
-        show_header_toggle: false
-        entities:
-          - type: section
-            label: default
-          - type: custom:slider-entity-row
-            entity: light.bed_light
-          - type: custom:slider-entity-row
-            entity: media_player.bedroom
-          - type: custom:slider-entity-row
-            entity: cover.hall_window
-
-          - type: section
-            label: "toggle: true"
-          - type: custom:slider-entity-row
-            entity: light.bed_light
-            toggle: true
-
-          - type: section
-            label: "full_row: true"
-          - entity: light.bed_light
-          - type: custom:slider-entity-row
-            entity: light.bed_light
-            full_row: true
-          - entity: media_player.bedroom
-          - type: custom:slider-entity-row
-            entity: media_player.bedroom
-            full_row: true
-          - entity: cover.hall_window
-          - type: custom:slider-entity-row
-            entity: cover.hall_window
-            full_row: true
+type: entities
+title: Options
+entities:
+  - type: custom:slider-entity-row
+    entity: light.bed_light
+    name: Default
+  - type: custom:slider-entity-row
+    entity: light.bed_light
+    name: toggle
+    toggle: true
+  - type: custom:slider-entity-row
+    entity: light.bed_light
+    name: hide_state
+    hide_state: true
+  - type: custom:slider-entity-row
+    entity: light.ceiling_lights
+    name: hide_when_off
+    hide_when_off: true
+  - type: custom:slider-entity-row
+    entity: light.ceiling_lights
+    name: hide_when_off + toggle
+    hide_when_off: true
+    toggle: true
+  - type: section
+    label: full_row
+  - type: custom:slider-entity-row
+    entity: light.bed_light
+    name: hide_state
+    full_row: true
 ```
 
-### Extra options
-`hide_state` - (default: false) Set to true to hide the percentage display.
-
-`min` - (default: 0) Minimum value of slider
-
-`max` - (default: 100) Maximum value of slider
-
-`step` - (default: 5) Step size of slider
-Note that slider values are in percent and will be rescaled e.g. for lights which require a brightness setting between 0 and 255.
-
-`hide_when_off` - Hide the slider when entity is off.
-
+![options](https://user-images.githubusercontent.com/1299821/59467902-19dd8380-8e31-11e9-9173-97c9b6be3179.png)
 
 ---
-Thanks to Gabe Cook (@gabe565) for help with fan and input_select support.
+<a href="https://www.buymeacoffee.com/uqD6KHCdJ" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/white_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
