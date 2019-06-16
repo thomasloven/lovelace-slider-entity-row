@@ -14,7 +14,7 @@ export class InputNumberController extends Controller {
   }
 
   get string() {
-    return `${Math.round(this.stateObj.state)}`
+    return `${parseFloat(this.stateObj.state)}`;
   }
 
   get isOff() {
