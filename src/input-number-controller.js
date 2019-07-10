@@ -14,10 +14,7 @@ export class InputNumberController extends Controller {
   }
 
   get string() {
-    if (typeof this.stateObj.attributes.unit_of_measurement === "undefined") {
-        this.stateObj.attributes.unit_of_measurement = "";
-    }
-    return `${parseFloat(this.stateObj.state)} ${this.stateObj.attributes.unit_of_measurement}`;
+    return `${parseFloat(this.stateObj.state)} ${this.stateObj.attributes.unit_of_measurement || ""}`.trim();
   }
 
   get isOff() {
