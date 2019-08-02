@@ -14,13 +14,13 @@ export class ClimateController extends Controller {
   }
 
   get string() {
-    if (this.stateObj.attributes.operation_mode === "off")
+    if (this.stateObj.attributes.hvac_mode === "off")
       return this._hass.localize("state.climate.off");
     return `${this.value} ${this._hass.config.unit_system.temperature}`;
   }
 
   get isOff() {
-    return this.stateObj.attributes.operation_mode === "off";
+    return this.stateObj.attributes.hvac_mode === "off";
   }
 
   get _min() {
