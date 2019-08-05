@@ -41,6 +41,7 @@ Currenly supported entity domains:
 - `min: <value>` - Set minimum value of slider
 - `max: <value>` - Set maximum value of slider
 - `step: <value>` - Set step size of slider
+- `attribute: <value>` - Select which attribute the slider should control
 
 ```yaml
 type: entities
@@ -75,6 +76,24 @@ entities:
 ```
 
 ![options](https://user-images.githubusercontent.com/1299821/59467902-19dd8380-8e31-11e9-9173-97c9b6be3179.png)
+
+#### Attributes
+Currently, the following attribute settings are supported.
+
+**For `light` domain:**
+
+- `brightness` - default
+- `color_temp`
+- `hue`
+- `saturation`
+- `red`
+- `green`
+- `blue`
+
+**For `cover` domain:**
+
+- `position` - default
+- `tilt`
 
 ---
 <a href="https://www.buymeacoffee.com/uqD6KHCdJ" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/white_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
