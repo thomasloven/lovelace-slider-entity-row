@@ -28,7 +28,7 @@ export class LightController extends Controller {
     }
   }
 
-  get min() {
+  get _min() {
     switch (this.attribute) {
       case "color_temp":
         return this.stateObj.attributes.min_mireds;
@@ -36,7 +36,7 @@ export class LightController extends Controller {
         return 0;
     }
   }
-  get max() {
+  get _max() {
     switch (this.attribute) {
       case "color_temp":
         return this.stateObj.attributes.max_mireds;
