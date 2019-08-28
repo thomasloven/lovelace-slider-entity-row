@@ -38,12 +38,14 @@ class SliderEntityRow extends LitElement {
   render() {
     const c = this.ctrl;
     c.hass = this.hass;
+    const dir = this.hass.translationMetadata.translations[this.hass.language || "en"].isRTL ? "rtl" : "ltr";
     const slider = html`
       <ha-slider
         .min=${c.min}
         .max=${c.max}
         .step=${c.step}
         .value=${c.value}
+        .dir=${dir}
         pin
         @change=${(ev) => c.value = this.shadowRoot.querySelector("ha-slider").value}
         class=${this._config.full_row ? "full" : ""}
