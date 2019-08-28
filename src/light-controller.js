@@ -23,8 +23,21 @@ export class LightController extends Controller {
         return this.stateObj.attributes.hs_color ? Math.ceil(this.stateObj.attributes.hs_color[0]): 0;
       case "saturation":
         return this.stateObj.attributes.hs_color ? Math.ceil(this.stateObj.attributes.hs_color[1]): 0;
+      case "effect":
+        if(this.stateObj.attributes.effect_list)
+          return (this.stateObj.attributes.effect_list.indexOf(this.stateObj.attributes.effect));
+        return 0;
       default:
         return 0;
+    }
+  }
+
+  get _step() {
+    switch (this.attribute) {
+      case "effect":
+        return 1;
+      default:
+        return 5;
     }
   }
 
@@ -46,6 +59,8 @@ export class LightController extends Controller {
         return 255;
       case "hue":
         return 360;
+      case "effect":
+        return this.stateObj.attributes.effect_list ? this.stateObj.attributes.effect_list.length - 1 : 0;
       default:
         return 100;
     }
@@ -78,6 +93,10 @@ export class LightController extends Controller {
         value = _value;
         attr = "hs_color";
         break;
+      case "effect":
+        value = this.stateObj.attributes.effect_list[value];
+        attr = "effect";
+        break;
     }
 
     if (on) {
@@ -103,6 +122,8 @@ export class LightController extends Controller {
         return `${this.value} %`;
       case "hue":
         return `${this.value} °`;
+      case "effect":
+        return this.stateObj.attributes.effect;
       default:
         return this.value;
     }
@@ -114,21 +135,28 @@ export class LightController extends Controller {
         if ("brightness" in this.stateObj.attributes) return true;
         if (("supported_features" in this.stateObj.attributes) &&
           (this.stateObj.attributes.supported_features & 1)) return true;
+        return false;
       case "color_temp":
         if ("color_temp" in this.stateObj.attributes) return true;
         if (("supported_features" in this.stateObj.attributes) &&
           (this.stateObj.attributes.supported_features & 2)) return true;
+        return false;
       case "red":
       case "green":
       case "blue":
         if ("rgb_color" in this.stateObj.attributes) return true;
         if (("supported_features" in this.stateObj.attributes) &&
           (this.stateObj.attributes.supported_features & 16)) return true;
+        return false;
       case "hue":
       case "saturation":
         if ("hs_color" in this.stateObj.attributes) return true;
         if (("supported_features" in this.stateObj.attributes) &&
           (this.stateObj.attributes.supported_features & 16)) return true;
+        return false;
+      case "effect":
+        if ("effect" in this.stateObj.attributes) return true;
+        return false;
       default:
         return false;
     }

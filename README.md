@@ -89,6 +89,7 @@ Currently, the following attribute settings are supported.
 - `red`
 - `green`
 - `blue`
+- `effect`
 
 **For `cover` domain:**
 
