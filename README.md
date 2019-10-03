@@ -1,11 +1,19 @@
 slider-entity-row
 =================
 
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
+
 Add a slider to rows in lovelace [entities](https://www.home-assistant.io/lovelace/entities/) cards.
 
 For installation instructions [see this guide](https://github.com/thomasloven/hass-config/wiki/Lovelace-Plugins).
 
 Install `slider-entity-row.js` as a `module`.
+
+```yaml
+resources:
+  url: /local/slider-entity-row.js
+  type: module
+```
 
 ## Usage
 Add this to an entities card:
