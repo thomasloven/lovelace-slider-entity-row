@@ -11,8 +11,10 @@ export class LightController extends Controller {
     switch (this.attribute) {
       case "color_temp":
         return Math.ceil(this.stateObj.attributes.color_temp);
+      case "white_value":
+        return Math.ceil(this.stateObj.attributes.white_value);
       case "brightness":
-        return Math.ceil(this.stateObj.attributes.brightness*100.0/255)
+        return Math.ceil(this.stateObj.attributes.brightness*100.0/255);
       case "red":
         return this.stateObj.attributes.rgb_color ? Math.ceil(this.stateObj.attributes.rgb_color[0]) : 0;
       case "green":
@@ -56,6 +58,7 @@ export class LightController extends Controller {
       case "red":
       case "green":
       case "blue":
+      case "white_value":
         return 255;
       case "hue":
         return 360;
@@ -140,6 +143,11 @@ export class LightController extends Controller {
         if ("color_temp" in this.stateObj.attributes) return true;
         if (("supported_features" in this.stateObj.attributes) &&
           (this.stateObj.attributes.supported_features & 2)) return true;
+        return false;
+      case "white_value":
+        if ("white_value" in this.stateObj.attributes) return true;
+        if (("supported_features" in this.stateObj.attributes) &&
+          (this.stateObj.attributes.supported_features & 128)) return true;
         return false;
       case "red":
       case "green":
