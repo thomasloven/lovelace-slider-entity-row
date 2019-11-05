@@ -1,4 +1,4 @@
-import {LitElement, html, css} from "/card-tools/lit-element.js";
+import {LitElement, html, css} from "card-tools/src/lit-element.js";
 
 import { Controller } from "./controller.js";
 import { LightController } from "./light-controller.js";
