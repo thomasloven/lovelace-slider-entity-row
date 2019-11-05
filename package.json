@@ -1,0 +1,25 @@
+{
+  "name": "slider-entity-row",
+  "private": true,
+  "version": "1.0.0",
+  "description": "slider-entity-row =================",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch --mode=development",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com:thomasloven/lovelace-slider-entity-row"
+  },
+  "keywords": [],
+  "author": "Thomas Lovén",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "card-tools": "github:thomasloven/lovelace-card-tools"
+  }
+}
