@@ -11,8 +11,8 @@ Install `slider-entity-row.js` as a `module`.
 
 ```yaml
 resources:
-  url: /local/slider-entity-row.js
-  type: module
+  - url: /local/slider-entity-row.js
+    type: module
 ```
 
 ## Usage
