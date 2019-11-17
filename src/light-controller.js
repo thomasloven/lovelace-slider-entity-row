@@ -14,7 +14,7 @@ export class LightController extends Controller {
       case "white_value":
         return Math.ceil(this.stateObj.attributes.white_value);
       case "brightness":
-        return Math.ceil(this.stateObj.attributes.brightness*100.0/255);
+        return Math.ceil(this.stateObj.attributes.brightness*this.max/255);
       case "red":
         return this.stateObj.attributes.rgb_color ? Math.ceil(this.stateObj.attributes.rgb_color[0]) : 0;
       case "green":
@@ -53,6 +53,8 @@ export class LightController extends Controller {
   }
   get _max() {
     switch (this.attribute) {
+      case "brightness":
+        return this._config.max || 100
       case "color_temp":
         return this.stateObj.attributes.max_mireds;
       case "red":
@@ -75,7 +77,7 @@ export class LightController extends Controller {
     let _value;
     switch (attr) {
       case "brightness":
-        value = Math.ceil(value/100.0*255);
+        value = Math.ceil(value/this.max*255);
         if (!value) on = false;
         break;
       case "red":
