@@ -49,6 +49,7 @@ class SliderEntityRow extends LitElement {
         pin
         @change=${(ev) => c.value = this.shadowRoot.querySelector("ha-slider").value}
         class=${this._config.full_row ? "full" : ""}
+        ignore-bar-touch
       ></ha-slider>
     `;
     const toggle = html`

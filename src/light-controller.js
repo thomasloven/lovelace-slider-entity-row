@@ -7,7 +7,7 @@ export class LightController extends Controller {
   }
 
   get _value() {
-    if (this.stateObj.state !== "on") return 0;
+    if (!this.stateObj || this.stateObj.state !== "on") return 0;
     switch (this.attribute) {
       case "color_temp":
         return Math.ceil(this.stateObj.attributes.color_temp);
@@ -46,7 +46,7 @@ export class LightController extends Controller {
   get _min() {
     switch (this.attribute) {
       case "color_temp":
-        return this.stateObj.attributes.min_mireds;
+        return this.stateObj ? this.stateObj.attributes.min_mireds : 0;
       default:
         return 0;
     }
@@ -54,7 +54,7 @@ export class LightController extends Controller {
   get _max() {
     switch (this.attribute) {
       case "color_temp":
-        return this.stateObj.attributes.max_mireds;
+        return this.stateObj ? this.stateObj.attributes.max_mireds : 0;
       case "red":
       case "green":
       case "blue":
@@ -63,13 +63,14 @@ export class LightController extends Controller {
       case "hue":
         return 360;
       case "effect":
-        return this.stateObj.attributes.effect_list ? this.stateObj.attributes.effect_list.length - 1 : 0;
+        return this.stateObj ? this.stateObj.attributes.effect_list ? this.stateObj.attributes.effect_list.length - 1 : 0 : 0;
       default:
         return 100;
     }
   }
 
   set _value(value) {
+    if(!this.stateObj) return;
     let attr = this.attribute;
     let on = true;
     let _value;
@@ -115,7 +116,7 @@ export class LightController extends Controller {
   }
 
   get string() {
-    if (this.stateObj.state === "off")
+    if (this.stateObj && this.stateObj.state === "off")
       return this._hass.localize("state.default.off");
     switch (this.attribute) {
       case "color_temp":
@@ -126,13 +127,14 @@ export class LightController extends Controller {
       case "hue":
         return `${this.value} °`;
       case "effect":
-        return this.stateObj.attributes.effect;
+        return this.stateObj ? this.stateObj.attributes.effect : "";
       default:
         return this.value;
     }
   }
 
   get hasSlider() {
+    if(!this.stateObj) return false;
     switch (this.attribute) {
       case "brightness":
         if ("brightness" in this.stateObj.attributes) return true;
