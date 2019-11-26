@@ -53,8 +53,6 @@ export class LightController extends Controller {
   }
   get _max() {
     switch (this.attribute) {
-      case "brightness":
-        return this._config.max || 100
       case "color_temp":
         return this.stateObj.attributes.max_mireds;
       case "red":
