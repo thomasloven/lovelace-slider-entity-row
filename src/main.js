@@ -88,7 +88,10 @@ class SliderEntityRow extends LitElement {
     `;
 
     if (this._config.full_row)
-      return content;
+      if(this._config.hide_when_off && c.isOff)
+        return html``;
+      else
+        return content;
 
     return html`
     <hui-generic-entity-row
@@ -108,6 +111,7 @@ class SliderEntityRow extends LitElement {
       .state {
         min-width: 45px;
         text-align: end;
+        margin-left: 5px;
       }
       ha-entity-toggle {
         margin-left: 8px;
