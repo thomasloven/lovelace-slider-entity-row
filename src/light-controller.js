@@ -120,7 +120,7 @@ export class LightController extends Controller {
       return this._hass.localize("state.default.off");
     switch (this.attribute) {
       case "color_temp":
-        return `${this.value} K`;
+        return `${this.value}`;
       case "brightness":
       case "saturation":
         return `${this.value} %`;
