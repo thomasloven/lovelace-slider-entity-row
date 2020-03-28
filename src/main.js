@@ -107,6 +107,7 @@ class SliderEntityRow extends LitElement {
         display: flex;
         align-items: center;
         height: 40px;
+        flex: 1 0 200px;
       }
       .state {
         min-width: 45px;
@@ -115,6 +116,10 @@ class SliderEntityRow extends LitElement {
       }
       ha-entity-toggle {
         margin-left: 8px;
+      }
+      ha-slider {
+        width: auto;
+        flex-grow: 1;
       }
       ha-slider.full {
         width: 100%;
