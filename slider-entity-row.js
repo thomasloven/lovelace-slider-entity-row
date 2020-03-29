@@ -42,7 +42,6 @@
         flex: auto;
         justify-content: flex-end;
         align-items: center;
-        width: 100%;
         height: 40px;
       }
       .state {
@@ -55,7 +54,7 @@
       }
       ha-slider {
         width: 100%;
-        min-width: 100px;
+        min-width: 80px;
         max-width: 200px;
       }
       ha-slider.full {
