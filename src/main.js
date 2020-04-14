@@ -35,6 +35,18 @@ class SliderEntityRow extends LitElement {
     this.ctrl = new ctrlClass(config);
   }
 
+  async resized() {
+    await this.updateComplete;
+    if(!this.shadowRoot) return;
+    const element = this.shadowRoot.querySelector(".state");
+    if(element)
+      element.hidden = this.parentElement.clientWidth <= 350;
+  }
+
+  async firstUpdated() {
+    await this.resized();
+  }
+
   render() {
     const c = this.ctrl;
     c.hass = this.hass;
@@ -106,6 +118,8 @@ class SliderEntityRow extends LitElement {
       .wrapper {
         display: flex;
         align-items: center;
+        justify-content: flex-end;
+        flex-grow: 2;
         height: 40px;
       }
       .state {
@@ -116,7 +130,7 @@ class SliderEntityRow extends LitElement {
       ha-entity-toggle {
         margin-left: 8px;
       }
-      ha-slider.full {
+      ha-slider {
         width: 100%;
       }
     `;
