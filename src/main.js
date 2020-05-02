@@ -40,7 +40,7 @@ class SliderEntityRow extends LitElement {
     if(!this.shadowRoot) return;
     const element = this.shadowRoot.querySelector(".state");
     if(element)
-      element.hidden = this.parentElement.clientWidth <= 350;
+      element.hidden = this.parentElement.clientWidth < 320;
   }
 
   async firstUpdated() {
