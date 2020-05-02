@@ -14,7 +14,11 @@ export class LightController extends Controller {
       case "white_value":
         return Math.ceil(this.stateObj.attributes.white_value);
       case "brightness":
-        return Math.ceil(this.stateObj.attributes.brightness*100.0/255);
+        if (this._config.brightness_percent === undefined || (this._config.brightness_percent !== undefined && this._config.brightness_percent)) {
+          return Math.ceil(this.stateObj.attributes.brightness*100.0/255);
+        } else {
+          return this.stateObj.attributes.brightness;
+        }
       case "red":
         return this.stateObj.attributes.rgb_color ? Math.ceil(this.stateObj.attributes.rgb_color[0]) : 0;
       case "green":
@@ -35,6 +39,7 @@ export class LightController extends Controller {
   }
 
   get _step() {
+    if (this._config.brightness_percent !== undefined && !this._config.brightness_percent) return 1;
     switch (this.attribute) {
       case "effect":
         return 1;
@@ -64,6 +69,12 @@ export class LightController extends Controller {
         return 360;
       case "effect":
         return this.stateObj ? this.stateObj.attributes.effect_list ? this.stateObj.attributes.effect_list.length - 1 : 0 : 0;
+      case "brightness":
+        if (this._config.brightness_percent === undefined || (this._config.brightness_percent !== undefined && this._config.brightness_percent)) {
+          return 100;
+        } else {
+          return 255;
+        }
       default:
         return 100;
     }
@@ -76,7 +87,9 @@ export class LightController extends Controller {
     let _value;
     switch (attr) {
       case "brightness":
-        value = Math.ceil(value/100.0*255);
+        if (this._config.brightness_percent === undefined || (this._config.brightness_percent !== undefined && this._config.brightness_percent)) {
+          value = Math.ceil(value/100.0*255);
+        }
         if (!value) on = false;
         break;
       case "red":
@@ -122,6 +135,7 @@ export class LightController extends Controller {
       case "color_temp":
         return `${this.value}`;
       case "brightness":
+        return this._config.brightness_percent === undefined || (this._config.brightness_percent !== undefined && this._config.brightness_percent) ? `${this.value} %` : `${this.value}`;
       case "saturation":
         return `${this.value} %`;
       case "hue":

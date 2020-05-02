@@ -50,6 +50,7 @@ Currenly supported entity domains:
 - `max: <value>` - Set maximum value of slider
 - `step: <value>` - Set step size of slider
 - `attribute: <value>` - Select which attribute the slider should control
+- `brightness_percent: true` - Only for light domain. When `true` (the default) shows brightness as a percent in a range from 0% to 100%. When `false` shows brightness in the range 0 to 255.
 
 ```yaml
 type: entities
