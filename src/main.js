@@ -40,7 +40,9 @@ class SliderEntityRow extends LitElement {
     if(!this.shadowRoot) return;
     const element = this.shadowRoot.querySelector(".state");
     if(element)
-      element.hidden = this.parentElement.clientWidth <= 350;
+      element.hidden = this._config.full_row
+        ? this.parentElement.clientWidth <= 180
+        : this.parentElement.clientWidth <= 350;
   }
 
   async firstUpdated() {
@@ -65,10 +67,12 @@ class SliderEntityRow extends LitElement {
       ></ha-slider>
     `;
     const toggle = html`
-      <ha-entity-toggle
-        .stateObj=${this.hass.states[this._config.entity]}
-        .hass=${this.hass}
-      ></ha-entity-toggle>
+      <span class="state">
+        <ha-entity-toggle
+          .stateObj=${this.hass.states[this._config.entity]}
+          .hass=${this.hass}
+        ></ha-entity-toggle>
+      </span>
     `;
 
     const content = html`
