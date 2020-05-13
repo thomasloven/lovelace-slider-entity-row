@@ -1,0 +1,73 @@
+x-anchors:
+  desc: &desc
+    type: markdown
+    style: |
+      code {
+        font-size: 8pt;
+        line-height: normal;
+        white-space: pre-wrap;
+        }
+
+title: Attributes
+cards:
+  - type: vertical-stack
+    cards:
+      - <<: *desc
+        content: |
+          ## Light attributes
+
+          - Default (brightness): {{ state_attr('light.bed_light', 'brightness') }}
+          - color_temp: {{state_attr('light.bed_light', 'color_temp')}}
+          - hue: {{state_attr('light.bed_light', 'hs_color')[0]}}
+          - saturation: {{state_attr('light.bed_light', 'hs_color')[1]}}
+          - red: {{state_attr('light.bed_light', 'rgb_color')[0]}}
+          - green: {{state_attr('light.bed_light', 'rgb_color')[1]}}
+          - blue: {{state_attr('light.bed_light', 'rgb_color')[2]}}
+          - effect: {{state_attr('light.bed_light', 'effect')}}
+          - white_value: {{state_attr('light.bed_light', 'white_value')}}
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - &light
+            type: custom:slider-entity-row
+            entity: light.bed_light
+          - <<: *light
+            name: color_temp
+            attribute: color_temp
+          - <<: *light
+            name: hue
+            attribute: hue
+          - <<: *light
+            name: saturation
+            attribute: saturation
+          - <<: *light
+            name: red
+            attribute: red
+          - <<: *light
+            name: green
+            attribute: green
+          - <<: *light
+            name: blue
+            attribute: blue
+          - <<: *light
+            name: effect
+            attribute: effect
+          - <<: *light
+            name: white_value
+            attribute: white_value
+
+  - type: vertical-stack
+    cards:
+      - <<: *desc
+        content: |
+          ## Cover attributes
+
+          - Default (position): {{state_attr('cover.living_room_window', 'current_position')}}
+          - tilt: {{state_attr('cover.living_room_window', 'current_tilt_position')}}
+      - type: entities
+        entities:
+          - type: custom:slider-entity-row
+            entity: cover.living_room_window
+          - type: custom:slider-entity-row
+            entity: cover.living_room_window
+            attribute: tilt

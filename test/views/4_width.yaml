@@ -1,0 +1,48 @@
+title: Width
+panel: true
+cards:
+  - type: vertical-stack
+    cards:
+      - &c
+        type: entities
+        show_header_toggle: false
+        entities:
+          - input_number.slider
+          - &row
+            type: custom:slider-entity-row
+            entity: light.bed_light
+          - <<: *row
+            toggle: true
+          - <<: *row
+            hide_state: true
+          - <<: *row
+            full_row: true
+          - <<: *row
+            full_row: true
+            toggle: true
+          - <<: *row
+            full_row: true
+            hide_state: true
+      - type: horizontal-stack
+        cards:
+          - *c
+          - type: horizontal-stack
+            cards:
+              - *c
+              - type: horizontal-stack
+                cards:
+                  - *c
+                  - type: markdown
+                    content: " "
+      - type: horizontal-stack
+        cards:
+          - type: entities
+            show_header_toggle: false
+            entities:
+              - light.bed_light
+          - type: entities
+            show_header_toggle: false
+            entities:
+              - type: custom:slider-entity-row
+                entity: light.bed_light
+                toggle: true

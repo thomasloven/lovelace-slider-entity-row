@@ -1,0 +1,56 @@
+x-anchors:
+  desc: &desc
+    type: markdown
+    style: |
+      code {
+        font-size: 8pt;
+        line-height: normal;
+        white-space: pre-wrap;
+        }
+
+title: Standard
+cards:
+  - type: vertical-stack
+    cards:
+      - <<: *desc
+        content: |
+          ## Domains
+
+          - light
+          - media_player
+          - climate
+          - cover
+          - fan
+          - input_number
+          - input_select
+
+          ```
+          type: custom:slider-entity-row
+          entity: ligh.bed_light
+          name: light
+          ...
+          ```
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - type: custom:slider-entity-row
+            entity: light.bed_light
+            name: light
+          - type: custom:slider-entity-row
+            entity: media_player.bedroom
+            name: media_player
+          - type: custom:slider-entity-row
+            entity: climate.hvac
+            name: climate
+          - type: custom:slider-entity-row
+            entity: cover.hall_window
+            name: cover
+          - type: custom:slider-entity-row
+            entity: fan.ceiling_fan
+            name: fan
+          - type: custom:slider-entity-row
+            entity: input_number.slider
+            name: input_number
+          - type: custom:slider-entity-row
+            entity: input_select.select
+            name: input_select

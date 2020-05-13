@@ -1,0 +1,31 @@
+default_config:
+
+demo:
+
+lovelace:
+  mode: yaml
+  resources:
+    - url: /local/slider-entity-row.js
+      type: module
+    - url: /local/card-mod.js
+      type: module
+  dashboards:
+    lovelace-yaml:
+      mode: yaml
+      title: yaml
+      filename: lovelace.yaml
+
+input_number:
+  slider:
+    name: Input number
+    min: 0
+    max: 200
+    step: 25
+
+input_select:
+  select:
+    name: Input select
+    options:
+      - A
+      - B
+      - C
