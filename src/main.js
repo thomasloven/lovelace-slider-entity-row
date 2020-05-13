@@ -141,4 +141,10 @@ class SliderEntityRow extends LitElement {
   }
 }
 
-customElements.define('slider-entity-row', SliderEntityRow);
+if(!customElements.get("slider-entity-row")) {
+  customElements.define('slider-entity-row', SliderEntityRow);
+  const pjson = require('../package.json');
+  console.info(`%cSLIDER-ENTITY-ROW ${pjson.version} IS INSTALLED`,
+  "color: green; font-weight: bold",
+  "");
+}
