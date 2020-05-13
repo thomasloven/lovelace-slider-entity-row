@@ -23,6 +23,7 @@ class SliderEntityRow extends LitElement {
   static get properties() {
     return {
       hass: {},
+      hide_state: {},
     };
   }
 
@@ -38,11 +39,10 @@ class SliderEntityRow extends LitElement {
   async resized() {
     await this.updateComplete;
     if(!this.shadowRoot) return;
-    const element = this.shadowRoot.querySelector(".state");
-    if(element)
-      element.hidden = this._config.full_row
-        ? this.parentElement.clientWidth <= 180
-        : this.parentElement.clientWidth <= 350;
+    this.hide_state = this._config.full_row
+      ? this.parentElement.clientWidth <= 180
+      : this.parentElement.clientWidth <= 300;
+    return;
   }
 
   async firstUpdated() {
@@ -67,39 +67,46 @@ class SliderEntityRow extends LitElement {
       ></ha-slider>
     `;
     const toggle = html`
-      <span class="state">
-        <ha-entity-toggle
-          .stateObj=${this.hass.states[this._config.entity]}
-          .hass=${this.hass}
-        ></ha-entity-toggle>
-      </span>
+      <ha-entity-toggle
+        .stateObj=${this.hass.states[this._config.entity]}
+        .hass=${this.hass}
+        .class="state"
+      ></ha-entity-toggle>
     `;
 
     const content = html`
     <div class="wrapper" @click=${(ev) => ev.stopPropagation()}>
       ${(c.stateObj.state === "unavailable")
         ? html`
-          <span class="state">
-          unavailable
-          </span>
+            <span class="state">
+            unavailable
+            </span>
         `
         : html`
-          ${((this._config.hide_when_off && c.isOff)
-            || !c.hasSlider)
-            ? ""
-            : slider }
-          ${(this._config.hide_state || this._config.toggle)
-            ? ""
-            : html`
-              <span class="state">
-                ${c.string}
-              </span>
-              `}
-          ${this._config.toggle
-            && c.hasToggle
-            ? toggle
-            : ""}
-        `}
+            ${((this._config.hide_when_off && c.isOff)
+              || !c.hasSlider)
+              ? ""
+              : slider }
+
+            ${this.hide_state
+              ? ''
+              : html`
+                  ${this._config.toggle
+                    ? c.hasToggle
+                      ? toggle
+                      : ''
+                    : this._config.hide_state
+                      ? ''
+                      : html`
+                          <span class="state">
+                            ${c.string}
+                          </span>
+                        `
+                  }
+                `
+            }
+          `
+      }
     </div>
     `;
 
@@ -110,10 +117,10 @@ class SliderEntityRow extends LitElement {
         return content;
 
     return html`
-    <hui-generic-entity-row
-      .hass=${this.hass}
-      .config=${this._config}
-    > ${content} </hui-generic-entity-row>
+      <hui-generic-entity-row
+        .hass=${this.hass}
+        .config=${this._config}
+      > ${content} </hui-generic-entity-row>
     `;
   }
 
@@ -123,7 +130,7 @@ class SliderEntityRow extends LitElement {
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        flex-grow: 2;
+        flex-grow: 100;
         height: 40px;
       }
       .state {
@@ -132,10 +139,15 @@ class SliderEntityRow extends LitElement {
         margin-left: 5px;
       }
       ha-entity-toggle {
+        min-width: auto;
         margin-left: 8px;
       }
       ha-slider {
         width: 100%;
+        min-width: 100px;
+      }
+      ha-slider:not(.full) {
+        max-width: 200px;
       }
     `;
   }

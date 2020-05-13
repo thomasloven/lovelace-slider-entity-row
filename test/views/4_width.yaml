@@ -40,6 +40,9 @@ cards:
             show_header_toggle: false
             entities:
               - light.bed_light
+              - type: custom:slider-entity-row
+                entity: light.bed_light
+                toggle: true
           - type: entities
             show_header_toggle: false
             entities:
