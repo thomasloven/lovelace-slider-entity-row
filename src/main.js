@@ -41,7 +41,7 @@ class SliderEntityRow extends LitElement {
     if(!this.shadowRoot) return;
     this.hide_state = this._config.full_row
       ? this.parentElement.clientWidth <= 180
-      : this.parentElement.clientWidth <= 300;
+      : this.parentElement.clientWidth <= 335;
     return;
   }
 
@@ -88,22 +88,17 @@ class SliderEntityRow extends LitElement {
               ? ""
               : slider }
 
-            ${this.hide_state
-              ? ''
-              : html`
-                  ${this._config.toggle
-                    ? c.hasToggle
-                      ? toggle
-                      : ''
-                    : this._config.hide_state
-                      ? ''
-                      : html`
-                          <span class="state">
-                            ${c.string}
-                          </span>
-                        `
-                  }
-                `
+            ${this._config.toggle
+              ? c.hasToggle
+                ? toggle
+                : ''
+              : (this._config.hide_state || this.hide_state) && (this._config.hide_state !== false)
+                ? ''
+                : html`
+                    <span class="state">
+                      ${c.string}
+                    </span>
+                  `
             }
           `
       }

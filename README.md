@@ -44,6 +44,7 @@ Currenly supported entity domains:
 
 - `toggle: true` - Show a toggle instead of current state
 - `hide_state: true` - Do not display current state
+- `hide_state: false` - Always show the state, even when the card is too narrow
 - `hide_when_off: true` - Hide the slider when state is `off`
 - `full_row: true` - Hide icon and name and stretch slider to full width
 - `min: <value>` - Set minimum value of slider

@@ -12,6 +12,8 @@ cards:
             type: custom:slider-entity-row
             entity: light.bed_light
           - <<: *row
+            hide_state: false
+          - <<: *row
             toggle: true
           - <<: *row
             hide_state: true
