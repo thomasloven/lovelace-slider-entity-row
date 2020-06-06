@@ -3,10 +3,10 @@
         .min=${t.min}
         .max=${t.max}
         .step=${t.step}
-        .value=${t.value}
+        .value=${this._config.inverted?100-t.value:t.value}
         .dir=${e}
         pin
-        @change=${e=>t.value=this.shadowRoot.querySelector("ha-slider").value}
+        @change=${e=>{let s=this._config.inverted?100-this.shadowRoot.querySelector("ha-slider").value:this.shadowRoot.querySelector("ha-slider").value;t.value=s}}
         class=${this._config.full_row?"full":""}
         ignore-bar-touch
       ></ha-slider>
@@ -27,7 +27,7 @@
 
             ${this._config.toggle?t.hasToggle?i:"":(this._config.hide_state||this.hide_state)&&!1!==this._config.hide_state?"":a`
                     <span class="state">
-                      ${t.string}
+                      ${this._config.inverted?(()=>{let e=/[0-9]{2}/.exec(t.string)||[];return e.length?t.string.replace(e[0],100-t.value):t.string})():t.string}
                     </span>
                   `}
           `}

@@ -51,6 +51,7 @@ Currenly supported entity domains:
 - `max: <value>` - Set maximum value of slider
 - `step: <value>` - Set step size of slider
 - `attribute: <value>` - Select which attribute the slider should control
+- `inverted: true` - Inverts slider percentage
 
 ```yaml
 type: entities
