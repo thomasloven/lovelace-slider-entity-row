@@ -3,7 +3,7 @@ default_config:
 demo:
 
 lovelace:
-  mode: yaml
+  mode: storage
   resources:
     - url: /local/slider-entity-row.js
       type: module

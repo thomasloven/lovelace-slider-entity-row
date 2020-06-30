@@ -29,6 +29,8 @@ class SliderEntityRow extends LitElement {
 
   setConfig(config) {
     this._config = config;
+    if(!config.entity)
+      throw new Error(`No entity specified.`);
     const domain = config.entity.split('.')[0];
     const ctrlClass = controllers[domain];
     if(!ctrlClass)
@@ -52,6 +54,15 @@ class SliderEntityRow extends LitElement {
   render() {
     const c = this.ctrl;
     c.hass = this.hass;
+    if (!c.stateObj)
+      return html`
+      <hui-warning>
+        ${this.hass.localize("ui.panel.lovelace.warning.entity_not_found",
+          "entity",
+          this._config.entity
+        )}
+      </hui-warning>
+      `
     const dir = this.hass.translationMetadata.translations[this.hass.language || "en"].isRTL ? "rtl" : "ltr";
     const slider = html`
       <ha-slider
