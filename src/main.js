@@ -90,7 +90,7 @@ class SliderEntityRow extends LitElement {
       ${(c.stateObj.state === "unavailable")
         ? html`
             <span class="state">
-            unavailable
+            Unavailable
             </span>
         `
         : html`
