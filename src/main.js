@@ -90,7 +90,7 @@ class SliderEntityRow extends LitElement {
       ${(c.stateObj.state === "unavailable")
         ? html`
             <span class="state">
-            ${this.hass.resources[this.hass.language]["state.default.unavailable"]}
+            ${this.hass.localize("state.default.unavailable")}
             </span>
         `
         : html`
