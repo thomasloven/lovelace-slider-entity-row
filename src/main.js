@@ -88,11 +88,13 @@ class SliderEntityRow extends LitElement {
     const content = html`
     <div class="wrapper" @click=${(ev) => ev.stopPropagation()}>
       ${(c.stateObj.state === "unavailable")
-        ? html`
-            <span class="state">
-            ${this.hass.localize("state.default.unavailable")}
-            </span>
-        `
+        ? this._config.toggle && c.hasToggle 
+          ? toggle 
+          : html`
+              <span class="state">
+              ${this.hass.localize("state.default.unavailable")}
+              </span>
+            `
         : html`
             ${((this._config.hide_when_off && c.isOff)
               || !c.hasSlider)
