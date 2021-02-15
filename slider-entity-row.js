@@ -24,7 +24,7 @@
     <div class="wrapper" @click=${t=>t.stopPropagation()}>
       ${"unavailable"===t.stateObj.state?a`
             <span class="state">
-            unavailable
+            ${this.hass.localize("state.default.unavailable")}
             </span>
         `:a`
             ${this._config.hide_when_off&&t.isOff||!t.hasSlider?"":s}

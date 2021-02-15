@@ -38,6 +38,8 @@ Currenly supported entity domains:
 - `input_number` - set value (only if `mode: slider`)
 - `input_select` - select option
 
+For `group`, use [light group](https://www.home-assistant.io/integrations/light.group/) or [cover group](https://www.home-assistant.io/integrations/cover.group/) instead.
+
 ![domains](https://user-images.githubusercontent.com/1299821/59467899-1813c000-8e31-11e9-8abd-34c887a7db2a.png)
 
 ### Options
