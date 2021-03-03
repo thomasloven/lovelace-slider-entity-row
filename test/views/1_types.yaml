@@ -55,3 +55,6 @@ cards:
           - type: custom:slider-entity-row
             entity: input_select.select
             name: input_select
+          - type: custom:slider-entity-row
+            entity: number.pwm_1
+            name: number

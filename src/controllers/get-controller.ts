@@ -5,6 +5,7 @@ import { CoverController } from "./cover-controller";
 import { FanController } from "./fan-controller";
 import { InputNumberController } from "./input-number-controller";
 import { InputSelectController } from "./input-select-controller";
+import { NumberController } from "./number-controller";
 
 export function getController(domain: string) {
   return {
@@ -15,5 +16,6 @@ export function getController(domain: string) {
     fan: FanController,
     input_number: InputNumberController,
     input_select: InputSelectController,
+    number: NumberController,
   }[domain];
 }
