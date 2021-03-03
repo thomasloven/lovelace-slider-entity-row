@@ -153,12 +153,16 @@ cards:
             secondary_info: last-changed
           ```
 
+  - type: vertical-stack
+    cards:
+      - <<: *desc
+        content: |
+          ## Toggle for media player entity
+          ```
       - type: entities
         show_header_toggle: false
         entities:
-          - <<: *default
-            name: Name
-          - <<: *default
-            icon: mdi:settings
-          - <<: *default
-            secondary_info: last-changed
+          - type: custom:slider-entity-row
+            entity: media_player.bedroom
+            name: media_player
+            toggle: true

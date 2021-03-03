@@ -1,3 +1,4 @@
+import { html } from "lit-element";
 import { Controller } from "./controller";
 
 export class MediaPlayerController extends Controller {
@@ -6,7 +7,7 @@ export class MediaPlayerController extends Controller {
   _step;
 
   get _value() {
-    return this.stateObj.is_volume_muted === "on"
+    return this.stateObj.attributes.is_volume_muted
       ? 0
       : Math.ceil(this.stateObj.attributes.volume_level * 100.0);
   }
@@ -17,6 +18,11 @@ export class MediaPlayerController extends Controller {
       entity_id: this.stateObj.entity_id,
       volume_level: value,
     });
+    if (value)
+      this._hass.callService("media_player", "volume_mute", {
+        entity_id: this.stateObj.entity_id,
+        is_volume_muted: false,
+      });
   }
 
   get isOff() {
@@ -31,6 +37,23 @@ export class MediaPlayerController extends Controller {
   }
 
   get hasToggle() {
-    return false;
+    return true;
+  }
+
+  _handleMute() {
+    this._hass.callService("media_player", "volume_mute", {
+      entity_id: this.stateObj.entity_id,
+      is_volume_muted: !this.stateObj.attributes.is_volume_muted,
+    });
+  }
+
+  renderToggle(hass: any) {
+    const stateObj = hass.states[this.stateObj.entity_id];
+    const btn: any = document.createElement("ha-icon-button");
+    btn.icon = stateObj.attributes.is_volume_muted
+      ? "mdi:volume-off"
+      : "mdi:volume-high";
+    btn.addEventListener("click", () => this._handleMute());
+    return this.hasToggle ? btn : undefined;
   }
 }

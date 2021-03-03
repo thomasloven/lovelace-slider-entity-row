@@ -57,7 +57,7 @@ export abstract class Controller {
     return this.hasToggle
       ? html`
           <ha-entity-toggle
-            .stateObj=${this.stateObj}
+            .stateObj=${hass.states[this.stateObj.entity_id]}
             .hass=${hass}
             .class="state"
           ></ha-entity-toggle>
