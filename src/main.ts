@@ -46,56 +46,58 @@ class SliderEntityRow extends LitElement {
           )}
         </hui-warning>
       `;
+
     const dir = this.hass.translationMetadata.translations[
       this.hass.language || "en"
     ].isRTL
       ? "rtl"
       : "ltr";
-    const slider = html`
-      <ha-slider
-        .min=${c.min}
-        .max=${c.max}
-        .step=${c.step}
-        .value=${c.value}
-        .dir=${dir}
-        pin
-        @change=${(ev) =>
-          (c.value = (this.shadowRoot.querySelector("ha-slider") as any).value)}
-        class=${this._config.full_row ? "full" : ""}
-        ignore-bar-touch
-      ></ha-slider>
-    `;
-    const toggle = html`
-      <ha-entity-toggle
-        .stateObj=${this.hass.states[this._config.entity]}
-        .hass=${this.hass}
-        .class="state"
-      ></ha-entity-toggle>
-    `;
+
+    const showSlider =
+      c.stateObj.state !== "unavailable" &&
+      c.hasSlider &&
+      !(c.isOff && this._config.hide_when_off);
+    const showToggle = this._config.toggle && c.hasToggle;
+    const showValue = showToggle
+      ? false
+      : this._config.hide_state === false
+      ? true
+      : this._config.hide_state || this.hide_state
+      ? false
+      : c.isOff && this._config.hide_when_off
+      ? false
+      : true;
 
     const content = html`
       <div class="wrapper" @click=${(ev) => ev.stopPropagation()}>
-        ${c.stateObj.state === "unavailable"
-          ? this._config.toggle && c.hasToggle
-            ? toggle
-            : html`
-                <span class="state">
-                  ${this.hass.localize("state.default.unavailable")}
-                </span>
-              `
-          : html`
-              ${(this._config.hide_when_off && c.isOff) || !c.hasSlider
-                ? ""
-                : slider}
-              ${this._config.toggle
-                ? c.hasToggle
-                  ? toggle
-                  : ""
-                : (this._config.hide_state || this.hide_state) &&
-                  this._config.hide_state !== false
-                ? ""
-                : html` <span class="state"> ${c.string} </span> `}
-            `}
+        ${showSlider
+          ? html`
+              <ha-slider
+                .min=${c.min}
+                .max=${c.max}
+                .step=${c.step}
+                .value=${c.value}
+                .dir=${dir}
+                pin
+                @change=${(ev) =>
+                  (c.value = (this.shadowRoot.querySelector(
+                    "ha-slider"
+                  ) as any).value)}
+                class=${this._config.full_row || this._config.grow
+                  ? "full"
+                  : ""}
+                ignore-bar-touch
+              ></ha-slider>
+            `
+          : ""}
+        ${showToggle ? c.renderToggle(this.hass) : ""}
+        ${showValue
+          ? html`<span class="state">
+              ${c.stateObj.state === "unavailable"
+                ? this.hass.localize("state.default.unavailable")
+                : c.string}
+            </span>`
+          : ""}
       </div>
     `;
 
@@ -116,7 +118,7 @@ class SliderEntityRow extends LitElement {
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        flex-grow: 2;
+        flex: 100;
         height: 40px;
       }
       .state {

@@ -1,3 +1,5 @@
+import { html } from "lit-element";
+
 export interface ControllerConfig {
   entity: string;
   toggle?: boolean;
@@ -8,6 +10,7 @@ export interface ControllerConfig {
   max?: number;
   step?: number;
   attribute?: string;
+  grow?: boolean;
 }
 
 export abstract class Controller {
@@ -48,6 +51,18 @@ export abstract class Controller {
   }
   get hasToggle(): boolean {
     return true;
+  }
+
+  renderToggle(hass: any) {
+    return this.hasToggle
+      ? html`
+          <ha-entity-toggle
+            .stateObj=${this.stateObj}
+            .hass=${hass}
+            .class="state"
+          ></ha-entity-toggle>
+        `
+      : undefined;
   }
 
   get isOff(): boolean {
