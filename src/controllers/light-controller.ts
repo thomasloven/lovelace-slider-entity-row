@@ -129,7 +129,7 @@ export class LightController extends Controller {
 
   get string() {
     if (this.stateObj && this.stateObj.state === "off")
-      return this._hass.localize("state.default.off");
+      return this._hass.localize("component.light.state._.off");
     switch (this.attribute) {
       case "color_temp":
       case "brightness":

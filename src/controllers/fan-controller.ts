@@ -26,7 +26,7 @@ export class FanController extends Controller {
 
   get string() {
     if (this.stateObj.state === "off")
-      return this._hass.localize("state.default.off");
+      return this._hass.localize("component.fan.state._.off");
     return this.stateObj.attributes.speed;
   }
 
