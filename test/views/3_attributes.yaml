@@ -16,7 +16,8 @@ cards:
         content: |
           ## Light attributes
 
-          - Default (brightness): {{ state_attr('light.bed_light', 'brightness') }}
+          - Default (brightness_pct): {{ state_attr('light.bed_light', 'brightness_pct') }}
+          - brightness: {{ state_attr('light.bed_light', 'brightness') }}
           - color_temp: {{state_attr('light.bed_light', 'color_temp')}}
           - hue: {{state_attr('light.bed_light', 'hs_color')[0]}}
           - saturation: {{state_attr('light.bed_light', 'hs_color')[1]}}
@@ -31,6 +32,9 @@ cards:
           - &light
             type: custom:slider-entity-row
             entity: light.bed_light
+          - <<: *light
+            name: brightness
+            attribute: brightness
           - <<: *light
             name: color_temp
             attribute: color_temp

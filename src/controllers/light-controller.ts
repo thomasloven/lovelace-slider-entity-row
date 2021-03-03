@@ -1,33 +1,38 @@
-import {Controller} from "./controller.js";
+import { Controller } from "./controller";
+
+const RGB_INDEX = { red: 0, green: 1, blue: 2 };
+const HS_INDEX = { hue: 0, saturation: 1 };
 
 export class LightController extends Controller {
-
   get attribute() {
-    return this._config.attribute || "brightness";
+    return this._config.attribute || "brightness_pct";
   }
 
   get _value() {
     if (!this.stateObj || this.stateObj.state !== "on") return 0;
+    const attr = this.stateObj.attributes;
     switch (this.attribute) {
       case "color_temp":
-        return Math.ceil(this.stateObj.attributes.color_temp);
+        return Math.round(attr.color_temp);
       case "white_value":
-        return Math.ceil(this.stateObj.attributes.white_value);
+        return Math.round(attr.white_value);
       case "brightness":
-        return Math.ceil(this.stateObj.attributes.brightness*100.0/255);
+        return Math.round(attr.brightness);
+      case "brightness_pct":
+        return Math.round((attr.brightness * 100.0) / 255);
       case "red":
-        return this.stateObj.attributes.rgb_color ? Math.ceil(this.stateObj.attributes.rgb_color[0]) : 0;
       case "green":
-        return this.stateObj.attributes.rgb_color ? Math.ceil(this.stateObj.attributes.rgb_color[1]) : 0;
       case "blue":
-        return this.stateObj.attributes.rgb_color ? Math.ceil(this.stateObj.attributes.rgb_color[2]) : 0;
+        return attr.rgb_color
+          ? Math.round(attr.rgb_color[RGB_INDEX[this.attribute]])
+          : 0;
       case "hue":
-        return this.stateObj.attributes.hs_color ? Math.ceil(this.stateObj.attributes.hs_color[0]): 0;
       case "saturation":
-        return this.stateObj.attributes.hs_color ? Math.ceil(this.stateObj.attributes.hs_color[1]): 0;
+        return attr.hs_color
+          ? Math.round(attr.hs_color[HS_INDEX[this.attribute]])
+          : 0;
       case "effect":
-        if(this.stateObj.attributes.effect_list)
-          return (this.stateObj.attributes.effect_list.indexOf(this.stateObj.attributes.effect));
+        if (attr.effect_list) return attr.effect_list.indexOf(attr.effect);
         return 0;
       default:
         return 0;
@@ -59,41 +64,48 @@ export class LightController extends Controller {
       case "green":
       case "blue":
       case "white_value":
+      case "brightness":
         return 255;
       case "hue":
         return 360;
       case "effect":
-        return this.stateObj ? this.stateObj.attributes.effect_list ? this.stateObj.attributes.effect_list.length - 1 : 0 : 0;
+        return this.stateObj
+          ? this.stateObj.attributes.effect_list
+            ? this.stateObj.attributes.effect_list.length - 1
+            : 0
+          : 0;
       default:
         return 100;
     }
   }
 
   set _value(value) {
-    if(!this.stateObj) return;
+    if (!this.stateObj) return;
     let attr = this.attribute;
     let on = true;
     let _value;
     switch (attr) {
       case "brightness":
-        value = Math.ceil(value/100.0*255);
+      case "brightness_pct":
+        value =
+          attr === "brightness"
+            ? Math.round(value)
+            : Math.round((value / 100.0) * 255);
         if (!value) on = false;
+        attr = "brightness";
         break;
       case "red":
       case "green":
       case "blue":
-        _value = this.stateObj.attributes.rgb_color || [0,0,0];
-        if (attr === "red") _value[0] = value;
-        if (attr === "green") _value[1] = value;
-        if (attr === "blue") _value[2] = value;
+        _value = this.stateObj.attributes.rgb_color || [0, 0, 0];
+        _value[RGB_INDEX[attr]] = value;
         value = _value;
         attr = "rgb_color";
         break;
       case "hue":
       case "saturation":
-        _value = this.stateObj.attributes.hs_color || [0,0];
-        if (attr === "hue") _value[0] = value;
-        if (attr === "saturation") _value[1] = value;
+        _value = this.stateObj.attributes.hs_color || [0, 0];
+        _value[HS_INDEX[attr]] = value;
         value = _value;
         attr = "hs_color";
         break;
@@ -120,8 +132,9 @@ export class LightController extends Controller {
       return this._hass.localize("state.default.off");
     switch (this.attribute) {
       case "color_temp":
-        return `${this.value}`;
       case "brightness":
+        return `${this.value}`;
+      case "brightness_pct":
       case "saturation":
         return `${this.value} %`;
       case "hue":
@@ -134,35 +147,51 @@ export class LightController extends Controller {
   }
 
   get hasSlider() {
-    if(!this.stateObj) return false;
+    if (!this.stateObj) return false;
     switch (this.attribute) {
       case "brightness":
+      case "brightness_pct":
         if ("brightness" in this.stateObj.attributes) return true;
-        if (("supported_features" in this.stateObj.attributes) &&
-          (this.stateObj.attributes.supported_features & 1)) return true;
+        if (
+          "supported_features" in this.stateObj.attributes &&
+          this.stateObj.attributes.supported_features & 1
+        )
+          return true;
         return false;
       case "color_temp":
         if ("color_temp" in this.stateObj.attributes) return true;
-        if (("supported_features" in this.stateObj.attributes) &&
-          (this.stateObj.attributes.supported_features & 2)) return true;
+        if (
+          "supported_features" in this.stateObj.attributes &&
+          this.stateObj.attributes.supported_features & 2
+        )
+          return true;
         return false;
       case "white_value":
         if ("white_value" in this.stateObj.attributes) return true;
-        if (("supported_features" in this.stateObj.attributes) &&
-          (this.stateObj.attributes.supported_features & 128)) return true;
+        if (
+          "supported_features" in this.stateObj.attributes &&
+          this.stateObj.attributes.supported_features & 128
+        )
+          return true;
         return false;
       case "red":
       case "green":
       case "blue":
         if ("rgb_color" in this.stateObj.attributes) return true;
-        if (("supported_features" in this.stateObj.attributes) &&
-          (this.stateObj.attributes.supported_features & 16)) return true;
+        if (
+          "supported_features" in this.stateObj.attributes &&
+          this.stateObj.attributes.supported_features & 16
+        )
+          return true;
         return false;
       case "hue":
       case "saturation":
         if ("hs_color" in this.stateObj.attributes) return true;
-        if (("supported_features" in this.stateObj.attributes) &&
-          (this.stateObj.attributes.supported_features & 16)) return true;
+        if (
+          "supported_features" in this.stateObj.attributes &&
+          this.stateObj.attributes.supported_features & 16
+        )
+          return true;
         return false;
       case "effect":
         if ("effect" in this.stateObj.attributes) return true;

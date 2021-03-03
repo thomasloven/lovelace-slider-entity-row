@@ -1,6 +1,8 @@
-import {Controller} from "./controller.js";
+import { Controller } from "./controller";
 
 export class CoverController extends Controller {
+  _max;
+  _min;
 
   get attribute() {
     return this._config.attribute || "position";
@@ -10,8 +12,8 @@ export class CoverController extends Controller {
     switch (this.attribute) {
       case "position":
         return this.stateObj.state === "closed"
-        ? 0
-        : this.stateObj.attributes.current_position;
+          ? 0
+          : this.stateObj.attributes.current_position;
       case "tilt":
         return this.stateObj.attributes.current_tilt_position;
       default:
@@ -35,17 +37,15 @@ export class CoverController extends Controller {
         break;
       default:
     }
-
   }
 
   get string() {
-    if (!this.hasSlider)
-      return "";
+    if (!this.hasSlider) return "";
     switch (this.attribute) {
       case "position":
         if (this.stateObj.state === "closed")
           return this._hass.localize("state.cover.closed");
-        return `${this.value} %`
+        return `${this.value} %`;
       case "tilt":
         return this.value;
     }
@@ -59,12 +59,18 @@ export class CoverController extends Controller {
     switch (this.attribute) {
       case "position":
         if ("current_position" in this.stateObj.attributes) return true;
-        if (("supported_features" in this.stateObj.attributes) &&
-          (this.stateObj.attributes.supported_features & 4)) return true;
+        if (
+          "supported_features" in this.stateObj.attributes &&
+          this.stateObj.attributes.supported_features & 4
+        )
+          return true;
       case "tilt":
         if ("current_tilt_position" in this.stateObj.attributes) return true;
-        if (("supported_features" in this.stateObj.attributes) &&
-          (this.stateObj.attributes.supported_features & 128)) return true;
+        if (
+          "supported_features" in this.stateObj.attributes &&
+          this.stateObj.attributes.supported_features & 128
+        )
+          return true;
       default:
         return false;
     }

@@ -1,7 +1,6 @@
-import {Controller} from "./controller.js";
+import { Controller } from "./controller";
 
 export class ClimateController extends Controller {
-
   get _value() {
     return this.stateObj.attributes.temperature;
   }

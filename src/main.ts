@@ -1,43 +1,21 @@
-import { LitElement, html, css } from "lit-element";
+import { LitElement, html, css, property } from "lit-element";
 
-import { Controller } from "./controller.js";
-import { LightController } from "./light-controller.js";
-import { MediaPlayerController } from "./media-player-controller.js";
-import { ClimateController } from "./climate-controller.js";
-import { CoverController } from "./cover-controller.js";
-import { FanController } from "./fan-controller.js";
-import { InputNumberController } from "./input-number-controller.js";
-import { InputSelectController } from "./input-select-controller.js";
+import { getController } from "./controllers/get-controller";
+import { Controller, ControllerConfig } from "./controllers/controller";
 import pjson from "../package.json";
 
-const controllers = {
-  light: LightController,
-  media_player: MediaPlayerController,
-  climate: ClimateController,
-  cover: CoverController,
-  fan: FanController,
-  input_number: InputNumberController,
-  input_select: InputSelectController,
-};
-
 class SliderEntityRow extends LitElement {
-  _config;
-  ctrl;
-  hide_state;
-  hass;
+  _config: ControllerConfig;
+  ctrl: Controller;
 
-  static get properties() {
-    return {
-      hass: {},
-      hide_state: {},
-    };
-  }
+  @property() hass: any;
+  @property() hide_state: boolean;
 
-  setConfig(config) {
+  setConfig(config: ControllerConfig) {
     this._config = config;
     if (!config.entity) throw new Error(`No entity specified.`);
     const domain = config.entity.split(".")[0];
-    const ctrlClass = controllers[domain];
+    const ctrlClass = getController(domain);
     if (!ctrlClass) throw new Error(`Unsupported entity type: ${domain}`);
     this.ctrl = new ctrlClass(config);
   }

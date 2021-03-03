@@ -1,11 +1,14 @@
-import {Controller} from "./controller.js";
+import { Controller } from "./controller";
 
 export class FanController extends Controller {
+  _min;
 
   get _value() {
-    return (this.stateObj.state !== "off")
-    ? this.stateObj.attributes.speed_list.indexOf(this.stateObj.attributes.speed)
-    : 0;
+    return this.stateObj.state !== "off"
+      ? this.stateObj.attributes.speed_list.indexOf(
+          this.stateObj.attributes.speed
+        )
+      : 0;
   }
 
   set _value(value) {
@@ -33,11 +36,10 @@ export class FanController extends Controller {
   }
 
   get _max() {
-    return this.stateObj.attributes.speed_list.length -1;
+    return this.stateObj.attributes.speed_list.length - 1;
   }
 
   get _step() {
     return 1;
   }
-
 }

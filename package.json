@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "card-tools": "github:thomasloven/lovelace-card-tools",
-    "lit-element": "^2.4.0"
+    "lit-element": "^2.4.0",
+    "tslib": "^2.1.0"
   }
 }

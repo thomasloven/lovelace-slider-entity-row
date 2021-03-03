@@ -1,15 +1,18 @@
-import {Controller} from "./controller.js";
+import { Controller } from "./controller";
 
 export class MediaPlayerController extends Controller {
+  _max;
+  _min;
+  _step;
 
   get _value() {
-    return (this.stateObj.is_volume_muted === "on")
-    ? 0
-    : Math.ceil(this.stateObj.attributes.volume_level*100.0);
+    return this.stateObj.is_volume_muted === "on"
+      ? 0
+      : Math.ceil(this.stateObj.attributes.volume_level * 100.0);
   }
 
   set _value(value) {
-    value = value/100.0;
+    value = value / 100.0;
     this._hass.callService("media_player", "volume_set", {
       entity_id: this.stateObj.entity_id,
       volume_level: value,
@@ -21,8 +24,7 @@ export class MediaPlayerController extends Controller {
   }
 
   get string() {
-    if (this.stateObj.attributes.is_volume_muted)
-      return "-";
+    if (this.stateObj.attributes.is_volume_muted) return "-";
     return !!this.stateObj.attributes.volume_level
       ? `${this.value} %`
       : this._hass.localize("state.media_player.off");

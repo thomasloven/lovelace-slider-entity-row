@@ -1,6 +1,7 @@
-import {Controller} from "./controller.js";
+import { Controller } from "./controller";
 
 export class InputSelectController extends Controller {
+  _min;
 
   get _value() {
     return this.stateObj.attributes.options.indexOf(this.stateObj.state);
@@ -27,7 +28,10 @@ export class InputSelectController extends Controller {
   }
 
   get hasSlider() {
-    return this.stateObj.attributes.options && this.stateObj.attributes.options.length > 0
+    return (
+      this.stateObj.attributes.options &&
+      this.stateObj.attributes.options.length > 0
+    );
   }
 
   get _max() {
@@ -37,5 +41,4 @@ export class InputSelectController extends Controller {
   get _step() {
     return 1;
   }
-
 }
