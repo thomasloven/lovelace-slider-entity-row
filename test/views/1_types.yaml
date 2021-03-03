@@ -33,6 +33,7 @@ cards:
       - type: entities
         show_header_toggle: false
         entities:
+          - input_number.slider
           - type: custom:slider-entity-row
             entity: light.bed_light
             name: light
