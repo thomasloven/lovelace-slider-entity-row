@@ -4,16 +4,11 @@ demo:
 
 lovelace:
   mode: storage
-  resources:
-    - url: /local/slider-entity-row.js
-      type: module
-    - url: /local/card-mod.js
-      type: module
   dashboards:
     lovelace-yaml:
       mode: yaml
       title: yaml
-      filename: lovelace.yaml
+      filename: test/lovelace.yaml
 
 input_number:
   slider:
