@@ -158,7 +158,6 @@ cards:
       - <<: *desc
         content: |
           ## Toggle for media player entity
-          ```
       - type: entities
         show_header_toggle: false
         entities:
