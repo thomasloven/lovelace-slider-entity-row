@@ -2,20 +2,19 @@ import { Controller } from "./controller";
 
 export class FanController extends Controller {
   _min;
+  _max;
 
   get _value() {
     return this.stateObj.state !== "off"
-      ? this.stateObj.attributes.speed_list.indexOf(
-          this.stateObj.attributes.speed
-        )
+      ? this.stateObj.attributes.percentage
       : 0;
   }
 
   set _value(value) {
-    if (value in this.stateObj.attributes.speed_list) {
-      this._hass.callService("fan", "turn_on", {
+    if (value > 0) {
+      this._hass.callService("fan", "set_percentage", {
         entity_id: this.stateObj.entity_id,
-        speed: this.stateObj.attributes.speed_list[value],
+        percentage: value,
       });
     } else {
       this._hass.callService("fan", "turn_off", {
@@ -35,11 +34,7 @@ export class FanController extends Controller {
     return false;
   }
 
-  get _max() {
-    return this.stateObj.attributes.speed_list.length - 1;
-  }
-
   get _step() {
-    return 1;
+    return this.stateObj.attributes.percentage_step;
   }
 }
