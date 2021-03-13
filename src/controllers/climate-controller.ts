@@ -17,7 +17,7 @@ export class ClimateController extends Controller {
   }
 
   get isOff() {
-    return this.stateObj.attributes.hvac_mode === "off";
+    return this.stateObj.state === "off";
   }
 
   get _min() {
