@@ -1,7 +1,7 @@
 {
   "name": "slider-entity-row",
   "private": true,
-  "version": "17.0.1",
+  "version": "17.1.0",
   "description": "slider-entity-row =================",
   "scripts": {
     "build": "rollup -c",
