@@ -1,11 +1,34 @@
 import { Controller } from "./controller";
 
-const RGB_INDEX = { red: 0, green: 1, blue: 2 };
+const RGB_INDEX = {
+  red: 0,
+  green: 1,
+  blue: 2,
+  white: 3,
+  cold_white: 3,
+  warm_white: 4,
+};
 const HS_INDEX = { hue: 0, saturation: 1 };
 
 export class LightController extends Controller {
   get attribute() {
     return this._config.attribute || "brightness_pct";
+  }
+
+  get _rgbww() {
+    const attr = this.stateObj.attributes;
+    switch (attr.color_mode) {
+      case "rgb":
+      case "hs":
+      case "xy":
+        return [...attr.rgb_color, 0, 0];
+      case "rgbw":
+        return [...attr.rgbw_color, 0];
+      case "rgbww":
+        return [...attr.rgbww_color];
+      default:
+        return [0, 0, 0, 0, 0];
+    }
   }
 
   get _value() {
@@ -24,7 +47,16 @@ export class LightController extends Controller {
       case "green":
       case "blue":
         return attr.rgb_color
-          ? Math.round(attr.rgb_color[RGB_INDEX[this.attribute]])
+          ? Math.round(this._rgbww[RGB_INDEX[this.attribute]])
+          : 0;
+      case "white":
+        return attr.rgbw_color
+          ? Math.round((this._rgbww[RGB_INDEX[this.attribute]] * 100.0) / 255)
+          : 0;
+      case "cold_white":
+      case "warm_white":
+        return attr.rgbww_color
+          ? Math.round((this._rgbww[RGB_INDEX[this.attribute]] * 100.0) / 255)
           : 0;
       case "hue":
       case "saturation":
@@ -81,6 +113,7 @@ export class LightController extends Controller {
 
   set _value(value) {
     if (!this.stateObj) return;
+    const color_mode = this.stateObj.attributes.color_mode;
     let attr = this.attribute;
     let on = true;
     let _value;
@@ -97,10 +130,33 @@ export class LightController extends Controller {
       case "red":
       case "green":
       case "blue":
-        _value = this.stateObj.attributes.rgb_color || [0, 0, 0];
+        _value = this._rgbww;
         _value[RGB_INDEX[attr]] = value;
-        value = _value;
+        if (color_mode === "rgbww") {
+          attr = "rgbww_color";
+          value = _value;
+          break;
+        }
+        if (color_mode === "rgbw") {
+          attr = "rgbw_color";
+          value = _value.slice(0, 4);
+          break;
+        }
         attr = "rgb_color";
+        value = _value.slice(0, 3);
+        break;
+      case "white":
+        _value = this._rgbww;
+        _value[RGB_INDEX[attr]] = Math.round((value / 100.0) * 255);
+        value = _value.slice(0, 4);
+        attr = "rgbw_color";
+        break;
+      case "cold_white":
+      case "warm_white":
+        _value = this._rgbww;
+        _value[RGB_INDEX[attr]] = Math.round((value / 100.0) * 255);
+        value = _value;
+        attr = "rgbww_color";
         break;
       case "hue":
       case "saturation":
@@ -147,54 +203,72 @@ export class LightController extends Controller {
   }
 
   get hasSlider() {
+    const attr = this.stateObj.attributes;
+    const support_temp =
+      attr.supported_features & 2 ||
+      attr.supported_color_modes?.some((mode) => ["color_temp"].includes(mode));
+    const support_rgb =
+      attr.supported_features & 16 ||
+      attr.supported_color_modes?.some((mode) =>
+        ["rgb", "rgbw", "rgbww"].includes(mode)
+      );
+    const support_w = attr.supported_color_modes?.some((mode) =>
+      ["rgbw"].includes(mode)
+    );
+    const support_ww = attr.supported_color_modes?.some((mode) =>
+      ["rgbww"].includes(mode)
+    );
+    const support_hs =
+      attr.supported_features & 16 ||
+      attr.supported_color_modes?.some((mode) => ["hs"].includes(mode));
+    const support_brightness =
+      attr.supported_features & 1 ||
+      support_temp ||
+      support_rgb ||
+      support_hs ||
+      attr.supported_color_modes?.some((mode) => ["brightness"].includes(mode));
+    const support_color = support_rgb || support_hs;
+
     if (!this.stateObj) return false;
     switch (this.attribute) {
       case "brightness":
       case "brightness_pct":
-        if ("brightness" in this.stateObj.attributes) return true;
-        if (
-          "supported_features" in this.stateObj.attributes &&
-          this.stateObj.attributes.supported_features & 1
-        )
+        if ("brightness" in this.stateObj.attributes || support_brightness)
           return true;
         return false;
       case "color_temp":
-        if ("color_temp" in this.stateObj.attributes) return true;
-        if (
-          "supported_features" in this.stateObj.attributes &&
-          this.stateObj.attributes.supported_features & 2
-        )
+        if ("color_temp" in this.stateObj.attributes || support_temp)
           return true;
         return false;
       case "white_value":
-        if ("white_value" in this.stateObj.attributes) return true;
         if (
-          "supported_features" in this.stateObj.attributes &&
-          this.stateObj.attributes.supported_features & 128
+          attr.supported_features & 128 ||
+          "white_value" in this.stateObj.attributes
         )
           return true;
         return false;
+      case "white":
+        return !!support_w;
+      case "cold_white":
+      case "warm_white":
+        return !!support_ww;
       case "red":
       case "green":
       case "blue":
-        if ("rgb_color" in this.stateObj.attributes) return true;
-        if (
-          "supported_features" in this.stateObj.attributes &&
-          this.stateObj.attributes.supported_features & 16
-        )
+        if ("rgb_color" in this.stateObj.attributes || support_color)
           return true;
         return false;
       case "hue":
       case "saturation":
-        if ("hs_color" in this.stateObj.attributes) return true;
-        if (
-          "supported_features" in this.stateObj.attributes &&
-          this.stateObj.attributes.supported_features & 16
-        )
+        if ("hs_color" in this.stateObj.attributes || support_color)
           return true;
         return false;
       case "effect":
-        if ("effect" in this.stateObj.attributes) return true;
+        if (
+          "effect" in this.stateObj.attributes ||
+          "effect_list" in this.stateObj.attributes
+        )
+          return true;
         return false;
       default:
         return false;

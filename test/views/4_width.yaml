@@ -8,9 +8,9 @@ cards:
         show_header_toggle: false
         entities:
           - input_number.slider
-          - &row
-            type: custom:slider-entity-row
-            entity: light.bed_light
+          - <<: &row
+              type: custom:slider-entity-row
+              entity: light.bed_light
             name: Default
           - <<: *row
             hide_state: false

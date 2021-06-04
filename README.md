@@ -105,7 +105,10 @@ Currently, the following attribute settings are supported.
 - `green`
 - `blue`
 - `effect`
-- `white_value`
+- `white_value` - deprecated
+- `white` - for RGBW lights only
+- `cold_white` - for RGBWW lights only
+- `warm_white` - for RGBWW lights only
 
 **For `cover` domain:**
 

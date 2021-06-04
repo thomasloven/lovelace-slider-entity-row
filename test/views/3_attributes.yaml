@@ -26,6 +26,9 @@ cards:
           - blue: {{state_attr('light.bed_light', 'rgb_color')[2]}}
           - effect: {{state_attr('light.bed_light', 'effect')}}
           - white_value: {{state_attr('light.bed_light', 'white_value')}}
+
+          - rgbw_value: {{state_attr('light.office_rgbw_lights', 'rgbw_color')}}
+          - rgbww_value: {{state_attr('light.living_room_rgbww_lights', 'rgbww_color')}}
       - type: entities
         show_header_toggle: false
         entities:
@@ -59,6 +62,52 @@ cards:
           - <<: *light
             name: white_value
             attribute: white_value
+
+      - type: entities
+        title: RGBW
+        show_header_toggle: false
+        entities:
+          - type: custom:slider-entity-row
+            entity: light.office_rgbw_lights
+            name: red
+            attribute: red
+          - type: custom:slider-entity-row
+            entity: light.office_rgbw_lights
+            name: green
+            attribute: green
+          - type: custom:slider-entity-row
+            entity: light.office_rgbw_lights
+            name: blue
+            attribute: blue
+          - type: custom:slider-entity-row
+            entity: light.office_rgbw_lights
+            name: white
+            attribute: white
+
+      - type: entities
+        title: RGBWW
+        show_header_toggle: false
+        entities:
+          - type: custom:slider-entity-row
+            entity: light.living_room_rgbww_lights
+            name: red
+            attribute: red
+          - type: custom:slider-entity-row
+            entity: light.living_room_rgbww_lights
+            name: green
+            attribute: green
+          - type: custom:slider-entity-row
+            entity: light.living_room_rgbww_lights
+            name: blue
+            attribute: blue
+          - type: custom:slider-entity-row
+            entity: light.living_room_rgbww_lights
+            name: cold_white
+            attribute: cold_white
+          - type: custom:slider-entity-row
+            entity: light.living_room_rgbww_lights
+            name: warm_white
+            attribute: warm_white
 
   - type: vertical-stack
     cards:
