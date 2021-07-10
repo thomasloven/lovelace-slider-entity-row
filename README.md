@@ -50,7 +50,9 @@ Available options:
 | `hide_state` | `true`/`false` | `true`: Do not display the current state <br>`false`: Always display current state - even when the card is too narrow for it to be usable | none    |
 | `grow`       | `true`/`false` | Make the slider as wide as possible (which is really just a little bit wider)                                                             | `false` |
 | `full_row`   | `true`/`false` | Hide the icon and name and stretch slider to full width                                                                                   | `false` |
-| `attribute`  | (see below)    | Which attribute the slider should control                                                                                                |         |
+| `attribute`  | (see below)    | Which attribute the slider should control                                                                                                 |         |
+
+Most general Entities row options like `name`, `icon` and `tap_action` et.al. are also supported.
 
 ![options](https://user-images.githubusercontent.com/1299821/59467902-19dd8380-8e31-11e9-9173-97c9b6be3179.png)
 
