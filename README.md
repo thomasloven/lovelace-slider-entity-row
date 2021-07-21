@@ -48,6 +48,7 @@ Available options:
 | `step`       | number         | Step size of slider selection                                                                                                             |         |
 | `toggle`     | `true`/`false` | Show a toggle or mute button if possible                                                                                                  | `false` |
 | `hide_state` | `true`/`false` | `true`: Do not display the current state <br>`false`: Always display current state - even when the card is too narrow for it to be usable | none    |
+| `hide_when_off` | `true`/`false` | `true`: Hide slider when state is off <br>`false`: Always display slider | `false`    |
 | `grow`       | `true`/`false` | Make the slider as wide as possible (which is really just a little bit wider)                                                             | `false` |
 | `full_row`   | `true`/`false` | Hide the icon and name and stretch slider to full width                                                                                   | `false` |
 | `attribute`  | (see below)    | Which attribute the slider should control                                                                                                 |         |
