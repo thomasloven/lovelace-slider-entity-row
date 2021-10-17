@@ -122,7 +122,7 @@ class SliderEntityRow extends LitElement {
         height: 40px;
       }
       .state {
-        min-width: 45px;
+        min-width: 55px;
         text-align: end;
         margin-left: 5px;
       }

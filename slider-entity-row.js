@@ -41,7 +41,7 @@ function t(t,e,s,i){var r,n=arguments.length,a=n<3?e:null===i?i=Object.getOwnPro
         height: 40px;
       }
       .state {
-        min-width: 45px;
+        min-width: 55px;
         text-align: end;
         margin-left: 5px;
       }
