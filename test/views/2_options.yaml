@@ -165,3 +165,17 @@ cards:
             entity: media_player.bedroom
             name: media_player
             toggle: true
+
+  - type: vertical-stack
+    cards:
+      - <<: *desc
+        content: |
+          ## Invert
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - type: custom:slider-entity-row
+            entity: light.bed_light
+          - type: custom:slider-entity-row
+            entity: light.bed_light
+            dir: rtl

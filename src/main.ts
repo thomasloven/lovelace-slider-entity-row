@@ -47,11 +47,12 @@ class SliderEntityRow extends LitElement {
         </hui-warning>
       `;
 
-    const dir = this.hass.translationMetadata.translations[
-      this.hass.language || "en"
-    ].isRTL
-      ? "rtl"
-      : "ltr";
+    const dir =
+      c.dir ??
+      this.hass.translationMetadata.translations[this.hass.language || "en"]
+        .isRTL
+        ? "rtl"
+        : "ltr";
 
     const showSlider =
       c.stateObj.state !== "unavailable" &&
@@ -80,9 +81,9 @@ class SliderEntityRow extends LitElement {
                 .dir=${dir}
                 pin
                 @change=${(ev) =>
-                  (c.value = (this.shadowRoot.querySelector(
-                    "ha-slider"
-                  ) as any).value)}
+                  (c.value = (
+                    this.shadowRoot.querySelector("ha-slider") as any
+                  ).value)}
                 class=${this._config.full_row || this._config.grow
                   ? "full"
                   : ""}

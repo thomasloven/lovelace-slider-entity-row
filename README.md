@@ -41,17 +41,18 @@ If you want to control more than one entity with the same slider, use [light gro
 
 Available options:
 
-| Option       | Values         | Description                                                                                                                               | default |
-| ------------ | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `min`        | number         | Minimum value of slider                                                                                                                   |         |
-| `max`        | number         | Maximum value of slider                                                                                                                   |         |
-| `step`       | number         | Step size of slider selection                                                                                                             |         |
-| `toggle`     | `true`/`false` | Show a toggle or mute button if possible                                                                                                  | `false` |
-| `hide_state` | `true`/`false` | `true`: Do not display the current state <br>`false`: Always display current state - even when the card is too narrow for it to be usable | none    |
-| `hide_when_off` | `true`/`false` | `true`: Hide slider when state is off <br>`false`: Always display slider | `false`    |
-| `grow`       | `true`/`false` | Make the slider as wide as possible (which is really just a little bit wider)                                                             | `false` |
-| `full_row`   | `true`/`false` | Hide the icon and name and stretch slider to full width                                                                                   | `false` |
-| `attribute`  | (see below)    | Which attribute the slider should control                                                                                                 |         |
+| Option          | Values         | Description                                                                                                                               | default  |
+| --------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `min`           | number         | Minimum value of slider                                                                                                                   |          |
+| `max`           | number         | Maximum value of slider                                                                                                                   |          |
+| `step`          | number         | Step size of slider selection                                                                                                             |          |
+| `toggle`        | `true`/`false` | Show a toggle or mute button if possible                                                                                                  | `false`  |
+| `hide_state`    | `true`/`false` | `true`: Do not display the current state <br>`false`: Always display current state - even when the card is too narrow for it to be usable | none     |
+| `hide_when_off` | `true`/`false` | `true`: Hide slider when state is off <br>`false`: Always display slider                                                                  | `false`  |
+| `grow`          | `true`/`false` | Make the slider as wide as possible (which is really just a little bit wider)                                                             | `false`  |
+| `full_row`      | `true`/`false` | Hide the icon and name and stretch slider to full width                                                                                   | `false`  |
+| `attribute`     | (see below)    | Which attribute the slider should control                                                                                                 |          |
+| `dir`           | `ltr`/`rtl`    | Use this to override your languages Right-To-Left or Left-To-Right setting                                                                | language |
 
 Most general Entities row options like `name`, `icon` and `tap_action` et.al. are also supported.
 

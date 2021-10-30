@@ -11,6 +11,7 @@ export interface ControllerConfig {
   step?: number;
   attribute?: string;
   grow?: boolean;
+  dir?: string;
 }
 
 export abstract class Controller {
@@ -77,5 +78,8 @@ export abstract class Controller {
   }
   get step(): number {
     return this._config.step ?? this._step ?? 5;
+  }
+  get dir(): string {
+    return this._config.dir ?? undefined;
   }
 }
