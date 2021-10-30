@@ -58,3 +58,6 @@ cards:
           - type: custom:slider-entity-row
             entity: number.pwm_1
             name: number
+          - type: custom:slider-entity-row
+            entity: water_heater.demo_water_heater
+            name: water_heater
