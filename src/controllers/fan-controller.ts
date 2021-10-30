@@ -26,11 +26,11 @@ export class FanController extends Controller {
   get string() {
     if (this.stateObj.state === "off")
       return this._hass.localize("component.fan.state._.off");
-    return this.stateObj.attributes.speed;
+    return `${this.stateObj.attributes.percentage} %`;
   }
 
   get hasSlider() {
-    if ("speed" in this.stateObj.attributes) return true;
+    if ("percentage" in this.stateObj.attributes) return true;
     return false;
   }
 
