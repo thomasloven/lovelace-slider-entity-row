@@ -111,6 +111,10 @@ export class LightController extends Controller {
     }
   }
 
+  get isOff() {
+    return this.stateObj.state === "off";
+  }
+
   set _value(value) {
     if (!this.stateObj) return;
     const color_mode = this.stateObj.attributes.color_mode;

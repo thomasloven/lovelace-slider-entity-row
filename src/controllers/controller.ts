@@ -67,7 +67,7 @@ export abstract class Controller {
   }
 
   get isOff(): boolean {
-    return this.value === 0;
+    return this.stateObj.state === "off" || this.value === 0;
   }
 
   get min(): number {
