@@ -124,7 +124,6 @@ class SliderEntityRow extends LitElement {
       .state {
         min-width: 45px;
         text-align: end;
-        margin-left: 5px;
       }
       ha-entity-toggle {
         min-width: auto;
