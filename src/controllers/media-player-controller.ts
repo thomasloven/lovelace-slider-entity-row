@@ -49,10 +49,13 @@ export class MediaPlayerController extends Controller {
 
   renderToggle(hass: any) {
     const stateObj = hass.states[this.stateObj.entity_id];
+    const icon: any = document.createElement("ha-icon");
+    icon.style.display = "flex";
+    icon.icon = stateObj.attributes.is_volume_muted
+        ? "mdi:volume-off"
+        : "mdi:volume-high";
     const btn: any = document.createElement("ha-icon-button");
-    btn.icon = stateObj.attributes.is_volume_muted
-      ? "mdi:volume-off"
-      : "mdi:volume-high";
+    btn.appendChild(icon);
     btn.addEventListener("click", () => this._handleMute());
     return this.hasToggle ? btn : undefined;
   }
