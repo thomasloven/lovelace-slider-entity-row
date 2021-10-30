@@ -18,7 +18,7 @@ export class MediaPlayerController extends Controller {
       entity_id: this.stateObj.entity_id,
       volume_level: value,
     });
-    if (value)
+    if (value && this.stateObj.attributes.is_volume_muted)
       this._hass.callService("media_player", "volume_mute", {
         entity_id: this.stateObj.entity_id,
         is_volume_muted: false,
