@@ -132,6 +132,7 @@ class SliderEntityRow extends LitElement {
       ha-slider {
         width: 100%;
         min-width: 100px;
+        --paper-slider-secondary-color: transparent;
       }
       ha-slider:not(.full) {
         max-width: 200px;
