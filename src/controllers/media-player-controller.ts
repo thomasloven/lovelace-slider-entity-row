@@ -9,7 +9,7 @@ export class MediaPlayerController extends Controller {
   get _value() {
     return this.stateObj.attributes.is_volume_muted
       ? 0
-      : Math.ceil(this.stateObj.attributes.volume_level * 100.0);
+      : Math.round(this.stateObj.attributes.volume_level * 100.0);
   }
 
   set _value(value) {
@@ -52,8 +52,8 @@ export class MediaPlayerController extends Controller {
     const icon: any = document.createElement("ha-icon");
     icon.style.display = "flex";
     icon.icon = stateObj.attributes.is_volume_muted
-        ? "mdi:volume-off"
-        : "mdi:volume-high";
+      ? "mdi:volume-off"
+      : "mdi:volume-high";
     const btn: any = document.createElement("ha-icon-button");
     btn.appendChild(icon);
     btn.addEventListener("click", () => this._handleMute());
