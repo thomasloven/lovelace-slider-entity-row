@@ -221,11 +221,15 @@ export class LightController extends Controller {
     const support_hs =
       attr.supported_features & 16 ||
       attr.supported_color_modes?.some((mode) => ["hs"].includes(mode));
+    const support_xy = attr.supported_color_modes?.some((mode) =>
+      ["xy"].includes(mode)
+    );
     const support_brightness =
       attr.supported_features & 1 ||
       support_temp ||
       support_rgb ||
       support_hs ||
+      support_xy ||
       attr.supported_color_modes?.some((mode) => ["brightness"].includes(mode));
     const support_color = support_rgb || support_hs;
 
