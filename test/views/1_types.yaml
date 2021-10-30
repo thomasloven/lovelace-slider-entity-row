@@ -61,3 +61,6 @@ cards:
           - type: custom:slider-entity-row
             entity: water_heater.demo_water_heater
             name: water_heater
+          - type: custom:slider-entity-row
+            entity: humidifier.hygrostat
+            name: humidifier

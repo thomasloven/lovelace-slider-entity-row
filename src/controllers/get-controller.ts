@@ -7,6 +7,7 @@ import { InputNumberController } from "./input-number-controller";
 import { InputSelectController } from "./input-select-controller";
 import { NumberController } from "./number-controller";
 import { WaterHeaterController } from "./water-heater-controller";
+import { HumidifierController } from "./humidifier-controller";
 
 export function getController(domain: string) {
   return {
@@ -19,5 +20,6 @@ export function getController(domain: string) {
     input_number: InputNumberController,
     input_select: InputSelectController,
     number: NumberController,
+    humidifier: HumidifierController,
   }[domain];
 }
