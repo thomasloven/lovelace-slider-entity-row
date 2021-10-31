@@ -67,6 +67,7 @@ export abstract class Controller {
   }
 
   get isOff(): boolean {
+    if (!this.stateObj || this.stateObj.state === "unavailable") return true;
     return this.stateObj.state === "off" || this.value === 0;
   }
 

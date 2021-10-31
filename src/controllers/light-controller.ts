@@ -112,7 +112,7 @@ export class LightController extends Controller {
   }
 
   get isOff() {
-    return this.stateObj.state === "off";
+    return this.stateObj.state !== "on";
   }
 
   set _value(value) {
