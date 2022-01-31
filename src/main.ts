@@ -1,4 +1,5 @@
-import { LitElement, html, css, property } from "lit-element";
+import { LitElement, html, css } from 'lit';
+import { property } from 'lit/decorators.js';
 
 import { getController } from "./controllers/get-controller";
 import { Controller, ControllerConfig } from "./controllers/controller";
@@ -40,17 +41,17 @@ class SliderEntityRow extends LitElement {
       return html`
         <hui-warning>
           ${this.hass.localize(
-            "ui.panel.lovelace.warning.entity_not_found",
-            "entity",
-            this._config.entity
-          )}
+        "ui.panel.lovelace.warning.entity_not_found",
+        "entity",
+        this._config.entity
+      )}
         </hui-warning>
       `;
 
     const dir =
       c.dir ??
-      this.hass.translationMetadata.translations[this.hass.language || "en"]
-        .isRTL
+        this.hass.translationMetadata.translations[this.hass.language || "en"]
+          .isRTL
         ? "rtl"
         : "ltr";
 
@@ -62,17 +63,17 @@ class SliderEntityRow extends LitElement {
     const showValue = showToggle
       ? false
       : this._config.hide_state === false
-      ? true
-      : this._config.hide_state || this.hide_state
-      ? false
-      : c.isOff && this._config.hide_when_off
-      ? false
-      : true;
+        ? true
+        : this._config.hide_state || this.hide_state
+          ? false
+          : c.isOff && this._config.hide_when_off
+            ? false
+            : true;
 
     const content = html`
       <div class="wrapper" @click=${(ev) => ev.stopPropagation()}>
         ${showSlider
-          ? html`
+        ? html`
               <ha-slider
                 .min=${c.min}
                 .max=${c.max}
@@ -81,24 +82,24 @@ class SliderEntityRow extends LitElement {
                 .dir=${dir}
                 pin
                 @change=${(ev) =>
-                  (c.value = (
-                    this.shadowRoot.querySelector("ha-slider") as any
-                  ).value)}
+          (c.value = (
+            this.shadowRoot.querySelector("ha-slider") as any
+          ).value)}
                 class=${this._config.full_row || this._config.grow
-                  ? "full"
-                  : ""}
+            ? "full"
+            : ""}
                 ignore-bar-touch
               ></ha-slider>
             `
-          : ""}
+        : ""}
         ${showToggle ? c.renderToggle(this.hass) : ""}
         ${showValue
-          ? html`<span class="state">
+        ? html`<span class="state">
               ${c.stateObj.state === "unavailable"
-                ? this.hass.localize("state.default.unavailable")
-                : c.string}
+            ? this.hass.localize("state.default.unavailable")
+            : c.string}
             </span>`
-          : ""}
+        : ""}
       </div>
     `;
 
