@@ -1,22 +1,16 @@
-slider-entity-row
-=================
-
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
+# slider-entity-row
 
 Add a slider to rows in lovelace [entities](https://www.home-assistant.io/lovelace/entities/) cards.
 
-For installation instructions [see this guide](https://github.com/thomasloven/hass-config/wiki/Lovelace-Plugins).
+## Installing
 
-Install `slider-entity-row.js` as a `module`.
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
 
-```yaml
-resources:
-  - url: /local/slider-entity-row.js
-    type: module
-```
+Install using HACS or [see this guide](https://github.com/thomasloven/hass-config/wiki/Lovelace-Plugins).
 
-## Usage
-Add this to an entities card:
+## Quick Start
+
+Add this to an [entities](https://www.home-assistant.io/lovelace/entities/) card:
 
 ```yaml
 type: entities
@@ -28,7 +22,9 @@ entities:
 
 ![slider-entity-row](https://user-images.githubusercontent.com/1299821/59467898-15b16600-8e31-11e9-9924-53b108572d3a.png)
 
-Currenly supported entity domains:
+## Usage
+
+`entity` can be an entity in one of the following domains:
 
 - `light` - set brightness
 - `media_player` - set volume
@@ -37,21 +33,33 @@ Currenly supported entity domains:
 - `fan` - set speed (assumes first setting is `off`)
 - `input_number` - set value (only if `mode: slider`)
 - `input_select` - select option
+- `number` - set value
+
+If you want to control more than one entity with the same slider, use [light group](https://www.home-assistant.io/integrations/light.group/), [cover group](https://www.home-assistant.io/integrations/cover.group/) or a custom made [template entity](https://www.home-assistant.io/integrations/#search/template).
 
 ![domains](https://user-images.githubusercontent.com/1299821/59467899-1813c000-8e31-11e9-8abd-34c887a7db2a.png)
 
-### Options
+Available options:
 
-- `toggle: true` - Show a toggle instead of current state
-- `hide_state: true` - Do not display current state
-- `hide_state: false` - Always show the state, even when the card is too narrow
-- `hide_when_off: true` - Hide the slider when state is `off`
-- `full_row: true` - Hide icon and name and stretch slider to full width
-- `min: <value>` - Set minimum value of slider
-- `max: <value>` - Set maximum value of slider
-- `step: <value>` - Set step size of slider
-- `attribute: <value>` - Select which attribute the slider should control
-- `inverted: true` - Inverts slider percentage
+| Option          | Values         | Description                                                                                                                               | default  |
+| --------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `min`           | number         | Minimum value of slider                                                                                                                   |          |
+| `max`           | number         | Maximum value of slider                                                                                                                   |          |
+| `step`          | number         | Step size of slider selection                                                                                                             |          |
+| `toggle`        | `true`/`false` | Show a toggle or mute button if possible                                                                                                  | `false`  |
+| `hide_state`    | `true`/`false` | `true`: Do not display the current state <br>`false`: Always display current state - even when the card is too narrow for it to be usable | none     |
+| `hide_when_off` | `true`/`false` | `true`: Hide slider when state is off <br>`false`: Always display slider                                                                  | `false`  |
+| `grow`          | `true`/`false` | Make the slider as wide as possible (which is really just a little bit wider)                                                             | `false`  |
+| `full_row`      | `true`/`false` | Hide the icon and name and stretch slider to full width                                                                                   | `false`  |
+| `attribute`     | (see below)    | Which attribute the slider should control                                                                                                 |          |
+| `dir`           | `ltr`/`rtl`    | Use this to override your languages Right-To-Left or Left-To-Right setting                                                                | language |
+| `inverted`      | `true`/`false` | Inverts slider percentage for a more natural cover slider from closed to open                                                             | `false`  |
+
+Most general Entities row options like `name`, `icon` and `tap_action` et.al. are also supported.
+
+![options](https://user-images.githubusercontent.com/1299821/59467902-19dd8380-8e31-11e9-9173-97c9b6be3179.png)
+
+<details><summary>YAML code for screenshot above</summary>
 
 ```yaml
 type: entities
@@ -85,14 +93,16 @@ entities:
     full_row: true
 ```
 
-![options](https://user-images.githubusercontent.com/1299821/59467902-19dd8380-8e31-11e9-9173-97c9b6be3179.png)
+</details>
 
-#### Attributes
+### Attribute
+
 Currently, the following attribute settings are supported.
 
 **For `light` domain:**
 
-- `brightness` - default
+- `brightness_pct` - default
+- `brightness`
 - `color_temp`
 - `hue`
 - `saturation`
@@ -100,7 +110,10 @@ Currently, the following attribute settings are supported.
 - `green`
 - `blue`
 - `effect`
-- `white_value`
+- `white_value` - deprecated
+- `white` - for RGBW lights only
+- `cold_white` - for RGBWW lights only
+- `warm_white` - for RGBWW lights only
 
 **For `cover` domain:**
 
@@ -108,4 +121,5 @@ Currently, the following attribute settings are supported.
 - `tilt`
 
 ---
+
 <a href="https://www.buymeacoffee.com/uqD6KHCdJ" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/white_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>

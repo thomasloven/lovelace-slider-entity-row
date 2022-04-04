@@ -3,17 +3,12 @@ default_config:
 demo:
 
 lovelace:
-  mode: yaml
-  resources:
-    - url: /local/slider-entity-row.js
-      type: module
-    - url: /local/card-mod.js
-      type: module
+  mode: storage
   dashboards:
     lovelace-yaml:
       mode: yaml
       title: yaml
-      filename: lovelace.yaml
+      filename: test/lovelace.yaml
 
 input_number:
   slider:

@@ -40,6 +40,9 @@ cards:
             name: hide_when_off
             hide_when_off: true
           - <<: *default
+            name: hide_when_off + hide_state
+            hide_when_off: true
+          - <<: *default
             name: hide_when_off + toggle
             hide_when_off: true
             toggle: true
@@ -63,6 +66,9 @@ cards:
             type: custom:slider-entity-row
             entity: light.bed_light
           - <<: *default
+            name: grow
+            grow: true
+          - <<: *default
             name: toggle
             toggle: true
           - <<: *default
@@ -71,6 +77,10 @@ cards:
           - <<: *default
             name: hide_when_off
             hide_when_off: true
+          - <<: *default
+            name: hide_when_off + hide_state
+            hide_when_off: true
+            hide_state: true
           - <<: *default
             name: hide_when_off + toggle
             hide_when_off: true
@@ -143,12 +153,29 @@ cards:
             secondary_info: last-changed
           ```
 
+  - type: vertical-stack
+    cards:
+      - <<: *desc
+        content: |
+          ## Toggle for media player entity
       - type: entities
         show_header_toggle: false
         entities:
-          - <<: *default
-            name: Name
-          - <<: *default
-            icon: mdi:settings
-          - <<: *default
-            secondary_info: last-changed
+          - type: custom:slider-entity-row
+            entity: media_player.bedroom
+            name: media_player
+            toggle: true
+
+  - type: vertical-stack
+    cards:
+      - <<: *desc
+        content: |
+          ## Invert
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - type: custom:slider-entity-row
+            entity: light.bed_light
+          - type: custom:slider-entity-row
+            entity: light.bed_light
+            dir: rtl

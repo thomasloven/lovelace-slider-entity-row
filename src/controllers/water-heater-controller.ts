@@ -1,26 +1,23 @@
-import {Controller} from "./controller.js";
+import { Controller } from "./controller";
 
-export class ClimateController extends Controller {
-
+export class WaterHeaterController extends Controller {
   get _value() {
     return this.stateObj.attributes.temperature;
   }
 
   set _value(value) {
-    this._hass.callService("climate", "set_temperature", {
+    this._hass.callService("water_heater", "set_temperature", {
       entity_id: this.stateObj.entity_id,
       temperature: value,
     });
   }
 
   get string() {
-    if (this.stateObj.attributes.hvac_mode === "off")
-      return this._hass.localize("state.climate.off");
     return `${this.value} ${this._hass.config.unit_system.temperature}`;
   }
 
   get isOff() {
-    return this.stateObj.attributes.hvac_mode === "off";
+    return this.stateObj.state === "off";
   }
 
   get _min() {

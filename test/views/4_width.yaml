@@ -8,15 +8,22 @@ cards:
         show_header_toggle: false
         entities:
           - input_number.slider
-          - &row
-            type: custom:slider-entity-row
-            entity: light.bed_light
+          - <<: &row
+              type: custom:slider-entity-row
+              entity: light.bed_light
+            name: Default
           - <<: *row
             hide_state: false
+            name: "!Hide state"
           - <<: *row
             toggle: true
+            name: Toggle
+          - <<: *row
+            grow: true
+            name: Grow
           - <<: *row
             hide_state: true
+            name: Hide state
           - <<: *row
             full_row: true
           - <<: *row

@@ -5,6 +5,7 @@ views:
   - !include views/2_options.yaml
   - !include views/3_attributes.yaml
   - !include views/4_width.yaml
+  - !include views/5_errors.yaml
   - title: test
     cards:
       - type: picture-elements

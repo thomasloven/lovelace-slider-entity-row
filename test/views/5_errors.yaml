@@ -1,0 +1,22 @@
+x-anchors:
+  desc: &desc
+    type: markdown
+    style: |
+      code {
+        font-size: 8pt;
+        line-height: normal;
+        white-space: pre-wrap;
+        }
+
+title: Errors
+cards:
+  - type: entities
+    entities:
+      - type: section
+        label: No entity
+      - type: custom:slider-entity-row
+
+      - type: section
+        label: Unknown entity
+      - type: custom:slider-entity-row
+        entity: light.no_light

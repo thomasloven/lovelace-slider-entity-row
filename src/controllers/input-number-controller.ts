@@ -1,7 +1,6 @@
-import {Controller} from "./controller.js";
+import { Controller } from "./controller";
 
 export class InputNumberController extends Controller {
-
   get _value() {
     return this.stateObj.state;
   }
@@ -14,7 +13,9 @@ export class InputNumberController extends Controller {
   }
 
   get string() {
-    return `${parseFloat(this.stateObj.state)} ${this.stateObj.attributes.unit_of_measurement || ""}`.trim();
+    return `${parseFloat(this.stateObj.state)} ${
+      this.stateObj.attributes.unit_of_measurement || ""
+    }`.trim();
   }
 
   get isOff() {
@@ -40,5 +41,4 @@ export class InputNumberController extends Controller {
   get _step() {
     return this.stateObj.attributes.step;
   }
-
 }
