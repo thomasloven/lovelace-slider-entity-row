@@ -12,6 +12,7 @@ export interface ControllerConfig {
   attribute?: string;
   grow?: boolean;
   dir?: string;
+  inverted?: boolean;
 }
 
 export abstract class Controller {
