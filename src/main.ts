@@ -69,21 +69,34 @@ class SliderEntityRow extends LitElement {
       ? false
       : true;
 
+    const formatValue = () =>
+      this._config.inverted
+        ? (() => {
+            let matches = /[0-9]{2}/.exec(c.string) || [];
+            if (!matches.length) {
+              return c.string;
+            }
+            return c.string.replace(matches[0], (100 - c.value).toString());
+          })()
+        : c.string;
+
     const content = html`
-      <div class="wrapper" @click=${(ev) => ev.stopPropagation()}>
+      <div class="wrapper" @click=${(ev: Event) => ev.stopPropagation()}>
         ${showSlider
           ? html`
               <ha-slider
                 .min=${c.min}
                 .max=${c.max}
                 .step=${c.step}
-                .value=${c.value}
+                .value=${this._config?.inverted ? 100 - c.value : c.value}
                 .dir=${dir}
                 pin
-                @change=${(ev) =>
-                  (c.value = (
+                @change=${(ev: Event) => {
+                  const target = (
                     this.shadowRoot.querySelector("ha-slider") as any
-                  ).value)}
+                  ).value;
+                  c.value = this._config.inverted ? 100 - target : target;
+                }}
                 class=${this._config.full_row || this._config.grow
                   ? "full"
                   : ""}
@@ -96,7 +109,7 @@ class SliderEntityRow extends LitElement {
           ? html`<span class="state">
               ${c.stateObj.state === "unavailable"
                 ? this.hass.localize("state.default.unavailable")
-                : c.string}
+                : formatValue()}
             </span>`
           : ""}
       </div>
