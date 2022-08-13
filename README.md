@@ -53,6 +53,7 @@ Available options:
 | `full_row`      | `true`/`false` | Hide the icon and name and stretch slider to full width                                                                                   | `false`  |
 | `attribute`     | (see below)    | Which attribute the slider should control                                                                                                 |          |
 | `dir`           | `ltr`/`rtl`    | Use this to override your languages Right-To-Left or Left-To-Right setting                                                                | language |
+| `state_unit`    | string         | Unit to show for "unitless" values (brightness, color_temp, currently only for light components)                                                            | none |
 
 Most general Entities row options like `name`, `icon` and `tap_action` et.al. are also supported.
 

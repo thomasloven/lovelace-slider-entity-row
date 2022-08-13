@@ -15,6 +15,10 @@ export class LightController extends Controller {
     return this._config.attribute || "brightness_pct";
   }
 
+  get state_unit() {
+    return this._config.state_unit || undefined;
+  }
+ 
   get _rgbww() {
     const attr = this.stateObj.attributes;
     switch (attr.color_mode) {
@@ -193,6 +197,9 @@ export class LightController extends Controller {
     switch (this.attribute) {
       case "color_temp":
       case "brightness":
+        if (this.state_unit) {
+          return `${this.value} ${this.state_unit}`;
+        }
         return `${this.value}`;
       case "brightness_pct":
       case "saturation":
