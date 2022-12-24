@@ -37,6 +37,8 @@ export class LightController extends Controller {
     switch (this.attribute) {
       case "color_temp":
         return Math.round(attr.color_temp);
+      case "color_temp_kelvin":
+        return Math.round(attr.color_temp_kelvin);
       case "white_value":
         return Math.round(attr.white_value);
       case "brightness":
@@ -84,6 +86,8 @@ export class LightController extends Controller {
     switch (this.attribute) {
       case "color_temp":
         return this.stateObj ? this.stateObj.attributes.min_mireds : 0;
+      case "color_temp_kelvin":
+        return this.stateObj ? this.stateObj.attributes.min_color_temp_kelvin : 0;
       default:
         return 0;
     }
@@ -92,6 +96,8 @@ export class LightController extends Controller {
     switch (this.attribute) {
       case "color_temp":
         return this.stateObj ? this.stateObj.attributes.max_mireds : 0;
+      case "color_temp_kelvin":
+        return this.stateObj ? this.stateObj.attributes.max_color_temp_kelvin : 0;
       case "red":
       case "green":
       case "blue":
@@ -192,6 +198,7 @@ export class LightController extends Controller {
       return this._hass.localize("component.light.state._.off");
     switch (this.attribute) {
       case "color_temp":
+      case "color_temp_kelvin":
       case "brightness":
         return `${this.value}`;
       case "brightness_pct":
@@ -246,6 +253,10 @@ export class LightController extends Controller {
         return false;
       case "color_temp":
         if ("color_temp" in this.stateObj.attributes || support_temp)
+          return true;
+        return false;
+      case "color_temp_kelvin":
+        if ("color_temp_kelvin" in this.stateObj.attributes || support_temp)
           return true;
         return false;
       case "white_value":
