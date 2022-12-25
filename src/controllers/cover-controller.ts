@@ -49,7 +49,7 @@ export class CoverController extends Controller {
           return this._hass.localize("component.cover.state._.open");
         return `${this.value} %`;
       case "tilt":
-        return this.value;
+        return `${this.value} %`;
     }
   }
 
