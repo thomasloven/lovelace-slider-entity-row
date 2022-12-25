@@ -1,4 +1,5 @@
-import { LitElement, html, css, property } from "lit-element";
+import { LitElement, html, css } from "lit";
+import { property } from "lit/decorators.js";
 
 import { getController } from "./controllers/get-controller";
 import { Controller, ControllerConfig } from "./controllers/controller";
@@ -22,7 +23,7 @@ class SliderEntityRow extends LitElement {
 
   async resized() {
     await this.updateComplete;
-    if (!this.shadowRoot) return;
+    if (!this.shadowRoot || !this.parentElement) return;
     this.hide_state = this._config.full_row
       ? this.parentElement.clientWidth <= 180
       : this.parentElement.clientWidth <= 335;
@@ -107,7 +108,11 @@ class SliderEntityRow extends LitElement {
       else return content;
 
     return html`
-      <hui-generic-entity-row .hass=${this.hass} .config=${this._config}>
+      <hui-generic-entity-row
+        .hass=${this.hass}
+        .config=${this._config}
+        .catchInteraction=${false}
+      >
         ${content}
       </hui-generic-entity-row>
     `;

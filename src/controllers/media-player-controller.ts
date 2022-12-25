@@ -1,4 +1,3 @@
-import { html } from "lit-element";
 import { Controller } from "./controller";
 
 export class MediaPlayerController extends Controller {

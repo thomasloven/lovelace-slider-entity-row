@@ -1,38 +1,883 @@
-function t(t,e,s,i){var r,n=arguments.length,a=n<3?e:null===i?i=Object.getOwnPropertyDescriptor(e,s):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)a=Reflect.decorate(t,e,s,i);else for(var o=t.length-1;o>=0;o--)(r=t[o])&&(a=(n<3?r(a):n>3?r(e,s,a):r(e,s))||a);return n>3&&a&&Object.defineProperty(e,s,a),a}const e=window.ShadowRoot&&(void 0===window.ShadyCSS||window.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,s=Symbol(),i=new Map;class r{constructor(t,e){if(this._$cssResult$=!0,e!==s)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t}get styleSheet(){let t=i.get(this.cssText);return e&&void 0===t&&(i.set(this.cssText,t=new CSSStyleSheet),t.replaceSync(this.cssText)),t}toString(){return this.cssText}}const n=(t,...e)=>{const i=1===t.length?t[0]:e.reduce(((e,s,i)=>e+(t=>{if(!0===t._$cssResult$)return t.cssText;if("number"==typeof t)return t;throw Error("Value passed to 'css' function must be a 'css' function result: "+t+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(s)+t[i+1]),t[0]);return new r(i,s)},a=e?t=>t:t=>t instanceof CSSStyleSheet?(t=>{let e="";for(const s of t.cssRules)e+=s.cssText;return(t=>new r("string"==typeof t?t:t+"",s))(e)})(t):t;var o;const l=window.reactiveElementPolyfillSupport,h={toAttribute(t,e){switch(e){case Boolean:t=t?"":null;break;case Object:case Array:t=null==t?t:JSON.stringify(t)}return t},fromAttribute(t,e){let s=t;switch(e){case Boolean:s=null!==t;break;case Number:s=null===t?null:Number(t);break;case Object:case Array:try{s=JSON.parse(t)}catch(t){s=null}}return s}},u=(t,e)=>e!==t&&(e==e||t==t),c={attribute:!0,type:String,converter:h,reflect:!1,hasChanged:u};class d extends HTMLElement{constructor(){super(),this._$Et=new Map,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Ei=null,this.o()}static addInitializer(t){var e;null!==(e=this.l)&&void 0!==e||(this.l=[]),this.l.push(t)}static get observedAttributes(){this.finalize();const t=[];return this.elementProperties.forEach(((e,s)=>{const i=this._$Eh(s,e);void 0!==i&&(this._$Eu.set(i,s),t.push(i))})),t}static createProperty(t,e=c){if(e.state&&(e.attribute=!1),this.finalize(),this.elementProperties.set(t,e),!e.noAccessor&&!this.prototype.hasOwnProperty(t)){const s="symbol"==typeof t?Symbol():"__"+t,i=this.getPropertyDescriptor(t,s,e);void 0!==i&&Object.defineProperty(this.prototype,t,i)}}static getPropertyDescriptor(t,e,s){return{get(){return this[e]},set(i){const r=this[t];this[e]=i,this.requestUpdate(t,r,s)},configurable:!0,enumerable:!0}}static getPropertyOptions(t){return this.elementProperties.get(t)||c}static finalize(){if(this.hasOwnProperty("finalized"))return!1;this.finalized=!0;const t=Object.getPrototypeOf(this);if(t.finalize(),this.elementProperties=new Map(t.elementProperties),this._$Eu=new Map,this.hasOwnProperty("properties")){const t=this.properties,e=[...Object.getOwnPropertyNames(t),...Object.getOwnPropertySymbols(t)];for(const s of e)this.createProperty(s,t[s])}return this.elementStyles=this.finalizeStyles(this.styles),!0}static finalizeStyles(t){const e=[];if(Array.isArray(t)){const s=new Set(t.flat(1/0).reverse());for(const t of s)e.unshift(a(t))}else void 0!==t&&e.push(a(t));return e}static _$Eh(t,e){const s=e.attribute;return!1===s?void 0:"string"==typeof s?s:"string"==typeof t?t.toLowerCase():void 0}o(){var t;this._$Ev=new Promise((t=>this.enableUpdating=t)),this._$AL=new Map,this._$Ep(),this.requestUpdate(),null===(t=this.constructor.l)||void 0===t||t.forEach((t=>t(this)))}addController(t){var e,s;(null!==(e=this._$Em)&&void 0!==e?e:this._$Em=[]).push(t),void 0!==this.renderRoot&&this.isConnected&&(null===(s=t.hostConnected)||void 0===s||s.call(t))}removeController(t){var e;null===(e=this._$Em)||void 0===e||e.splice(this._$Em.indexOf(t)>>>0,1)}_$Ep(){this.constructor.elementProperties.forEach(((t,e)=>{this.hasOwnProperty(e)&&(this._$Et.set(e,this[e]),delete this[e])}))}createRenderRoot(){var t;const s=null!==(t=this.shadowRoot)&&void 0!==t?t:this.attachShadow(this.constructor.shadowRootOptions);return((t,s)=>{e?t.adoptedStyleSheets=s.map((t=>t instanceof CSSStyleSheet?t:t.styleSheet)):s.forEach((e=>{const s=document.createElement("style"),i=window.litNonce;void 0!==i&&s.setAttribute("nonce",i),s.textContent=e.cssText,t.appendChild(s)}))})(s,this.constructor.elementStyles),s}connectedCallback(){var t;void 0===this.renderRoot&&(this.renderRoot=this.createRenderRoot()),this.enableUpdating(!0),null===(t=this._$Em)||void 0===t||t.forEach((t=>{var e;return null===(e=t.hostConnected)||void 0===e?void 0:e.call(t)}))}enableUpdating(t){}disconnectedCallback(){var t;null===(t=this._$Em)||void 0===t||t.forEach((t=>{var e;return null===(e=t.hostDisconnected)||void 0===e?void 0:e.call(t)}))}attributeChangedCallback(t,e,s){this._$AK(t,s)}_$Eg(t,e,s=c){var i,r;const n=this.constructor._$Eh(t,s);if(void 0!==n&&!0===s.reflect){const a=(null!==(r=null===(i=s.converter)||void 0===i?void 0:i.toAttribute)&&void 0!==r?r:h.toAttribute)(e,s.type);this._$Ei=t,null==a?this.removeAttribute(n):this.setAttribute(n,a),this._$Ei=null}}_$AK(t,e){var s,i,r;const n=this.constructor,a=n._$Eu.get(t);if(void 0!==a&&this._$Ei!==a){const t=n.getPropertyOptions(a),o=t.converter,l=null!==(r=null!==(i=null===(s=o)||void 0===s?void 0:s.fromAttribute)&&void 0!==i?i:"function"==typeof o?o:null)&&void 0!==r?r:h.fromAttribute;this._$Ei=a,this[a]=l(e,t.type),this._$Ei=null}}requestUpdate(t,e,s){let i=!0;void 0!==t&&(((s=s||this.constructor.getPropertyOptions(t)).hasChanged||u)(this[t],e)?(this._$AL.has(t)||this._$AL.set(t,e),!0===s.reflect&&this._$Ei!==t&&(void 0===this._$ES&&(this._$ES=new Map),this._$ES.set(t,s))):i=!1),!this.isUpdatePending&&i&&(this._$Ev=this._$EC())}async _$EC(){this.isUpdatePending=!0;try{await this._$Ev}catch(t){Promise.reject(t)}const t=this.scheduleUpdate();return null!=t&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){var t;if(!this.isUpdatePending)return;this.hasUpdated,this._$Et&&(this._$Et.forEach(((t,e)=>this[e]=t)),this._$Et=void 0);let e=!1;const s=this._$AL;try{e=this.shouldUpdate(s),e?(this.willUpdate(s),null===(t=this._$Em)||void 0===t||t.forEach((t=>{var e;return null===(e=t.hostUpdate)||void 0===e?void 0:e.call(t)})),this.update(s)):this._$EU()}catch(t){throw e=!1,this._$EU(),t}e&&this._$AE(s)}willUpdate(t){}_$AE(t){var e;null===(e=this._$Em)||void 0===e||e.forEach((t=>{var e;return null===(e=t.hostUpdated)||void 0===e?void 0:e.call(t)})),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(t)),this.updated(t)}_$EU(){this._$AL=new Map,this.isUpdatePending=!1}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$Ev}shouldUpdate(t){return!0}update(t){void 0!==this._$ES&&(this._$ES.forEach(((t,e)=>this._$Eg(e,this[e],t))),this._$ES=void 0),this._$EU()}updated(t){}firstUpdated(t){}}var _;d.finalized=!0,d.elementProperties=new Map,d.elementStyles=[],d.shadowRootOptions={mode:"open"},null==l||l({ReactiveElement:d}),(null!==(o=globalThis.reactiveElementVersions)&&void 0!==o?o:globalThis.reactiveElementVersions=[]).push("1.0.1");const p=globalThis.trustedTypes,g=p?p.createPolicy("lit-html",{createHTML:t=>t}):void 0,b=`lit$${(Math.random()+"").slice(9)}$`,v="?"+b,f=`<${v}>`,m=document,$=(t="")=>m.createComment(t),y=t=>null===t||"object"!=typeof t&&"function"!=typeof t,w=Array.isArray,O=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,A=/-->/g,j=/>/g,S=/>|[ 	\n\r](?:([^\s"'>=/]+)([ 	\n\r]*=[ 	\n\r]*(?:[^ 	\n\r"'`<>=]|("|')|))|$)/g,E=/'/g,x=/"/g,C=/^(?:script|style|textarea)$/i,T=(t=>(e,...s)=>({_$litType$:t,strings:e,values:s}))(1),U=Symbol.for("lit-noChange"),P=Symbol.for("lit-nothing"),M=new WeakMap,H=m.createTreeWalker(m,129,null,!1),k=(t,e)=>{const s=t.length-1,i=[];let r,n=2===e?"<svg>":"",a=O;for(let e=0;e<s;e++){const s=t[e];let o,l,h=-1,u=0;for(;u<s.length&&(a.lastIndex=u,l=a.exec(s),null!==l);)u=a.lastIndex,a===O?"!--"===l[1]?a=A:void 0!==l[1]?a=j:void 0!==l[2]?(C.test(l[2])&&(r=RegExp("</"+l[2],"g")),a=S):void 0!==l[3]&&(a=S):a===S?">"===l[0]?(a=null!=r?r:O,h=-1):void 0===l[1]?h=-2:(h=a.lastIndex-l[2].length,o=l[1],a=void 0===l[3]?S:'"'===l[3]?x:E):a===x||a===E?a=S:a===A||a===j?a=O:(a=S,r=void 0);const c=a===S&&t[e+1].startsWith("/>")?" ":"";n+=a===O?s+f:h>=0?(i.push(o),s.slice(0,h)+"$lit$"+s.slice(h)+b+c):s+b+(-2===h?(i.push(void 0),e):c)}const o=n+(t[s]||"<?>")+(2===e?"</svg>":"");return[void 0!==g?g.createHTML(o):o,i]};class R{constructor({strings:t,_$litType$:e},s){let i;this.parts=[];let r=0,n=0;const a=t.length-1,o=this.parts,[l,h]=k(t,e);if(this.el=R.createElement(l,s),H.currentNode=this.el.content,2===e){const t=this.el.content,e=t.firstChild;e.remove(),t.append(...e.childNodes)}for(;null!==(i=H.nextNode())&&o.length<a;){if(1===i.nodeType){if(i.hasAttributes()){const t=[];for(const e of i.getAttributeNames())if(e.endsWith("$lit$")||e.startsWith(b)){const s=h[n++];if(t.push(e),void 0!==s){const t=i.getAttribute(s.toLowerCase()+"$lit$").split(b),e=/([.?@])?(.*)/.exec(s);o.push({type:1,index:r,name:e[2],strings:t,ctor:"."===e[1]?D:"?"===e[1]?B:"@"===e[1]?W:I})}else o.push({type:6,index:r})}for(const e of t)i.removeAttribute(e)}if(C.test(i.tagName)){const t=i.textContent.split(b),e=t.length-1;if(e>0){i.textContent=p?p.emptyScript:"";for(let s=0;s<e;s++)i.append(t[s],$()),H.nextNode(),o.push({type:2,index:++r});i.append(t[e],$())}}}else if(8===i.nodeType)if(i.data===v)o.push({type:2,index:r});else{let t=-1;for(;-1!==(t=i.data.indexOf(b,t+1));)o.push({type:7,index:r}),t+=b.length-1}r++}}static createElement(t,e){const s=m.createElement("template");return s.innerHTML=t,s}}function N(t,e,s=t,i){var r,n,a,o;if(e===U)return e;let l=void 0!==i?null===(r=s._$Cl)||void 0===r?void 0:r[i]:s._$Cu;const h=y(e)?void 0:e._$litDirective$;return(null==l?void 0:l.constructor)!==h&&(null===(n=null==l?void 0:l._$AO)||void 0===n||n.call(l,!1),void 0===h?l=void 0:(l=new h(t),l._$AT(t,s,i)),void 0!==i?(null!==(a=(o=s)._$Cl)&&void 0!==a?a:o._$Cl=[])[i]=l:s._$Cu=l),void 0!==l&&(e=N(t,l._$AS(t,e.values),l,i)),e}class z{constructor(t,e){this.v=[],this._$AN=void 0,this._$AD=t,this._$AM=e}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}p(t){var e;const{el:{content:s},parts:i}=this._$AD,r=(null!==(e=null==t?void 0:t.creationScope)&&void 0!==e?e:m).importNode(s,!0);H.currentNode=r;let n=H.nextNode(),a=0,o=0,l=i[0];for(;void 0!==l;){if(a===l.index){let e;2===l.type?e=new L(n,n.nextSibling,this,t):1===l.type?e=new l.ctor(n,l.name,l.strings,this,t):6===l.type&&(e=new V(n,this,t)),this.v.push(e),l=i[++o]}a!==(null==l?void 0:l.index)&&(n=H.nextNode(),a++)}return r}m(t){let e=0;for(const s of this.v)void 0!==s&&(void 0!==s.strings?(s._$AI(t,s,e),e+=s.strings.length-2):s._$AI(t[e])),e++}}class L{constructor(t,e,s,i){var r;this.type=2,this._$AH=P,this._$AN=void 0,this._$AA=t,this._$AB=e,this._$AM=s,this.options=i,this._$Cg=null===(r=null==i?void 0:i.isConnected)||void 0===r||r}get _$AU(){var t,e;return null!==(e=null===(t=this._$AM)||void 0===t?void 0:t._$AU)&&void 0!==e?e:this._$Cg}get parentNode(){let t=this._$AA.parentNode;const e=this._$AM;return void 0!==e&&11===t.nodeType&&(t=e.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,e=this){t=N(this,t,e),y(t)?t===P||null==t||""===t?(this._$AH!==P&&this._$AR(),this._$AH=P):t!==this._$AH&&t!==U&&this.$(t):void 0!==t._$litType$?this.T(t):void 0!==t.nodeType?this.S(t):(t=>{var e;return w(t)||"function"==typeof(null===(e=t)||void 0===e?void 0:e[Symbol.iterator])})(t)?this.M(t):this.$(t)}A(t,e=this._$AB){return this._$AA.parentNode.insertBefore(t,e)}S(t){this._$AH!==t&&(this._$AR(),this._$AH=this.A(t))}$(t){this._$AH!==P&&y(this._$AH)?this._$AA.nextSibling.data=t:this.S(m.createTextNode(t)),this._$AH=t}T(t){var e;const{values:s,_$litType$:i}=t,r="number"==typeof i?this._$AC(t):(void 0===i.el&&(i.el=R.createElement(i.h,this.options)),i);if((null===(e=this._$AH)||void 0===e?void 0:e._$AD)===r)this._$AH.m(s);else{const t=new z(r,this),e=t.p(this.options);t.m(s),this.S(e),this._$AH=t}}_$AC(t){let e=M.get(t.strings);return void 0===e&&M.set(t.strings,e=new R(t)),e}M(t){w(this._$AH)||(this._$AH=[],this._$AR());const e=this._$AH;let s,i=0;for(const r of t)i===e.length?e.push(s=new L(this.A($()),this.A($()),this,this.options)):s=e[i],s._$AI(r),i++;i<e.length&&(this._$AR(s&&s._$AB.nextSibling,i),e.length=i)}_$AR(t=this._$AA.nextSibling,e){var s;for(null===(s=this._$AP)||void 0===s||s.call(this,!1,!0,e);t&&t!==this._$AB;){const e=t.nextSibling;t.remove(),t=e}}setConnected(t){var e;void 0===this._$AM&&(this._$Cg=t,null===(e=this._$AP)||void 0===e||e.call(this,t))}}class I{constructor(t,e,s,i,r){this.type=1,this._$AH=P,this._$AN=void 0,this.element=t,this.name=e,this._$AM=i,this.options=r,s.length>2||""!==s[0]||""!==s[1]?(this._$AH=Array(s.length-1).fill(new String),this.strings=s):this._$AH=P}get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}_$AI(t,e=this,s,i){const r=this.strings;let n=!1;if(void 0===r)t=N(this,t,e,0),n=!y(t)||t!==this._$AH&&t!==U,n&&(this._$AH=t);else{const i=t;let a,o;for(t=r[0],a=0;a<r.length-1;a++)o=N(this,i[s+a],e,a),o===U&&(o=this._$AH[a]),n||(n=!y(o)||o!==this._$AH[a]),o===P?t=P:t!==P&&(t+=(null!=o?o:"")+r[a+1]),this._$AH[a]=o}n&&!i&&this.k(t)}k(t){t===P?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,null!=t?t:"")}}class D extends I{constructor(){super(...arguments),this.type=3}k(t){this.element[this.name]=t===P?void 0:t}}class B extends I{constructor(){super(...arguments),this.type=4}k(t){t&&t!==P?this.element.setAttribute(this.name,""):this.element.removeAttribute(this.name)}}class W extends I{constructor(t,e,s,i,r){super(t,e,s,i,r),this.type=5}_$AI(t,e=this){var s;if((t=null!==(s=N(this,t,e,0))&&void 0!==s?s:P)===U)return;const i=this._$AH,r=t===P&&i!==P||t.capture!==i.capture||t.once!==i.once||t.passive!==i.passive,n=t!==P&&(i===P||r);r&&this.element.removeEventListener(this.name,this,i),n&&this.element.addEventListener(this.name,this,t),this._$AH=t}handleEvent(t){var e,s;"function"==typeof this._$AH?this._$AH.call(null!==(s=null===(e=this.options)||void 0===e?void 0:e.host)&&void 0!==s?s:this.element,t):this._$AH.handleEvent(t)}}class V{constructor(t,e,s){this.element=t,this.type=6,this._$AN=void 0,this._$AM=e,this.options=s}get _$AU(){return this._$AM._$AU}_$AI(t){N(this,t)}}const q=window.litHtmlPolyfillSupport;var K,F;null==q||q(R,L),(null!==(_=globalThis.litHtmlVersions)&&void 0!==_?_:globalThis.litHtmlVersions=[]).push("2.0.1");class J extends d{constructor(){super(...arguments),this.renderOptions={host:this},this._$Dt=void 0}createRenderRoot(){var t,e;const s=super.createRenderRoot();return null!==(t=(e=this.renderOptions).renderBefore)&&void 0!==t||(e.renderBefore=s.firstChild),s}update(t){const e=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Dt=((t,e,s)=>{var i,r;const n=null!==(i=null==s?void 0:s.renderBefore)&&void 0!==i?i:e;let a=n._$litPart$;if(void 0===a){const t=null!==(r=null==s?void 0:s.renderBefore)&&void 0!==r?r:null;n._$litPart$=a=new L(e.insertBefore($(),t),t,void 0,null!=s?s:{})}return a._$AI(t),a})(e,this.renderRoot,this.renderOptions)}connectedCallback(){var t;super.connectedCallback(),null===(t=this._$Dt)||void 0===t||t.setConnected(!0)}disconnectedCallback(){var t;super.disconnectedCallback(),null===(t=this._$Dt)||void 0===t||t.setConnected(!1)}render(){return U}}J.finalized=!0,J._$litElement$=!0,null===(K=globalThis.litElementHydrateSupport)||void 0===K||K.call(globalThis,{LitElement:J});const Z=globalThis.litElementPolyfillSupport;null==Z||Z({LitElement:J}),(null!==(F=globalThis.litElementVersions)&&void 0!==F?F:globalThis.litElementVersions=[]).push("3.0.1");const Y=(t,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e,finisher(s){s.createProperty(e.key,t)}}:{kind:"field",key:Symbol(),placement:"own",descriptor:{},originalKey:e.key,initializer(){"function"==typeof e.initializer&&(this[e.key]=e.initializer.call(this))},finisher(s){s.createProperty(e.key,t)}};function G(t){return(e,s)=>void 0!==s?((t,e,s)=>{e.constructor.createProperty(s,t)})(t,e,s):Y(t,e)}console.warn("The main 'lit-element' module entrypoint is deprecated. Please update your imports to use the 'lit' package: 'lit' and 'lit/decorators.ts' or import from 'lit-element/lit-element.ts'. See https://lit.dev/msg/deprecated-import-path for more information.");class Q{constructor(t){this._config=t}set hass(t){this._hass=t,this.stateObj=t.states[this._config.entity]}get value(){return this._value?Math.round(this._value/this.step)*this.step:0}set value(t){t!==this.value&&(this._value=t)}get string(){return`${this.value}`}get hidden(){return!1}get hasSlider(){return!0}get hasToggle(){return!0}renderToggle(t){return this.hasToggle?T`
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+function __decorate(decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+
+/**
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+const t$1=window.ShadowRoot&&(void 0===window.ShadyCSS||window.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,e$3=Symbol(),n$4=new Map;class s$3{constructor(t,n){if(this._$cssResult$=!0,n!==e$3)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t;}get styleSheet(){let e=n$4.get(this.cssText);return t$1&&void 0===e&&(n$4.set(this.cssText,e=new CSSStyleSheet),e.replaceSync(this.cssText)),e}toString(){return this.cssText}}const o$3=t=>new s$3("string"==typeof t?t:t+"",e$3),r$2=(t,...n)=>{const o=1===t.length?t[0]:n.reduce(((e,n,s)=>e+(t=>{if(!0===t._$cssResult$)return t.cssText;if("number"==typeof t)return t;throw Error("Value passed to 'css' function must be a 'css' function result: "+t+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(n)+t[s+1]),t[0]);return new s$3(o,e$3)},i$2=(e,n)=>{t$1?e.adoptedStyleSheets=n.map((t=>t instanceof CSSStyleSheet?t:t.styleSheet)):n.forEach((t=>{const n=document.createElement("style"),s=window.litNonce;void 0!==s&&n.setAttribute("nonce",s),n.textContent=t.cssText,e.appendChild(n);}));},S$1=t$1?t=>t:t=>t instanceof CSSStyleSheet?(t=>{let e="";for(const n of t.cssRules)e+=n.cssText;return o$3(e)})(t):t;
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */var s$2;const e$2=window.trustedTypes,r$1=e$2?e$2.emptyScript:"",h$1=window.reactiveElementPolyfillSupport,o$2={toAttribute(t,i){switch(i){case Boolean:t=t?r$1:null;break;case Object:case Array:t=null==t?t:JSON.stringify(t);}return t},fromAttribute(t,i){let s=t;switch(i){case Boolean:s=null!==t;break;case Number:s=null===t?null:Number(t);break;case Object:case Array:try{s=JSON.parse(t);}catch(t){s=null;}}return s}},n$3=(t,i)=>i!==t&&(i==i||t==t),l$2={attribute:!0,type:String,converter:o$2,reflect:!1,hasChanged:n$3};class a$1 extends HTMLElement{constructor(){super(),this._$Et=new Map,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Ei=null,this.o();}static addInitializer(t){var i;null!==(i=this.l)&&void 0!==i||(this.l=[]),this.l.push(t);}static get observedAttributes(){this.finalize();const t=[];return this.elementProperties.forEach(((i,s)=>{const e=this._$Eh(s,i);void 0!==e&&(this._$Eu.set(e,s),t.push(e));})),t}static createProperty(t,i=l$2){if(i.state&&(i.attribute=!1),this.finalize(),this.elementProperties.set(t,i),!i.noAccessor&&!this.prototype.hasOwnProperty(t)){const s="symbol"==typeof t?Symbol():"__"+t,e=this.getPropertyDescriptor(t,s,i);void 0!==e&&Object.defineProperty(this.prototype,t,e);}}static getPropertyDescriptor(t,i,s){return {get(){return this[i]},set(e){const r=this[t];this[i]=e,this.requestUpdate(t,r,s);},configurable:!0,enumerable:!0}}static getPropertyOptions(t){return this.elementProperties.get(t)||l$2}static finalize(){if(this.hasOwnProperty("finalized"))return !1;this.finalized=!0;const t=Object.getPrototypeOf(this);if(t.finalize(),this.elementProperties=new Map(t.elementProperties),this._$Eu=new Map,this.hasOwnProperty("properties")){const t=this.properties,i=[...Object.getOwnPropertyNames(t),...Object.getOwnPropertySymbols(t)];for(const s of i)this.createProperty(s,t[s]);}return this.elementStyles=this.finalizeStyles(this.styles),!0}static finalizeStyles(i){const s=[];if(Array.isArray(i)){const e=new Set(i.flat(1/0).reverse());for(const i of e)s.unshift(S$1(i));}else void 0!==i&&s.push(S$1(i));return s}static _$Eh(t,i){const s=i.attribute;return !1===s?void 0:"string"==typeof s?s:"string"==typeof t?t.toLowerCase():void 0}o(){var t;this._$Ep=new Promise((t=>this.enableUpdating=t)),this._$AL=new Map,this._$Em(),this.requestUpdate(),null===(t=this.constructor.l)||void 0===t||t.forEach((t=>t(this)));}addController(t){var i,s;(null!==(i=this._$Eg)&&void 0!==i?i:this._$Eg=[]).push(t),void 0!==this.renderRoot&&this.isConnected&&(null===(s=t.hostConnected)||void 0===s||s.call(t));}removeController(t){var i;null===(i=this._$Eg)||void 0===i||i.splice(this._$Eg.indexOf(t)>>>0,1);}_$Em(){this.constructor.elementProperties.forEach(((t,i)=>{this.hasOwnProperty(i)&&(this._$Et.set(i,this[i]),delete this[i]);}));}createRenderRoot(){var t;const s=null!==(t=this.shadowRoot)&&void 0!==t?t:this.attachShadow(this.constructor.shadowRootOptions);return i$2(s,this.constructor.elementStyles),s}connectedCallback(){var t;void 0===this.renderRoot&&(this.renderRoot=this.createRenderRoot()),this.enableUpdating(!0),null===(t=this._$Eg)||void 0===t||t.forEach((t=>{var i;return null===(i=t.hostConnected)||void 0===i?void 0:i.call(t)}));}enableUpdating(t){}disconnectedCallback(){var t;null===(t=this._$Eg)||void 0===t||t.forEach((t=>{var i;return null===(i=t.hostDisconnected)||void 0===i?void 0:i.call(t)}));}attributeChangedCallback(t,i,s){this._$AK(t,s);}_$ES(t,i,s=l$2){var e,r;const h=this.constructor._$Eh(t,s);if(void 0!==h&&!0===s.reflect){const n=(null!==(r=null===(e=s.converter)||void 0===e?void 0:e.toAttribute)&&void 0!==r?r:o$2.toAttribute)(i,s.type);this._$Ei=t,null==n?this.removeAttribute(h):this.setAttribute(h,n),this._$Ei=null;}}_$AK(t,i){var s,e,r;const h=this.constructor,n=h._$Eu.get(t);if(void 0!==n&&this._$Ei!==n){const t=h.getPropertyOptions(n),l=t.converter,a=null!==(r=null!==(e=null===(s=l)||void 0===s?void 0:s.fromAttribute)&&void 0!==e?e:"function"==typeof l?l:null)&&void 0!==r?r:o$2.fromAttribute;this._$Ei=n,this[n]=a(i,t.type),this._$Ei=null;}}requestUpdate(t,i,s){let e=!0;void 0!==t&&(((s=s||this.constructor.getPropertyOptions(t)).hasChanged||n$3)(this[t],i)?(this._$AL.has(t)||this._$AL.set(t,i),!0===s.reflect&&this._$Ei!==t&&(void 0===this._$EC&&(this._$EC=new Map),this._$EC.set(t,s))):e=!1),!this.isUpdatePending&&e&&(this._$Ep=this._$E_());}async _$E_(){this.isUpdatePending=!0;try{await this._$Ep;}catch(t){Promise.reject(t);}const t=this.scheduleUpdate();return null!=t&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){var t;if(!this.isUpdatePending)return;this.hasUpdated,this._$Et&&(this._$Et.forEach(((t,i)=>this[i]=t)),this._$Et=void 0);let i=!1;const s=this._$AL;try{i=this.shouldUpdate(s),i?(this.willUpdate(s),null===(t=this._$Eg)||void 0===t||t.forEach((t=>{var i;return null===(i=t.hostUpdate)||void 0===i?void 0:i.call(t)})),this.update(s)):this._$EU();}catch(t){throw i=!1,this._$EU(),t}i&&this._$AE(s);}willUpdate(t){}_$AE(t){var i;null===(i=this._$Eg)||void 0===i||i.forEach((t=>{var i;return null===(i=t.hostUpdated)||void 0===i?void 0:i.call(t)})),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(t)),this.updated(t);}_$EU(){this._$AL=new Map,this.isUpdatePending=!1;}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$Ep}shouldUpdate(t){return !0}update(t){void 0!==this._$EC&&(this._$EC.forEach(((t,i)=>this._$ES(i,this[i],t))),this._$EC=void 0),this._$EU();}updated(t){}firstUpdated(t){}}a$1.finalized=!0,a$1.elementProperties=new Map,a$1.elementStyles=[],a$1.shadowRootOptions={mode:"open"},null==h$1||h$1({ReactiveElement:a$1}),(null!==(s$2=globalThis.reactiveElementVersions)&&void 0!==s$2?s$2:globalThis.reactiveElementVersions=[]).push("1.3.1");
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+var t;const i$1=globalThis.trustedTypes,s$1=i$1?i$1.createPolicy("lit-html",{createHTML:t=>t}):void 0,e$1=`lit$${(Math.random()+"").slice(9)}$`,o$1="?"+e$1,n$2=`<${o$1}>`,l$1=document,h=(t="")=>l$1.createComment(t),r=t=>null===t||"object"!=typeof t&&"function"!=typeof t,d=Array.isArray,u=t=>{var i;return d(t)||"function"==typeof(null===(i=t)||void 0===i?void 0:i[Symbol.iterator])},c=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,v=/-->/g,a=/>/g,f=/>|[ 	\n\r](?:([^\s"'>=/]+)([ 	\n\r]*=[ 	\n\r]*(?:[^ 	\n\r"'`<>=]|("|')|))|$)/g,_=/'/g,m=/"/g,g=/^(?:script|style|textarea|title)$/i,p=t=>(i,...s)=>({_$litType$:t,strings:i,values:s}),$=p(1),b=Symbol.for("lit-noChange"),w=Symbol.for("lit-nothing"),T=new WeakMap,x=(t,i,s)=>{var e,o;const n=null!==(e=null==s?void 0:s.renderBefore)&&void 0!==e?e:i;let l=n._$litPart$;if(void 0===l){const t=null!==(o=null==s?void 0:s.renderBefore)&&void 0!==o?o:null;n._$litPart$=l=new N(i.insertBefore(h(),t),t,void 0,null!=s?s:{});}return l._$AI(t),l},A=l$1.createTreeWalker(l$1,129,null,!1),C=(t,i)=>{const o=t.length-1,l=[];let h,r=2===i?"<svg>":"",d=c;for(let i=0;i<o;i++){const s=t[i];let o,u,p=-1,$=0;for(;$<s.length&&(d.lastIndex=$,u=d.exec(s),null!==u);)$=d.lastIndex,d===c?"!--"===u[1]?d=v:void 0!==u[1]?d=a:void 0!==u[2]?(g.test(u[2])&&(h=RegExp("</"+u[2],"g")),d=f):void 0!==u[3]&&(d=f):d===f?">"===u[0]?(d=null!=h?h:c,p=-1):void 0===u[1]?p=-2:(p=d.lastIndex-u[2].length,o=u[1],d=void 0===u[3]?f:'"'===u[3]?m:_):d===m||d===_?d=f:d===v||d===a?d=c:(d=f,h=void 0);const y=d===f&&t[i+1].startsWith("/>")?" ":"";r+=d===c?s+n$2:p>=0?(l.push(o),s.slice(0,p)+"$lit$"+s.slice(p)+e$1+y):s+e$1+(-2===p?(l.push(void 0),i):y);}const u=r+(t[o]||"<?>")+(2===i?"</svg>":"");if(!Array.isArray(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return [void 0!==s$1?s$1.createHTML(u):u,l]};class E{constructor({strings:t,_$litType$:s},n){let l;this.parts=[];let r=0,d=0;const u=t.length-1,c=this.parts,[v,a]=C(t,s);if(this.el=E.createElement(v,n),A.currentNode=this.el.content,2===s){const t=this.el.content,i=t.firstChild;i.remove(),t.append(...i.childNodes);}for(;null!==(l=A.nextNode())&&c.length<u;){if(1===l.nodeType){if(l.hasAttributes()){const t=[];for(const i of l.getAttributeNames())if(i.endsWith("$lit$")||i.startsWith(e$1)){const s=a[d++];if(t.push(i),void 0!==s){const t=l.getAttribute(s.toLowerCase()+"$lit$").split(e$1),i=/([.?@])?(.*)/.exec(s);c.push({type:1,index:r,name:i[2],strings:t,ctor:"."===i[1]?M:"?"===i[1]?H:"@"===i[1]?I:S});}else c.push({type:6,index:r});}for(const i of t)l.removeAttribute(i);}if(g.test(l.tagName)){const t=l.textContent.split(e$1),s=t.length-1;if(s>0){l.textContent=i$1?i$1.emptyScript:"";for(let i=0;i<s;i++)l.append(t[i],h()),A.nextNode(),c.push({type:2,index:++r});l.append(t[s],h());}}}else if(8===l.nodeType)if(l.data===o$1)c.push({type:2,index:r});else {let t=-1;for(;-1!==(t=l.data.indexOf(e$1,t+1));)c.push({type:7,index:r}),t+=e$1.length-1;}r++;}}static createElement(t,i){const s=l$1.createElement("template");return s.innerHTML=t,s}}function P(t,i,s=t,e){var o,n,l,h;if(i===b)return i;let d=void 0!==e?null===(o=s._$Cl)||void 0===o?void 0:o[e]:s._$Cu;const u=r(i)?void 0:i._$litDirective$;return (null==d?void 0:d.constructor)!==u&&(null===(n=null==d?void 0:d._$AO)||void 0===n||n.call(d,!1),void 0===u?d=void 0:(d=new u(t),d._$AT(t,s,e)),void 0!==e?(null!==(l=(h=s)._$Cl)&&void 0!==l?l:h._$Cl=[])[e]=d:s._$Cu=d),void 0!==d&&(i=P(t,d._$AS(t,i.values),d,e)),i}class V{constructor(t,i){this.v=[],this._$AN=void 0,this._$AD=t,this._$AM=i;}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}p(t){var i;const{el:{content:s},parts:e}=this._$AD,o=(null!==(i=null==t?void 0:t.creationScope)&&void 0!==i?i:l$1).importNode(s,!0);A.currentNode=o;let n=A.nextNode(),h=0,r=0,d=e[0];for(;void 0!==d;){if(h===d.index){let i;2===d.type?i=new N(n,n.nextSibling,this,t):1===d.type?i=new d.ctor(n,d.name,d.strings,this,t):6===d.type&&(i=new L(n,this,t)),this.v.push(i),d=e[++r];}h!==(null==d?void 0:d.index)&&(n=A.nextNode(),h++);}return o}m(t){let i=0;for(const s of this.v)void 0!==s&&(void 0!==s.strings?(s._$AI(t,s,i),i+=s.strings.length-2):s._$AI(t[i])),i++;}}class N{constructor(t,i,s,e){var o;this.type=2,this._$AH=w,this._$AN=void 0,this._$AA=t,this._$AB=i,this._$AM=s,this.options=e,this._$Cg=null===(o=null==e?void 0:e.isConnected)||void 0===o||o;}get _$AU(){var t,i;return null!==(i=null===(t=this._$AM)||void 0===t?void 0:t._$AU)&&void 0!==i?i:this._$Cg}get parentNode(){let t=this._$AA.parentNode;const i=this._$AM;return void 0!==i&&11===t.nodeType&&(t=i.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,i=this){t=P(this,t,i),r(t)?t===w||null==t||""===t?(this._$AH!==w&&this._$AR(),this._$AH=w):t!==this._$AH&&t!==b&&this.$(t):void 0!==t._$litType$?this.T(t):void 0!==t.nodeType?this.k(t):u(t)?this.S(t):this.$(t);}M(t,i=this._$AB){return this._$AA.parentNode.insertBefore(t,i)}k(t){this._$AH!==t&&(this._$AR(),this._$AH=this.M(t));}$(t){this._$AH!==w&&r(this._$AH)?this._$AA.nextSibling.data=t:this.k(l$1.createTextNode(t)),this._$AH=t;}T(t){var i;const{values:s,_$litType$:e}=t,o="number"==typeof e?this._$AC(t):(void 0===e.el&&(e.el=E.createElement(e.h,this.options)),e);if((null===(i=this._$AH)||void 0===i?void 0:i._$AD)===o)this._$AH.m(s);else {const t=new V(o,this),i=t.p(this.options);t.m(s),this.k(i),this._$AH=t;}}_$AC(t){let i=T.get(t.strings);return void 0===i&&T.set(t.strings,i=new E(t)),i}S(t){d(this._$AH)||(this._$AH=[],this._$AR());const i=this._$AH;let s,e=0;for(const o of t)e===i.length?i.push(s=new N(this.M(h()),this.M(h()),this,this.options)):s=i[e],s._$AI(o),e++;e<i.length&&(this._$AR(s&&s._$AB.nextSibling,e),i.length=e);}_$AR(t=this._$AA.nextSibling,i){var s;for(null===(s=this._$AP)||void 0===s||s.call(this,!1,!0,i);t&&t!==this._$AB;){const i=t.nextSibling;t.remove(),t=i;}}setConnected(t){var i;void 0===this._$AM&&(this._$Cg=t,null===(i=this._$AP)||void 0===i||i.call(this,t));}}class S{constructor(t,i,s,e,o){this.type=1,this._$AH=w,this._$AN=void 0,this.element=t,this.name=i,this._$AM=e,this.options=o,s.length>2||""!==s[0]||""!==s[1]?(this._$AH=Array(s.length-1).fill(new String),this.strings=s):this._$AH=w;}get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}_$AI(t,i=this,s,e){const o=this.strings;let n=!1;if(void 0===o)t=P(this,t,i,0),n=!r(t)||t!==this._$AH&&t!==b,n&&(this._$AH=t);else {const e=t;let l,h;for(t=o[0],l=0;l<o.length-1;l++)h=P(this,e[s+l],i,l),h===b&&(h=this._$AH[l]),n||(n=!r(h)||h!==this._$AH[l]),h===w?t=w:t!==w&&(t+=(null!=h?h:"")+o[l+1]),this._$AH[l]=h;}n&&!e&&this.C(t);}C(t){t===w?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,null!=t?t:"");}}class M extends S{constructor(){super(...arguments),this.type=3;}C(t){this.element[this.name]=t===w?void 0:t;}}const k=i$1?i$1.emptyScript:"";class H extends S{constructor(){super(...arguments),this.type=4;}C(t){t&&t!==w?this.element.setAttribute(this.name,k):this.element.removeAttribute(this.name);}}class I extends S{constructor(t,i,s,e,o){super(t,i,s,e,o),this.type=5;}_$AI(t,i=this){var s;if((t=null!==(s=P(this,t,i,0))&&void 0!==s?s:w)===b)return;const e=this._$AH,o=t===w&&e!==w||t.capture!==e.capture||t.once!==e.once||t.passive!==e.passive,n=t!==w&&(e===w||o);o&&this.element.removeEventListener(this.name,this,e),n&&this.element.addEventListener(this.name,this,t),this._$AH=t;}handleEvent(t){var i,s;"function"==typeof this._$AH?this._$AH.call(null!==(s=null===(i=this.options)||void 0===i?void 0:i.host)&&void 0!==s?s:this.element,t):this._$AH.handleEvent(t);}}class L{constructor(t,i,s){this.element=t,this.type=6,this._$AN=void 0,this._$AM=i,this.options=s;}get _$AU(){return this._$AM._$AU}_$AI(t){P(this,t);}}const z=window.litHtmlPolyfillSupport;null==z||z(E,N),(null!==(t=globalThis.litHtmlVersions)&&void 0!==t?t:globalThis.litHtmlVersions=[]).push("2.2.2");
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */var l,o;class s extends a$1{constructor(){super(...arguments),this.renderOptions={host:this},this._$Dt=void 0;}createRenderRoot(){var t,e;const i=super.createRenderRoot();return null!==(t=(e=this.renderOptions).renderBefore)&&void 0!==t||(e.renderBefore=i.firstChild),i}update(t){const i=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Dt=x(i,this.renderRoot,this.renderOptions);}connectedCallback(){var t;super.connectedCallback(),null===(t=this._$Dt)||void 0===t||t.setConnected(!0);}disconnectedCallback(){var t;super.disconnectedCallback(),null===(t=this._$Dt)||void 0===t||t.setConnected(!1);}render(){return b}}s.finalized=!0,s._$litElement$=!0,null===(l=globalThis.litElementHydrateSupport)||void 0===l||l.call(globalThis,{LitElement:s});const n$1=globalThis.litElementPolyfillSupport;null==n$1||n$1({LitElement:s});(null!==(o=globalThis.litElementVersions)&&void 0!==o?o:globalThis.litElementVersions=[]).push("3.2.0");
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+const i=(i,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e,finisher(n){n.createProperty(e.key,i);}}:{kind:"field",key:Symbol(),placement:"own",descriptor:{},originalKey:e.key,initializer(){"function"==typeof e.initializer&&(this[e.key]=e.initializer.call(this));},finisher(n){n.createProperty(e.key,i);}};function e(e){return (n,t)=>void 0!==t?((i,e,n)=>{e.constructor.createProperty(n,i);})(e,n,t):i(e,n)}
+
+/**
+ * @license
+ * Copyright 2021 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */var n;null!=(null===(n=window.HTMLSlotElement)||void 0===n?void 0:n.prototype.assignedElements)?(o,n)=>o.assignedElements(n):(o,n)=>o.assignedNodes(n).filter((o=>o.nodeType===Node.ELEMENT_NODE));
+
+class Controller {
+    constructor(config) {
+        this._config = config;
+    }
+    set hass(hass) {
+        this._hass = hass;
+        this.stateObj = hass.states[this._config.entity];
+    }
+    get value() {
+        if (this._value)
+            return Math.round(this._value / this.step) * this.step;
+        return 0;
+    }
+    set value(value) {
+        if (value !== this.value)
+            this._value = value;
+    }
+    get string() {
+        return `${this.value}`;
+    }
+    get hidden() {
+        return false;
+    }
+    get hasSlider() {
+        return true;
+    }
+    get hasToggle() {
+        return true;
+    }
+    renderToggle(hass) {
+        return this.hasToggle
+            ? $ `
           <ha-entity-toggle
-            .stateObj=${t.states[this.stateObj.entity_id]}
-            .hass=${t}
+            .stateObj=${hass.states[this.stateObj.entity_id]}
+            .hass=${hass}
             .class="state"
           ></ha-entity-toggle>
-        `:void 0}get isOff(){return!this.stateObj||"unavailable"===this.stateObj.state||("off"===this.stateObj.state||0===this.value)}get min(){var t,e;return null!==(e=null!==(t=this._config.min)&&void 0!==t?t:this._min)&&void 0!==e?e:0}get max(){var t,e;return null!==(e=null!==(t=this._config.max)&&void 0!==t?t:this._max)&&void 0!==e?e:100}get step(){var t,e;return null!==(e=null!==(t=this._config.step)&&void 0!==t?t:this._step)&&void 0!==e?e:5}get dir(){var t;return null!==(t=this._config.dir)&&void 0!==t?t:void 0}}const X={red:0,green:1,blue:2,white:3,cold_white:3,warm_white:4},tt={hue:0,saturation:1};class et extends Q{get attribute(){return this._config.attribute||"brightness_pct"}get _rgbww(){const t=this.stateObj.attributes;switch(t.color_mode){case"rgb":case"hs":case"xy":return[...t.rgb_color,0,0];case"rgbw":return[...t.rgbw_color,0];case"rgbww":return[...t.rgbww_color];default:return[0,0,0,0,0]}}get _value(){if(!this.stateObj||"on"!==this.stateObj.state)return 0;const t=this.stateObj.attributes;switch(this.attribute){case"color_temp":return Math.round(t.color_temp);case"white_value":return Math.round(t.white_value);case"brightness":return Math.round(t.brightness);case"brightness_pct":return Math.round(100*t.brightness/255);case"red":case"green":case"blue":return t.rgb_color?Math.round(this._rgbww[X[this.attribute]]):0;case"white":return t.rgbw_color?Math.round(100*this._rgbww[X[this.attribute]]/255):0;case"cold_white":case"warm_white":return t.rgbww_color?Math.round(100*this._rgbww[X[this.attribute]]/255):0;case"hue":case"saturation":return t.hs_color?Math.round(t.hs_color[tt[this.attribute]]):0;case"effect":return t.effect_list?t.effect_list.indexOf(t.effect):0;default:return 0}}get _step(){switch(this.attribute){case"effect":return 1;default:return 5}}get _min(){switch(this.attribute){case"color_temp":return this.stateObj?this.stateObj.attributes.min_mireds:0;default:return 0}}get _max(){switch(this.attribute){case"color_temp":return this.stateObj?this.stateObj.attributes.max_mireds:0;case"red":case"green":case"blue":case"white_value":case"brightness":return 255;case"hue":return 360;case"effect":return this.stateObj&&this.stateObj.attributes.effect_list?this.stateObj.attributes.effect_list.length-1:0;default:return 100}}get isOff(){return"on"!==this.stateObj.state}set _value(t){if(!this.stateObj)return;const e=this.stateObj.attributes.color_mode;let s,i=this.attribute,r=!0;switch(i){case"brightness":case"brightness_pct":(t="brightness"===i?Math.round(t):Math.round(t/100*255))||(r=!1),i="brightness";break;case"red":case"green":case"blue":if(s=this._rgbww,s[X[i]]=t,"rgbww"===e){i="rgbww_color",t=s;break}if("rgbw"===e){i="rgbw_color",t=s.slice(0,4);break}i="rgb_color",t=s.slice(0,3);break;case"white":s=this._rgbww,s[X[i]]=Math.round(t/100*255),t=s.slice(0,4),i="rgbw_color";break;case"cold_white":case"warm_white":s=this._rgbww,s[X[i]]=Math.round(t/100*255),t=s,i="rgbww_color";break;case"hue":case"saturation":s=this.stateObj.attributes.hs_color||[0,0],s[tt[i]]=t,t=s,i="hs_color";break;case"effect":t=this.stateObj.attributes.effect_list[t],i="effect"}r?this._hass.callService("light","turn_on",{entity_id:this.stateObj.entity_id,[i]:t}):this._hass.callService("light","turn_off",{entity_id:this.stateObj.entity_id})}get string(){if(this.stateObj&&"off"===this.stateObj.state)return this._hass.localize("component.light.state._.off");switch(this.attribute){case"color_temp":case"brightness":return`${this.value}`;case"brightness_pct":case"saturation":return`${this.value} %`;case"hue":return`${this.value} °`;case"effect":return this.stateObj?this.stateObj.attributes.effect:"";default:return this.value}}get hasSlider(){var t,e,s,i,r,n,a;const o=this.stateObj.attributes,l=2&o.supported_features||(null===(t=o.supported_color_modes)||void 0===t?void 0:t.some((t=>["color_temp"].includes(t)))),h=16&o.supported_features||(null===(e=o.supported_color_modes)||void 0===e?void 0:e.some((t=>["rgb","rgbw","rgbww"].includes(t)))),u=null===(s=o.supported_color_modes)||void 0===s?void 0:s.some((t=>["rgbw"].includes(t))),c=null===(i=o.supported_color_modes)||void 0===i?void 0:i.some((t=>["rgbww"].includes(t))),d=16&o.supported_features||(null===(r=o.supported_color_modes)||void 0===r?void 0:r.some((t=>["hs"].includes(t)))),_=null===(n=o.supported_color_modes)||void 0===n?void 0:n.some((t=>["xy"].includes(t))),p=1&o.supported_features||l||h||d||_||(null===(a=o.supported_color_modes)||void 0===a?void 0:a.some((t=>["brightness"].includes(t)))),g=h||d;if(!this.stateObj)return!1;switch(this.attribute){case"brightness":case"brightness_pct":return!(!("brightness"in this.stateObj.attributes)&&!p);case"color_temp":return!(!("color_temp"in this.stateObj.attributes)&&!l);case"white_value":return!!(128&o.supported_features||"white_value"in this.stateObj.attributes);case"white":return!!u;case"cold_white":case"warm_white":return!!c;case"red":case"green":case"blue":return!(!("rgb_color"in this.stateObj.attributes)&&!g);case"hue":case"saturation":return!(!("hs_color"in this.stateObj.attributes)&&!g);case"effect":return"effect"in this.stateObj.attributes||"effect_list"in this.stateObj.attributes;default:return!1}}}class st extends Q{get _value(){return this.stateObj.attributes.is_volume_muted?0:Math.round(100*this.stateObj.attributes.volume_level)}set _value(t){t/=100,this._hass.callService("media_player","volume_set",{entity_id:this.stateObj.entity_id,volume_level:t}),t&&this.stateObj.attributes.is_volume_muted&&this._hass.callService("media_player","volume_mute",{entity_id:this.stateObj.entity_id,is_volume_muted:!1})}get isOff(){return"off"===this.stateObj.state}get string(){return this.stateObj.attributes.is_volume_muted?"-":this.stateObj.attributes.volume_level?`${this.value} %`:this._hass.localize("component.media_player.state._.off")}get hasToggle(){return!0}_handleMute(){this._hass.callService("media_player","volume_mute",{entity_id:this.stateObj.entity_id,is_volume_muted:!this.stateObj.attributes.is_volume_muted})}renderToggle(t){const e=t.states[this.stateObj.entity_id],s=document.createElement("ha-icon");s.style.display="flex",s.icon=e.attributes.is_volume_muted?"mdi:volume-off":"mdi:volume-high";const i=document.createElement("ha-icon-button");return i.appendChild(s),i.addEventListener("click",(()=>this._handleMute())),this.hasToggle?i:void 0}}class it extends Q{get _value(){return this.stateObj.attributes.temperature}set _value(t){this._hass.callService("climate","set_temperature",{entity_id:this.stateObj.entity_id,temperature:t})}get string(){return`${this.value} ${this._hass.config.unit_system.temperature}`}get isOff(){return"off"===this.stateObj.state}get _min(){return this.stateObj.attributes.min_temp}get _max(){return this.stateObj.attributes.max_temp}get _step(){return 1}}class rt extends Q{get attribute(){return this._config.attribute||"position"}get _value(){switch(this.attribute){case"position":return"closed"===this.stateObj.state?0:this.stateObj.attributes.current_position;case"tilt":return this.stateObj.attributes.current_tilt_position;default:return 0}}set _value(t){switch(this.attribute){case"position":this._hass.callService("cover","set_cover_position",{entity_id:this.stateObj.entity_id,position:t});break;case"tilt":this._hass.callService("cover","set_cover_tilt_position",{entity_id:this.stateObj.entity_id,tilt_position:t})}}get string(){if(!this.hasSlider)return"";switch(this.attribute){case"position":return"closed"===this.stateObj.state?this._hass.localize("component.cover.state._.closed"):100===this.value?this._hass.localize("component.cover.state._.open"):`${this.value} %`;case"tilt":return this.value}}get hasToggle(){return!1}get hasSlider(){switch(this.attribute){case"position":if("current_position"in this.stateObj.attributes)return!0;if("supported_features"in this.stateObj.attributes&&4&this.stateObj.attributes.supported_features)return!0;case"tilt":if("current_tilt_position"in this.stateObj.attributes)return!0;if("supported_features"in this.stateObj.attributes&&128&this.stateObj.attributes.supported_features)return!0;default:return!1}}get _step(){return 10}}class nt extends Q{get _value(){return"off"!==this.stateObj.state?this.stateObj.attributes.percentage:0}set _value(t){t>0?this._hass.callService("fan","set_percentage",{entity_id:this.stateObj.entity_id,percentage:t}):this._hass.callService("fan","turn_off",{entity_id:this.stateObj.entity_id})}get string(){return"off"===this.stateObj.state?this._hass.localize("component.fan.state._.off"):`${this.stateObj.attributes.percentage} %`}get hasSlider(){return"percentage"in this.stateObj.attributes}get _step(){return this.stateObj.attributes.percentage_step}}class at extends Q{get _value(){return this.stateObj.state}set _value(t){this._hass.callService("input_number","set_value",{entity_id:this.stateObj.entity_id,value:t})}get string(){return`${parseFloat(this.stateObj.state)} ${this.stateObj.attributes.unit_of_measurement||""}`.trim()}get isOff(){return!1}get hasToggle(){return!1}get hasSlider(){return"slider"===this.stateObj.attributes.mode}get _min(){return this.stateObj.attributes.min}get _max(){return this.stateObj.attributes.max}get _step(){return this.stateObj.attributes.step}}class ot extends Q{get _value(){return this.stateObj.attributes.options.indexOf(this.stateObj.state)}set _value(t){t in this.stateObj.attributes.options&&this._hass.callService("input_select","select_option",{entity_id:this.stateObj.entity_id,option:this.stateObj.attributes.options[t]})}get string(){return this.stateObj.state}get isOff(){return!1}get hasToggle(){return!1}get hasSlider(){return this.stateObj.attributes.options&&this.stateObj.attributes.options.length>0}get _max(){return this.stateObj.attributes.options.length-1}get _step(){return 1}}class lt extends Q{get _value(){return this.stateObj.state}set _value(t){this._hass.callService("number","set_value",{entity_id:this.stateObj.entity_id,value:t})}get string(){return`${parseFloat(this.stateObj.state)} ${this.stateObj.attributes.unit_of_measurement||""}`.trim()}get isOff(){return!1}get hasToggle(){return!1}get hasSlider(){return!0}get _min(){return this.stateObj.attributes.min}get _max(){return this.stateObj.attributes.max}get _step(){return this.stateObj.attributes.step}}class ht extends Q{get _value(){return this.stateObj.attributes.temperature}set _value(t){this._hass.callService("water_heater","set_temperature",{entity_id:this.stateObj.entity_id,temperature:t})}get string(){return`${this.value} ${this._hass.config.unit_system.temperature}`}get isOff(){return"off"===this.stateObj.state}get _min(){return this.stateObj.attributes.min_temp}get _max(){return this.stateObj.attributes.max_temp}get _step(){return 1}}class ut extends Q{get _value(){return this.stateObj.attributes.humidity}set _value(t){this._hass.callService("humidifier","set_humidity",{entity_id:this.stateObj.entity_id,humidity:t})}get string(){return`${this.value} %`}get isOff(){return"off"===this.stateObj.state}get _min(){return this.stateObj.attributes.min_humidity}get _max(){return this.stateObj.attributes.max_humidity}get _step(){return 1}}var ct="17.2.1";class dt extends J{setConfig(t){if(this._config=t,!t.entity)throw new Error("No entity specified.");const e=t.entity.split(".")[0],s=function(t){return{light:et,media_player:st,climate:it,water_heater:ht,cover:rt,fan:nt,input_number:at,input_select:ot,number:lt,humidifier:ut}[t]}(e);if(!s)throw new Error(`Unsupported entity type: ${e}`);this.ctrl=new s(t)}async resized(){await this.updateComplete,this.shadowRoot&&(this.hide_state=this._config.full_row?this.parentElement.clientWidth<=180:this.parentElement.clientWidth<=335)}async firstUpdated(){await this.resized()}render(){var t;const e=this.ctrl;if(e.hass=this.hass,!e.stateObj)return T`
+        `
+            : undefined;
+    }
+    get isOff() {
+        if (!this.stateObj || this.stateObj.state === "unavailable")
+            return true;
+        return this.stateObj.state === "off" || this.value === 0;
+    }
+    get min() {
+        var _a, _b;
+        return (_b = (_a = this._config.min) !== null && _a !== void 0 ? _a : this._min) !== null && _b !== void 0 ? _b : 0;
+    }
+    get max() {
+        var _a, _b;
+        return (_b = (_a = this._config.max) !== null && _a !== void 0 ? _a : this._max) !== null && _b !== void 0 ? _b : 100;
+    }
+    get step() {
+        var _a, _b;
+        return (_b = (_a = this._config.step) !== null && _a !== void 0 ? _a : this._step) !== null && _b !== void 0 ? _b : 5;
+    }
+    get dir() {
+        var _a;
+        return (_a = this._config.dir) !== null && _a !== void 0 ? _a : undefined;
+    }
+}
+
+const RGB_INDEX = {
+    red: 0,
+    green: 1,
+    blue: 2,
+    white: 3,
+    cold_white: 3,
+    warm_white: 4,
+};
+const HS_INDEX = { hue: 0, saturation: 1 };
+class LightController extends Controller {
+    get attribute() {
+        return this._config.attribute || "brightness_pct";
+    }
+    get _rgbww() {
+        const attr = this.stateObj.attributes;
+        switch (attr.color_mode) {
+            case "rgb":
+            case "hs":
+            case "xy":
+                return [...attr.rgb_color, 0, 0];
+            case "rgbw":
+                return [...attr.rgbw_color, 0];
+            case "rgbww":
+                return [...attr.rgbww_color];
+            default:
+                return [0, 0, 0, 0, 0];
+        }
+    }
+    get _value() {
+        if (!this.stateObj || this.stateObj.state !== "on")
+            return 0;
+        const attr = this.stateObj.attributes;
+        switch (this.attribute) {
+            case "color_temp":
+                return Math.round(attr.color_temp);
+            case "white_value":
+                return Math.round(attr.white_value);
+            case "brightness":
+                return Math.round(attr.brightness);
+            case "brightness_pct":
+                return Math.round((attr.brightness * 100.0) / 255);
+            case "red":
+            case "green":
+            case "blue":
+                return attr.rgb_color
+                    ? Math.round(this._rgbww[RGB_INDEX[this.attribute]])
+                    : 0;
+            case "white":
+                return attr.rgbw_color
+                    ? Math.round((this._rgbww[RGB_INDEX[this.attribute]] * 100.0) / 255)
+                    : 0;
+            case "cold_white":
+            case "warm_white":
+                return attr.rgbww_color
+                    ? Math.round((this._rgbww[RGB_INDEX[this.attribute]] * 100.0) / 255)
+                    : 0;
+            case "hue":
+            case "saturation":
+                return attr.hs_color
+                    ? Math.round(attr.hs_color[HS_INDEX[this.attribute]])
+                    : 0;
+            case "effect":
+                if (attr.effect_list)
+                    return attr.effect_list.indexOf(attr.effect);
+                return 0;
+            default:
+                return 0;
+        }
+    }
+    get _step() {
+        switch (this.attribute) {
+            case "effect":
+                return 1;
+            default:
+                return 5;
+        }
+    }
+    get _min() {
+        switch (this.attribute) {
+            case "color_temp":
+                return this.stateObj ? this.stateObj.attributes.min_mireds : 0;
+            default:
+                return 0;
+        }
+    }
+    get _max() {
+        switch (this.attribute) {
+            case "color_temp":
+                return this.stateObj ? this.stateObj.attributes.max_mireds : 0;
+            case "red":
+            case "green":
+            case "blue":
+            case "white_value":
+            case "brightness":
+                return 255;
+            case "hue":
+                return 360;
+            case "effect":
+                return this.stateObj
+                    ? this.stateObj.attributes.effect_list
+                        ? this.stateObj.attributes.effect_list.length - 1
+                        : 0
+                    : 0;
+            default:
+                return 100;
+        }
+    }
+    get isOff() {
+        return this.stateObj.state !== "on";
+    }
+    set _value(value) {
+        if (!this.stateObj)
+            return;
+        const color_mode = this.stateObj.attributes.color_mode;
+        let attr = this.attribute;
+        let on = true;
+        let _value;
+        switch (attr) {
+            case "brightness":
+            case "brightness_pct":
+                value =
+                    attr === "brightness"
+                        ? Math.round(value)
+                        : Math.round((value / 100.0) * 255);
+                if (!value)
+                    on = false;
+                attr = "brightness";
+                break;
+            case "red":
+            case "green":
+            case "blue":
+                _value = this._rgbww;
+                _value[RGB_INDEX[attr]] = value;
+                if (color_mode === "rgbww") {
+                    attr = "rgbww_color";
+                    value = _value;
+                    break;
+                }
+                if (color_mode === "rgbw") {
+                    attr = "rgbw_color";
+                    value = _value.slice(0, 4);
+                    break;
+                }
+                attr = "rgb_color";
+                value = _value.slice(0, 3);
+                break;
+            case "white":
+                _value = this._rgbww;
+                _value[RGB_INDEX[attr]] = Math.round((value / 100.0) * 255);
+                value = _value.slice(0, 4);
+                attr = "rgbw_color";
+                break;
+            case "cold_white":
+            case "warm_white":
+                _value = this._rgbww;
+                _value[RGB_INDEX[attr]] = Math.round((value / 100.0) * 255);
+                value = _value;
+                attr = "rgbww_color";
+                break;
+            case "hue":
+            case "saturation":
+                _value = this.stateObj.attributes.hs_color || [0, 0];
+                _value[HS_INDEX[attr]] = value;
+                value = _value;
+                attr = "hs_color";
+                break;
+            case "effect":
+                value = this.stateObj.attributes.effect_list[value];
+                attr = "effect";
+                break;
+        }
+        if (on) {
+            this._hass.callService("light", "turn_on", {
+                entity_id: this.stateObj.entity_id,
+                [attr]: value,
+            });
+        }
+        else {
+            this._hass.callService("light", "turn_off", {
+                entity_id: this.stateObj.entity_id,
+            });
+        }
+    }
+    get string() {
+        if (this.stateObj && this.stateObj.state === "off")
+            return this._hass.localize("component.light.state._.off");
+        switch (this.attribute) {
+            case "color_temp":
+            case "brightness":
+                return `${this.value}`;
+            case "brightness_pct":
+            case "saturation":
+                return `${this.value} %`;
+            case "hue":
+                return `${this.value} °`;
+            case "effect":
+                return this.stateObj ? this.stateObj.attributes.effect : "";
+            default:
+                return this.value;
+        }
+    }
+    get hasSlider() {
+        var _a, _b, _c, _d, _e, _f, _g;
+        const attr = this.stateObj.attributes;
+        const support_temp = attr.supported_features & 2 ||
+            ((_a = attr.supported_color_modes) === null || _a === void 0 ? void 0 : _a.some((mode) => ["color_temp"].includes(mode)));
+        const support_rgb = attr.supported_features & 16 ||
+            ((_b = attr.supported_color_modes) === null || _b === void 0 ? void 0 : _b.some((mode) => ["rgb", "rgbw", "rgbww"].includes(mode)));
+        const support_w = (_c = attr.supported_color_modes) === null || _c === void 0 ? void 0 : _c.some((mode) => ["rgbw"].includes(mode));
+        const support_ww = (_d = attr.supported_color_modes) === null || _d === void 0 ? void 0 : _d.some((mode) => ["rgbww"].includes(mode));
+        const support_hs = attr.supported_features & 16 ||
+            ((_e = attr.supported_color_modes) === null || _e === void 0 ? void 0 : _e.some((mode) => ["hs"].includes(mode)));
+        const support_xy = (_f = attr.supported_color_modes) === null || _f === void 0 ? void 0 : _f.some((mode) => ["xy"].includes(mode));
+        const support_brightness = attr.supported_features & 1 ||
+            support_temp ||
+            support_rgb ||
+            support_hs ||
+            support_xy ||
+            ((_g = attr.supported_color_modes) === null || _g === void 0 ? void 0 : _g.some((mode) => ["brightness"].includes(mode)));
+        const support_color = support_rgb || support_hs;
+        if (!this.stateObj)
+            return false;
+        switch (this.attribute) {
+            case "brightness":
+            case "brightness_pct":
+                if ("brightness" in this.stateObj.attributes || support_brightness)
+                    return true;
+                return false;
+            case "color_temp":
+                if ("color_temp" in this.stateObj.attributes || support_temp)
+                    return true;
+                return false;
+            case "white_value":
+                if (attr.supported_features & 128 ||
+                    "white_value" in this.stateObj.attributes)
+                    return true;
+                return false;
+            case "white":
+                return !!support_w;
+            case "cold_white":
+            case "warm_white":
+                return !!support_ww;
+            case "red":
+            case "green":
+            case "blue":
+                if ("rgb_color" in this.stateObj.attributes || support_color)
+                    return true;
+                return false;
+            case "hue":
+            case "saturation":
+                if ("hs_color" in this.stateObj.attributes || support_color)
+                    return true;
+                return false;
+            case "effect":
+                if ("effect" in this.stateObj.attributes ||
+                    "effect_list" in this.stateObj.attributes)
+                    return true;
+                return false;
+            default:
+                return false;
+        }
+    }
+}
+
+class MediaPlayerController extends Controller {
+    get _value() {
+        return this.stateObj.attributes.is_volume_muted
+            ? 0
+            : Math.round(this.stateObj.attributes.volume_level * 100.0);
+    }
+    set _value(value) {
+        value = value / 100.0;
+        this._hass.callService("media_player", "volume_set", {
+            entity_id: this.stateObj.entity_id,
+            volume_level: value,
+        });
+        if (value && this.stateObj.attributes.is_volume_muted)
+            this._hass.callService("media_player", "volume_mute", {
+                entity_id: this.stateObj.entity_id,
+                is_volume_muted: false,
+            });
+    }
+    get isOff() {
+        return this.stateObj.state === "off";
+    }
+    get string() {
+        if (this.stateObj.attributes.is_volume_muted)
+            return "-";
+        return !!this.stateObj.attributes.volume_level
+            ? `${this.value} %`
+            : this._hass.localize("component.media_player.state._.off");
+    }
+    get hasToggle() {
+        return true;
+    }
+    _handleMute() {
+        this._hass.callService("media_player", "volume_mute", {
+            entity_id: this.stateObj.entity_id,
+            is_volume_muted: !this.stateObj.attributes.is_volume_muted,
+        });
+    }
+    renderToggle(hass) {
+        const stateObj = hass.states[this.stateObj.entity_id];
+        const icon = document.createElement("ha-icon");
+        icon.style.display = "flex";
+        icon.icon = stateObj.attributes.is_volume_muted
+            ? "mdi:volume-off"
+            : "mdi:volume-high";
+        const btn = document.createElement("ha-icon-button");
+        btn.appendChild(icon);
+        btn.addEventListener("click", () => this._handleMute());
+        return this.hasToggle ? btn : undefined;
+    }
+}
+
+class ClimateController extends Controller {
+    get _value() {
+        return this.stateObj.attributes.temperature;
+    }
+    set _value(value) {
+        this._hass.callService("climate", "set_temperature", {
+            entity_id: this.stateObj.entity_id,
+            temperature: value,
+        });
+    }
+    get string() {
+        return `${this.value} ${this._hass.config.unit_system.temperature}`;
+    }
+    get isOff() {
+        return this.stateObj.state === "off";
+    }
+    get _min() {
+        return this.stateObj.attributes.min_temp;
+    }
+    get _max() {
+        return this.stateObj.attributes.max_temp;
+    }
+    get _step() {
+        return 1;
+    }
+}
+
+class CoverController extends Controller {
+    get attribute() {
+        return this._config.attribute || "position";
+    }
+    get _value() {
+        switch (this.attribute) {
+            case "position":
+                return this.stateObj.state === "closed"
+                    ? 0
+                    : this.stateObj.attributes.current_position;
+            case "tilt":
+                return this.stateObj.attributes.current_tilt_position;
+            default:
+                return 0;
+        }
+    }
+    set _value(value) {
+        switch (this.attribute) {
+            case "position":
+                this._hass.callService("cover", "set_cover_position", {
+                    entity_id: this.stateObj.entity_id,
+                    position: value,
+                });
+                break;
+            case "tilt":
+                this._hass.callService("cover", "set_cover_tilt_position", {
+                    entity_id: this.stateObj.entity_id,
+                    tilt_position: value,
+                });
+                break;
+        }
+    }
+    get string() {
+        if (!this.hasSlider)
+            return "";
+        switch (this.attribute) {
+            case "position":
+                if (this.stateObj.state === "closed")
+                    return this._hass.localize("component.cover.state._.closed");
+                if (this.value === 100)
+                    return this._hass.localize("component.cover.state._.open");
+                return `${this.value} %`;
+            case "tilt":
+                return `${this.value} %`;
+        }
+    }
+    get hasToggle() {
+        return false;
+    }
+    get hasSlider() {
+        switch (this.attribute) {
+            case "position":
+                if ("current_position" in this.stateObj.attributes)
+                    return true;
+                if ("supported_features" in this.stateObj.attributes &&
+                    this.stateObj.attributes.supported_features & 4)
+                    return true;
+            case "tilt":
+                if ("current_tilt_position" in this.stateObj.attributes)
+                    return true;
+                if ("supported_features" in this.stateObj.attributes &&
+                    this.stateObj.attributes.supported_features & 128)
+                    return true;
+            default:
+                return false;
+        }
+    }
+    get _step() {
+        return 10;
+    }
+}
+
+class FanController extends Controller {
+    get _value() {
+        return this.stateObj.state !== "off"
+            ? this.stateObj.attributes.percentage
+            : 0;
+    }
+    set _value(value) {
+        if (value > 0) {
+            this._hass.callService("fan", "set_percentage", {
+                entity_id: this.stateObj.entity_id,
+                percentage: value,
+            });
+        }
+        else {
+            this._hass.callService("fan", "turn_off", {
+                entity_id: this.stateObj.entity_id,
+            });
+        }
+    }
+    get string() {
+        if (this.stateObj.state === "off")
+            return this._hass.localize("component.fan.state._.off");
+        return `${this.stateObj.attributes.percentage} %`;
+    }
+    get hasSlider() {
+        if ("percentage" in this.stateObj.attributes)
+            return true;
+        return false;
+    }
+    get _step() {
+        return this.stateObj.attributes.percentage_step;
+    }
+}
+
+class InputNumberController extends Controller {
+    get _value() {
+        return this.stateObj.state;
+    }
+    set _value(value) {
+        this._hass.callService("input_number", "set_value", {
+            entity_id: this.stateObj.entity_id,
+            value: value,
+        });
+    }
+    get string() {
+        return `${parseFloat(this.stateObj.state)} ${this.stateObj.attributes.unit_of_measurement || ""}`.trim();
+    }
+    get isOff() {
+        return false;
+    }
+    get hasToggle() {
+        return false;
+    }
+    get hasSlider() {
+        return this.stateObj.attributes.mode === "slider";
+    }
+    get _min() {
+        return this.stateObj.attributes.min;
+    }
+    get _max() {
+        return this.stateObj.attributes.max;
+    }
+    get _step() {
+        return this.stateObj.attributes.step;
+    }
+}
+
+class InputSelectController extends Controller {
+    get _value() {
+        return this.stateObj.attributes.options.indexOf(this.stateObj.state);
+    }
+    set _value(value) {
+        if (value in this.stateObj.attributes.options)
+            this._hass.callService("input_select", "select_option", {
+                entity_id: this.stateObj.entity_id,
+                option: this.stateObj.attributes.options[value],
+            });
+    }
+    get string() {
+        return this.stateObj.state;
+    }
+    get isOff() {
+        return false;
+    }
+    get hasToggle() {
+        return false;
+    }
+    get hasSlider() {
+        return (this.stateObj.attributes.options &&
+            this.stateObj.attributes.options.length > 0);
+    }
+    get _max() {
+        return this.stateObj.attributes.options.length - 1;
+    }
+    get _step() {
+        return 1;
+    }
+}
+
+class NumberController extends Controller {
+    get _value() {
+        return this.stateObj.state;
+    }
+    set _value(value) {
+        this._hass.callService("number", "set_value", {
+            entity_id: this.stateObj.entity_id,
+            value: value,
+        });
+    }
+    get string() {
+        return `${parseFloat(this.stateObj.state)} ${this.stateObj.attributes.unit_of_measurement || ""}`.trim();
+    }
+    get isOff() {
+        return false;
+    }
+    get hasToggle() {
+        return false;
+    }
+    get hasSlider() {
+        return true;
+    }
+    get _min() {
+        return this.stateObj.attributes.min;
+    }
+    get _max() {
+        return this.stateObj.attributes.max;
+    }
+    get _step() {
+        return this.stateObj.attributes.step;
+    }
+}
+
+class WaterHeaterController extends Controller {
+    get _value() {
+        return this.stateObj.attributes.temperature;
+    }
+    set _value(value) {
+        this._hass.callService("water_heater", "set_temperature", {
+            entity_id: this.stateObj.entity_id,
+            temperature: value,
+        });
+    }
+    get string() {
+        return `${this.value} ${this._hass.config.unit_system.temperature}`;
+    }
+    get isOff() {
+        return this.stateObj.state === "off";
+    }
+    get _min() {
+        return this.stateObj.attributes.min_temp;
+    }
+    get _max() {
+        return this.stateObj.attributes.max_temp;
+    }
+    get _step() {
+        return 1;
+    }
+}
+
+class HumidifierController extends Controller {
+    get _value() {
+        return this.stateObj.attributes.humidity;
+    }
+    set _value(value) {
+        this._hass.callService("humidifier", "set_humidity", {
+            entity_id: this.stateObj.entity_id,
+            humidity: value,
+        });
+    }
+    get string() {
+        return `${this.value} %`;
+    }
+    get isOff() {
+        return this.stateObj.state === "off";
+    }
+    get _min() {
+        return this.stateObj.attributes.min_humidity;
+    }
+    get _max() {
+        return this.stateObj.attributes.max_humidity;
+    }
+    get _step() {
+        return 1;
+    }
+}
+
+function getController(domain) {
+    return {
+        light: LightController,
+        media_player: MediaPlayerController,
+        climate: ClimateController,
+        water_heater: WaterHeaterController,
+        cover: CoverController,
+        fan: FanController,
+        input_number: InputNumberController,
+        input_select: InputSelectController,
+        number: NumberController,
+        humidifier: HumidifierController,
+    }[domain];
+}
+
+var name = "slider-entity-row";
+var version = "17.2.1";
+var description = "slider-entity-row =================";
+var scripts = {
+	build: "rollup -c",
+	watch: "rollup -c --watch",
+	"update-card-tools": "npm uninstall card-tools && npm install thomasloven/lovelace-card-tools"
+};
+var repository = {
+	type: "git",
+	url: "github.com:thomasloven/lovelace-slider-entity-row"
+};
+var keywords = [
+];
+var author = "Thomas Lovén";
+var license = "MIT";
+var devDependencies = {
+	"@babel/core": "^7.16.0",
+	"@rollup/plugin-babel": "^5.3.0",
+	"@rollup/plugin-json": "^4.1.0",
+	"@rollup/plugin-node-resolve": "^13.0.6",
+	rollup: "^2.58.3",
+	"rollup-plugin-terser": "^7.0.2",
+	"rollup-plugin-typescript2": "^0.30.0",
+	typescript: "^4.4.4"
+};
+var dependencies = {
+	"card-tools": "github:thomasloven/lovelace-card-tools",
+	lit: "^2.2.2",
+	tslib: "^2.3.1"
+};
+var pjson = {
+	name: name,
+	"private": true,
+	version: version,
+	description: description,
+	scripts: scripts,
+	repository: repository,
+	keywords: keywords,
+	author: author,
+	license: license,
+	devDependencies: devDependencies,
+	dependencies: dependencies
+};
+
+class SliderEntityRow extends s {
+    setConfig(config) {
+        this._config = config;
+        if (!config.entity)
+            throw new Error(`No entity specified.`);
+        const domain = config.entity.split(".")[0];
+        const ctrlClass = getController(domain);
+        if (!ctrlClass)
+            throw new Error(`Unsupported entity type: ${domain}`);
+        this.ctrl = new ctrlClass(config);
+    }
+    async resized() {
+        await this.updateComplete;
+        if (!this.shadowRoot || !this.parentElement)
+            return;
+        this.hide_state = this._config.full_row
+            ? this.parentElement.clientWidth <= 180
+            : this.parentElement.clientWidth <= 335;
+        return;
+    }
+    async firstUpdated() {
+        await this.resized();
+    }
+    render() {
+        var _a;
+        const c = this.ctrl;
+        c.hass = this.hass;
+        if (!c.stateObj)
+            return $ `
         <hui-warning>
-          ${this.hass.localize("ui.panel.lovelace.warning.entity_not_found","entity",this._config.entity)}
+          ${this.hass.localize("ui.panel.lovelace.warning.entity_not_found", "entity", this._config.entity)}
         </hui-warning>
-      `;const s=(null!==(t=e.dir)&&void 0!==t?t:this.hass.translationMetadata.translations[this.hass.language||"en"].isRTL)?"rtl":"ltr",i="unavailable"!==e.stateObj.state&&e.hasSlider&&!(e.isOff&&this._config.hide_when_off),r=this._config.toggle&&e.hasToggle,n=!r&&(!1===this._config.hide_state||!this._config.hide_state&&!this.hide_state&&(!e.isOff||!this._config.hide_when_off)),a=T`
-      <div class="wrapper" @click=${t=>t.stopPropagation()}>
-        ${i?T`
+      `;
+        const dir = ((_a = c.dir) !== null && _a !== void 0 ? _a : this.hass.translationMetadata.translations[this.hass.language || "en"]
+            .isRTL)
+            ? "rtl"
+            : "ltr";
+        const showSlider = c.stateObj.state !== "unavailable" &&
+            c.hasSlider &&
+            !(c.isOff && this._config.hide_when_off);
+        const showToggle = this._config.toggle && c.hasToggle;
+        const showValue = showToggle
+            ? false
+            : this._config.hide_state === false
+                ? true
+                : this._config.hide_state || this.hide_state
+                    ? false
+                    : c.isOff && this._config.hide_when_off
+                        ? false
+                        : true;
+        const content = $ `
+      <div class="wrapper" @click=${(ev) => ev.stopPropagation()}>
+        ${showSlider
+            ? $ `
               <ha-slider
-                .min=${e.min}
-                .max=${e.max}
-                .step=${e.step}
-                .value=${e.value}
-                .dir=${s}
+                .min=${c.min}
+                .max=${c.max}
+                .step=${c.step}
+                .value=${c.value}
+                .dir=${dir}
                 pin
-                @change=${t=>e.value=this.shadowRoot.querySelector("ha-slider").value}
-                class=${this._config.full_row||this._config.grow?"full":""}
+                @change=${(ev) => (c.value = this.shadowRoot.querySelector("ha-slider").value)}
+                class=${this._config.full_row || this._config.grow
+                ? "full"
+                : ""}
                 ignore-bar-touch
               ></ha-slider>
-            `:""}
-        ${r?e.renderToggle(this.hass):""}
-        ${n?T`<span class="state">
-              ${"unavailable"===e.stateObj.state?this.hass.localize("state.default.unavailable"):e.string}
-            </span>`:""}
+            `
+            : ""}
+        ${showToggle ? c.renderToggle(this.hass) : ""}
+        ${showValue
+            ? $ `<span class="state">
+              ${c.stateObj.state === "unavailable"
+                ? this.hass.localize("state.default.unavailable")
+                : c.string}
+            </span>`
+            : ""}
       </div>
-    `;return this._config.full_row?this._config.hide_when_off&&e.isOff?T``:a:T`
-      <hui-generic-entity-row .hass=${this.hass} .config=${this._config}>
-        ${a}
+    `;
+        if (this._config.full_row)
+            if (this._config.hide_when_off && c.isOff)
+                return $ ``;
+            else
+                return content;
+        return $ `
+      <hui-generic-entity-row
+        .hass=${this.hass}
+        .config=${this._config}
+        .catchInteraction=${false}
+      >
+        ${content}
       </hui-generic-entity-row>
-    `}static get styles(){return n`
+    `;
+    }
+    static get styles() {
+        return r$2 `
       .wrapper {
         display: flex;
         align-items: center;
@@ -56,4 +901,16 @@ function t(t,e,s,i){var r,n=arguments.length,a=n<3?e:null===i?i=Object.getOwnPro
       ha-slider:not(.full) {
         max-width: 200px;
       }
-    `}}t([G()],dt.prototype,"hass",void 0),t([G()],dt.prototype,"hide_state",void 0),customElements.get("slider-entity-row")||(customElements.define("slider-entity-row",dt),console.info(`%cSLIDER-ENTITY-ROW ${ct} IS INSTALLED`,"color: green; font-weight: bold",""));
+    `;
+    }
+}
+__decorate([
+    e()
+], SliderEntityRow.prototype, "hass", void 0);
+__decorate([
+    e()
+], SliderEntityRow.prototype, "hide_state", void 0);
+if (!customElements.get("slider-entity-row")) {
+    customElements.define("slider-entity-row", SliderEntityRow);
+    console.info(`%cSLIDER-ENTITY-ROW ${pjson.version} IS INSTALLED`, "color: green; font-weight: bold", "");
+}
