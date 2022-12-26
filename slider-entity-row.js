@@ -916,6 +916,21 @@ class SliderEntityRow extends s {
         if (this._config.full_row)
             if (this._config.hide_when_off && c.isOff)
                 return $ ``;
+            else if (this._config.show_icon === true) {
+                const conf = this._config;
+                return $ `
+          <div class="wrapper">
+            <state-badge
+              .hass=${this.hass}
+              .stateObj=${c.stateObj}
+              .overrideIcon=${conf.icon}
+              .overrideImage=${conf.image}
+              .stateColor=${conf.state_color}
+            ></state-badge>
+            ${content}
+          </div>
+        `;
+            }
             else
                 return content;
         return $ `

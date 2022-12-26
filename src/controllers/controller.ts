@@ -13,6 +13,7 @@ export interface ControllerConfig {
   grow?: boolean;
   dir?: string;
   colorize?: boolean;
+  show_icon?: boolean;
 }
 
 export abstract class Controller {

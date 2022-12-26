@@ -58,6 +58,12 @@ cards:
           - <<: *default
             full_row: true
             hide_state: true
+          - <<: *default
+            full_row: true
+            show_icon: true
+          - <<: *default
+            name: rtl
+            dir: rtl
           ```
       - type: entities
         show_header_toggle: false
@@ -96,6 +102,12 @@ cards:
           - <<: *default
             full_row: true
             hide_state: true
+          - <<: *default
+            full_row: true
+            show_icon: true
+          - <<: *default
+            name: rtl
+            dir: rtl
 
   - type: vertical-stack
     cards:
