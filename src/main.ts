@@ -74,6 +74,16 @@ class SliderEntityRow extends LitElement {
       <div class="wrapper" @click=${(ev) => ev.stopPropagation()}>
         ${showSlider
           ? html`
+              ${this._config.colorize && c.background
+                ? html`
+                    <style>
+                      ha-slider {
+                        --paper-slider-container-color: ${c.background};
+                        --paper-progress-active-color: transparent;
+                      }
+                    </style>
+                  `
+                : ""}
               <ha-slider
                 .min=${c.min}
                 .max=${c.max}

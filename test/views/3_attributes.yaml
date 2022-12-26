@@ -39,13 +39,29 @@ cards:
             name: brightness
             attribute: brightness
           - <<: *light
+            name: brightness
+            colorize: true
+            attribute: brightness
+          - <<: *light
             name: color_temp
+            attribute: color_temp
+          - <<: *light
+            name: color_temp
+            colorize: true
             attribute: color_temp
           - <<: *light
             name: color_temp_mired
             attribute: color_temp_mired
           - <<: *light
+            name: color_temp_mired
+            colorize: true
+            attribute: color_temp_mired
+          - <<: *light
             name: hue
+            attribute: hue
+          - <<: *light
+            name: hue
+            colorize: true
             attribute: hue
           - <<: *light
             name: saturation
@@ -58,6 +74,18 @@ cards:
             attribute: green
           - <<: *light
             name: blue
+            attribute: blue
+          - <<: *light
+            name: red
+            colorize: true
+            attribute: red
+          - <<: *light
+            name: green
+            colorize: true
+            attribute: green
+          - <<: *light
+            name: blue
+            colorize: true
             attribute: blue
           - <<: *light
             name: effect

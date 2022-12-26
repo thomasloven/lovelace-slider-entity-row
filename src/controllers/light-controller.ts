@@ -304,4 +304,22 @@ export class LightController extends Controller {
         return false;
     }
   }
+
+  get background(): string | undefined {
+    if (this.attribute === "hue")
+      return "linear-gradient(to right,red,yellow,green,cyan,blue,magenta,red)";
+    if (this.attribute === "color_temp_mired")
+      return "linear-gradient(to right,rgb(166,209,255),rgb(255,255,255),rgb(255,160,0))";
+    if (this.attribute === "color_temp")
+      return "linear-gradient(to left,rgb(166,209,255),rgb(255,255,255),rgb(255,160,0))";
+    if (this.attribute === "red")
+      return "linear-gradient(to right,rgb(0,0,0),rgb(255,0,0))";
+    if (this.attribute === "green")
+      return "linear-gradient(to right,rgb(0,0,0),rgb(0,255,0))";
+    if (this.attribute === "blue")
+      return "linear-gradient(to right,rgb(0,0,0),rgb(0,0,255))";
+    if (this.attribute === "brightness")
+      return "linear-gradient(to right,rgb(0,0,0),rgb(255,255,255))";
+    return undefined;
+  }
 }

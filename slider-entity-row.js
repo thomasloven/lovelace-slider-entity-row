@@ -88,6 +88,9 @@ class Controller {
     get hasToggle() {
         return true;
     }
+    get background() {
+        return undefined;
+    }
     renderToggle(hass) {
         return this.hasToggle
             ? $ `
@@ -405,6 +408,23 @@ class LightController extends Controller {
             default:
                 return false;
         }
+    }
+    get background() {
+        if (this.attribute === "hue")
+            return "linear-gradient(to right,red,yellow,green,cyan,blue,magenta,red)";
+        if (this.attribute === "color_temp_mired")
+            return "linear-gradient(to right,rgb(166,209,255),rgb(255,255,255),rgb(255,160,0))";
+        if (this.attribute === "color_temp")
+            return "linear-gradient(to left,rgb(166,209,255),rgb(255,255,255),rgb(255,160,0))";
+        if (this.attribute === "red")
+            return "linear-gradient(to right,rgb(0,0,0),rgb(255,0,0))";
+        if (this.attribute === "green")
+            return "linear-gradient(to right,rgb(0,0,0),rgb(0,255,0))";
+        if (this.attribute === "blue")
+            return "linear-gradient(to right,rgb(0,0,0),rgb(0,0,255))";
+        if (this.attribute === "brightness")
+            return "linear-gradient(to right,rgb(0,0,0),rgb(255,255,255))";
+        return undefined;
     }
 }
 
@@ -858,6 +878,16 @@ class SliderEntityRow extends s {
       <div class="wrapper" @click=${(ev) => ev.stopPropagation()}>
         ${showSlider
             ? $ `
+              ${this._config.colorize && c.background
+                ? $ `
+                    <style>
+                      ha-slider {
+                        --paper-slider-container-color: ${c.background};
+                        --paper-progress-active-color: transparent;
+                      }
+                    </style>
+                  `
+                : ""}
               <ha-slider
                 .min=${c.min}
                 .max=${c.max}

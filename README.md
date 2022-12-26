@@ -52,6 +52,7 @@ Available options:
 | `grow`          | `true`/`false` | Make the slider as wide as possible (which is really just a little bit wider)                                                             | `false`  |
 | `full_row`      | `true`/`false` | Hide the icon and name and stretch slider to full width                                                                                   | `false`  |
 | `attribute`     | (see below)    | Which attribute the slider should control                                                                                                 |          |
+| `colorize`      | `true`/`false` | Colorize the bar (only for some attributes)                                                                                               | `false`  |
 | `dir`           | `ltr`/`rtl`    | Use this to override your languages Right-To-Left or Left-To-Right setting                                                                | language |
 
 Most general Entities row options like `name`, `icon` and `tap_action` et.al. are also supported.
