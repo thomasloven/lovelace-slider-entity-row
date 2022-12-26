@@ -156,6 +156,8 @@ class LightController extends Controller {
         const attr = this.stateObj.attributes;
         switch (this.attribute) {
             case "color_temp":
+                return Math.round(attr.color_temp_kelvin);
+            case "color_temp_mired":
                 return Math.round(attr.color_temp);
             case "white_value":
                 return Math.round(attr.white_value);
@@ -202,6 +204,10 @@ class LightController extends Controller {
     get _min() {
         switch (this.attribute) {
             case "color_temp":
+                return this.stateObj
+                    ? this.stateObj.attributes.min_color_temp_kelvin
+                    : 0;
+            case "color_temp_mired":
                 return this.stateObj ? this.stateObj.attributes.min_mireds : 0;
             default:
                 return 0;
@@ -210,6 +216,10 @@ class LightController extends Controller {
     get _max() {
         switch (this.attribute) {
             case "color_temp":
+                return this.stateObj
+                    ? this.stateObj.attributes.max_color_temp_kelvin
+                    : 0;
+            case "color_temp_mired":
                 return this.stateObj ? this.stateObj.attributes.max_mireds : 0;
             case "red":
             case "green":
@@ -292,6 +302,12 @@ class LightController extends Controller {
                 value = this.stateObj.attributes.effect_list[value];
                 attr = "effect";
                 break;
+            case "color_temp":
+                attr = "kelvin";
+                break;
+            case "color_temp_mired":
+                attr = "color_temp";
+                break;
         }
         if (on) {
             this._hass.callService("light", "turn_on", {
@@ -309,9 +325,11 @@ class LightController extends Controller {
         if (this.stateObj && this.stateObj.state === "off")
             return this._hass.localize("component.light.state._.off");
         switch (this.attribute) {
-            case "color_temp":
+            case "color_temp_mired":
             case "brightness":
                 return `${this.value}`;
+            case "color_temp":
+                return `${this.value} K`;
             case "brightness_pct":
             case "saturation":
                 return `${this.value} %`;
@@ -351,6 +369,10 @@ class LightController extends Controller {
                     return true;
                 return false;
             case "color_temp":
+                if ("color_temp" in this.stateObj.attributes || support_temp)
+                    return true;
+                return false;
+            case "color_temp_mired":
                 if ("color_temp" in this.stateObj.attributes || support_temp)
                     return true;
                 return false;

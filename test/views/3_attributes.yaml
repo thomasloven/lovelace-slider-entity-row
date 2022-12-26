@@ -42,6 +42,9 @@ cards:
             name: color_temp
             attribute: color_temp
           - <<: *light
+            name: color_temp_mired
+            attribute: color_temp_mired
+          - <<: *light
             name: hue
             attribute: hue
           - <<: *light

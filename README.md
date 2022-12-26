@@ -103,13 +103,13 @@ Currently, the following attribute settings are supported.
 - `brightness_pct` - default
 - `brightness`
 - `color_temp`
+- `color_temp_mired`
 - `hue`
 - `saturation`
 - `red`
 - `green`
 - `blue`
 - `effect`
-- `white_value` - deprecated
 - `white` - for RGBW lights only
 - `cold_white` - for RGBWW lights only
 - `warm_white` - for RGBWW lights only
