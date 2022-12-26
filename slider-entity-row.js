@@ -904,7 +904,7 @@ class SliderEntityRow extends s {
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        flex: 100;
+        flex: 7;
         height: 40px;
       }
       .state {
