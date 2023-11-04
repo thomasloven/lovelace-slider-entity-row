@@ -90,7 +90,8 @@ class SliderEntityRow extends LitElement {
                 .step=${c.step}
                 .value=${c.value}
                 .dir=${dir}
-                pin
+		labeled
+        	pin
                 @change=${(ev) =>
                   (c.value = (
                     this.shadowRoot.querySelector("ha-slider") as any
