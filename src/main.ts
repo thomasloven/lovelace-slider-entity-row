@@ -18,7 +18,7 @@ class SliderEntityRow extends LitElement {
     const domain = config.entity.split(".")[0];
     const ctrlClass = getController(domain);
     if (!ctrlClass) throw new Error(`Unsupported entity type: ${domain}`);
-    this.ctrl = new ctrlClass(config);
+    this.ctrl = new ctrlClass(config, this);
   }
 
   async resized() {

@@ -34,6 +34,7 @@ entities:
 - `input_number` - set value (only if `mode: slider`)
 - `input_select` - select option
 - `number` - set value
+- `timer` - set number of seconds remaining
 
 If you want to control more than one entity with the same slider, use [light group](https://www.home-assistant.io/integrations/light.group/), [cover group](https://www.home-assistant.io/integrations/cover.group/) or a custom made [template entity](https://www.home-assistant.io/integrations/#search/template).
 

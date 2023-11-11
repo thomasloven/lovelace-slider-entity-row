@@ -64,3 +64,6 @@ cards:
           - type: custom:slider-entity-row
             entity: humidifier.hygrostat
             name: humidifier
+          - type: custom:slider-entity-row
+            entity: timer.timer
+            name: timer
