@@ -1,19 +1,9 @@
 title: slider-entity-row
 views:
-
   - !include views/1_types.yaml
   - !include views/2_options.yaml
   - !include views/3_attributes.yaml
   - !include views/4_width.yaml
   - !include views/5_errors.yaml
   - title: test
-    cards:
-      - type: picture-elements
-        image: https://placekitten.com/800/600
-        elements:
-          - type: custom:slider-entity-row
-            entity: light.bed_light
-            style:
-              left: 50%
-              top: 50%
-              width: 100%
+    cards: []
