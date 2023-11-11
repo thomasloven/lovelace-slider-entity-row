@@ -1,5 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { property } from "lit/decorators.js";
+import { query } from "lit/decorators/query.js";
 
 import { getController } from "./controllers/get-controller";
 import { Controller, ControllerConfig } from "./controllers/controller";
@@ -11,6 +12,7 @@ class SliderEntityRow extends LitElement {
 
   @property() hass: any;
   @property() hide_state: boolean;
+  @query("ha-slider") _slider?;
 
   setConfig(config: ControllerConfig) {
     this._config = config;
@@ -32,6 +34,18 @@ class SliderEntityRow extends LitElement {
 
   async firstUpdated() {
     await this.resized();
+  }
+
+  async updated() {
+    if (!this._slider) return;
+    await this._slider.updateComplete;
+    if (this._slider.shadowRoot.querySelector("style.slider-entity-row"))
+      return;
+    const styleEl = document.createElement("style");
+    styleEl.classList.add("slider-entity-row");
+    styleEl.innerHTML = `.container .track::before{background: var(--_inactive-track-color);}
+    .container .track::after{background: var(--_active-track-color);}`;
+    this._slider.shadowRoot?.appendChild(styleEl);
   }
 
   async connectedCallback() {
@@ -84,6 +98,8 @@ class SliderEntityRow extends LitElement {
                     <style>
                       ha-slider {
                         --paper-slider-container-color: ${c.background};
+                        --_inactive-track-color: ${c.background};
+                        --_active-track-color: ${c.background};
                         --paper-progress-active-color: transparent;
                       }
                     </style>
