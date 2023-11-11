@@ -25,8 +25,7 @@ function t(t,e,s,i){var r,n=arguments.length,a=n<3?e:null===i?i=Object.getOwnPro
                 .step=${e.step}
                 .value=${e.value}
                 .dir=${s}
-		labeled
-        	pin
+                pin
                 @change=${t=>e.value=this.shadowRoot.querySelector("ha-slider").value}
                 class=${this._config.full_row||this._config.grow?"full":""}
                 ignore-bar-touch
