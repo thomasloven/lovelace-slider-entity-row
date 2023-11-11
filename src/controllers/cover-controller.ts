@@ -5,6 +5,8 @@ export class CoverController extends Controller {
   _max;
   _min;
 
+  static allowed_attributes = ["position", "tilt"];
+
   get attribute() {
     return this._config.attribute || "position";
   }

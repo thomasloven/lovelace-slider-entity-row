@@ -6,6 +6,8 @@ import { getController } from "./controllers/get-controller";
 import { Controller, ControllerConfig } from "./controllers/controller";
 import pjson from "../package.json";
 
+import "./editor.ts";
+
 class SliderEntityRow extends LitElement {
   _config: ControllerConfig;
   ctrl: Controller;
@@ -21,6 +23,11 @@ class SliderEntityRow extends LitElement {
     const ctrlClass = getController(domain);
     if (!ctrlClass) throw new Error(`Unsupported entity type: ${domain}`);
     this.ctrl = new ctrlClass(config, this);
+  }
+
+  static getConfigElement() {
+    console.log("GetConfigElement");
+    return document.createElement("slider-entity-row-editor");
   }
 
   async resized() {
