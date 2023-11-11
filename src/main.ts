@@ -25,12 +25,17 @@ class SliderEntityRow extends LitElement {
     await this.updateComplete;
     if (!this.shadowRoot || !this.parentElement) return;
     this.hide_state = this._config.full_row
-      ? this.parentElement.clientWidth <= 180
-      : this.parentElement.clientWidth <= 335;
+      ? this.parentElement?.clientWidth <= 180
+      : this.parentElement?.clientWidth <= 335;
     return;
   }
 
   async firstUpdated() {
+    await this.resized();
+  }
+
+  async connectedCallback() {
+    super.connectedCallback();
     await this.resized();
   }
 
@@ -90,8 +95,8 @@ class SliderEntityRow extends LitElement {
                 .step=${c.step}
                 .value=${c.value}
                 .dir=${dir}
-		labeled
-        	pin
+                labeled
+                pin
                 @change=${(ev) =>
                   (c.value = (
                     this.shadowRoot.querySelector("ha-slider") as any
