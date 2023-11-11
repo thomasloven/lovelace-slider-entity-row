@@ -45,9 +45,13 @@ export class CoverController extends Controller {
     switch (this.attribute) {
       case "position":
         if (this.stateObj.state === "closed")
-          return this._hass.localize("component.cover.state._.closed");
+          return this._hass.localize(
+            "component.cover.entity_component._.state.closed"
+          );
         if (this.value === 100)
-          return this._hass.localize("component.cover.state._.open");
+          return this._hass.localize(
+            "component.cover.entity_component._.state.open"
+          );
         return `${this.value} %`;
       case "tilt":
         return `${this.value} %`;

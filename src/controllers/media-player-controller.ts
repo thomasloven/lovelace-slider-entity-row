@@ -32,7 +32,9 @@ export class MediaPlayerController extends Controller {
     if (this.stateObj.attributes.is_volume_muted) return "-";
     return !!this.stateObj.attributes.volume_level
       ? `${this.value} %`
-      : this._hass.localize("component.media_player.state._.off");
+      : this._hass.localize(
+          "component.media_player.entity_component._.state.off"
+        );
   }
 
   get hasToggle() {

@@ -25,7 +25,9 @@ export class FanController extends Controller {
 
   get string() {
     if (this.stateObj.state === "off")
-      return this._hass.localize("component.fan.state._.off");
+      return this._hass.localize(
+        "component.light.entity_component._.state.off"
+      );
     return `${this.stateObj.attributes.percentage} %`;
   }
 
