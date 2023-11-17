@@ -46,6 +46,7 @@ cards:
           - type: custom:slider-entity-row
             entity: cover.hall_window
             name: cover
+            inverted: true
           - type: custom:slider-entity-row
             entity: fan.ceiling_fan
             name: fan

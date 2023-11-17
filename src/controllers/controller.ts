@@ -14,6 +14,7 @@ export interface ControllerConfig {
   dir?: string;
   colorize?: boolean;
   show_icon?: boolean;
+  inverted?: boolean;
 }
 
 export abstract class Controller {
