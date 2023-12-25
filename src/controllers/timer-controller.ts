@@ -18,6 +18,7 @@ export class TimerController extends Controller {
   }
 
   calculate_value() {
+    if (!this.stateObj) return 0;
     let timeRemaining = this.stateObj.attributes.remaining;
     if (!timeRemaining) return 0;
 
