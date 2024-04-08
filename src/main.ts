@@ -16,6 +16,16 @@ class SliderEntityRow extends LitElement {
   @property() hide_state: boolean;
   @query("ha-slider") _slider?;
 
+  getDirection() {
+    const dir =
+      this.ctrl.dir ??
+      this.hass.translationMetadata.translations[this.hass.language || "en"]
+        .isRTL
+        ? "rtl"
+        : "ltr";
+    return dir;
+  }
+
   setConfig(config: ControllerConfig) {
     this._config = config;
     if (!config.entity) throw new Error(`No entity specified.`);
@@ -58,6 +68,7 @@ class SliderEntityRow extends LitElement {
   async connectedCallback() {
     super.connectedCallback();
     await this.resized();
+    this._slider?.setAttribute("dir", this.getDirection());
   }
 
   render() {
@@ -74,12 +85,7 @@ class SliderEntityRow extends LitElement {
         </hui-warning>
       `;
 
-    const dir =
-      c.dir ??
-      this.hass.translationMetadata.translations[this.hass.language || "en"]
-        .isRTL
-        ? "rtl"
-        : "ltr";
+    const dir = this.getDirection();
 
     const showSlider =
       c.stateObj.state !== "unavailable" &&
