@@ -63,13 +63,12 @@ class SliderEntityRow extends LitElement {
     styleEl.innerHTML = `.container .track::before{background: var(--_inactive-track-color);}
     .container .track::after{background: var(--_active-track-color);}`;
     this._slider.shadowRoot?.appendChild(styleEl);
-
-    this._slider.setAttribute("dir", this.getDirection());
   }
 
   async connectedCallback() {
     super.connectedCallback();
     await this.resized();
+    this._slider?.setAttribute("dir", this.getDirection());
   }
 
   render() {
