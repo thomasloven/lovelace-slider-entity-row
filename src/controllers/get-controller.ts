@@ -9,6 +9,7 @@ import { NumberController } from "./number-controller";
 import { WaterHeaterController } from "./water-heater-controller";
 import { HumidifierController } from "./humidifier-controller";
 import { TimerController } from "./timer-controller";
+import { ValveController } from "./valve-controller";
 
 export const controllers = {
   light: LightController,
@@ -22,6 +23,7 @@ export const controllers = {
   number: NumberController,
   humidifier: HumidifierController,
   timer: TimerController,
+  valve: ValveController,
 };
 
 export function getController(domain: string) {
