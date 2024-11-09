@@ -18,6 +18,7 @@ export const controllers = {
   cover: CoverController,
   fan: FanController,
   input_number: InputNumberController,
+  select: InputSelectController,
   input_select: InputSelectController,
   number: NumberController,
   humidifier: HumidifierController,

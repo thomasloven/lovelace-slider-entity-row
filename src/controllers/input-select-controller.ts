@@ -9,7 +9,7 @@ export class InputSelectController extends Controller {
 
   set _value(value) {
     if (value in this.stateObj.attributes.options)
-      this._hass.callService("input_select", "select_option", {
+      this._hass.callService(this._domain, "select_option", {
         entity_id: this.stateObj.entity_id,
         option: this.stateObj.attributes.options[value],
       });
