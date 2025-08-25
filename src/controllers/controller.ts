@@ -1,5 +1,3 @@
-import { html } from "lit";
-
 export interface ControllerConfig {
   entity: string;
   toggle?: boolean;
@@ -14,6 +12,7 @@ export interface ControllerConfig {
   dir?: string;
   colorize?: boolean;
   show_icon?: boolean;
+  gamma?: number;
 }
 
 export abstract class Controller {
@@ -37,12 +36,30 @@ export abstract class Controller {
     this.stateObj = hass.states[this._config.entity];
   }
 
+  get gamma(): number {
+    return this._config.gamma ?? 1.0;
+  }
+
   get value(): number {
-    if (this._value) return Math.round(this._value / this.step) * this.step;
+    if (this._value) {
+      let value = this._value;
+      const gamma = this.gamma;
+      if (gamma !== 1.0 && gamma > 0) {
+        value = Math.pow(value / this.max, 1 / gamma) * this.max;
+      }
+      return Math.round(value / this.step) * this.step;
+    }
     return 0;
   }
   set value(value: number) {
-    if (value !== this.value) this._value = value;
+    if (value !== this.value) {
+      const gamma = this.gamma;
+      let newValue = value;
+      if (gamma !== 1.0 && gamma > 0) {
+        newValue = Math.pow(value / this.max, gamma) * this.max;
+      }
+      this._value = newValue;
+    }
   }
 
   get string(): string {
@@ -64,13 +81,9 @@ export abstract class Controller {
 
   renderToggle(hass: any) {
     return this.hasToggle
-      ? html`
-          <ha-entity-toggle
-            .stateObj=${hass.states[this.stateObj.entity_id]}
-            .hass=${hass}
-            .class="state"
-          ></ha-entity-toggle>
-        `
+      ? // eslint-disable-next-line lit/binding-positions
+        // @ts-ignore
+        document.createElement("ha-entity-toggle")
       : undefined;
   }
 

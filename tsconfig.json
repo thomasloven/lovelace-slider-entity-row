@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
     "target": "es2017",
+    "module": "es2015",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "lib": ["es2017", "dom"]
   }
 }
