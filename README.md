@@ -56,6 +56,7 @@ Available options:
 | `attribute`     | (see below)    | Which attribute the slider should control                                                                                                 |          |
 | `colorize`      | `true`/`false` | Colorize the bar (only for some attributes)                                                                                               | `false`  |
 | `dir`           | `ltr`/`rtl`    | Use this to override your languages Right-To-Left or Left-To-Right setting                                                                | language |
+| `gamma`         | number         | Set a [gamma correction](https://en.wikipedia.org/wiki/Gamma_correction) exponent to scale the values in the low end of the range. `1` is no scaling.                                                                | `1` |
 
 Most general Entities row options like `name`, `icon` and `tap_action` et.al. are also supported.
 
