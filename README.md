@@ -32,7 +32,7 @@ entities:
 - `cover` - set position
 - `fan` - set speed (assumes first setting is `off`)
 - `input_number` - set value (only if `mode: slider`)
-- `input_select` - select option
+- `select`, `input_select` - select option
 - `number` - set value
 - `timer` - set number of seconds remaining
 

@@ -20,6 +20,7 @@ export abstract class Controller {
   _config: ControllerConfig;
   _hass: any;
   stateObj: any;
+  _domain: string;
 
   abstract _value?: number;
   abstract _min?: number;
@@ -28,8 +29,9 @@ export abstract class Controller {
 
   static allowed_attributes = [];
 
-  constructor(config: ControllerConfig, parent) {
+  constructor(config: ControllerConfig, parent: any, domain: string) {
     this._config = config;
+    this._domain = domain;
   }
 
   set hass(hass: any) {
