@@ -15,7 +15,6 @@ export class LightController extends Controller {
     "brightness_pct",
     "brightness",
     "color_temp",
-    "color_temp_mired",
     "hue",
     "saturation",
     "red",
@@ -53,8 +52,6 @@ export class LightController extends Controller {
     switch (this.attribute) {
       case "color_temp":
         return Math.round(attr.color_temp_kelvin);
-      case "color_temp_mired":
-        return Math.round(attr.color_temp);
       case "white_value":
         return Math.round(attr.white_value);
       case "brightness":
@@ -104,8 +101,6 @@ export class LightController extends Controller {
         return this.stateObj
           ? this.stateObj.attributes.min_color_temp_kelvin
           : 0;
-      case "color_temp_mired":
-        return this.stateObj ? this.stateObj.attributes.min_mireds : 0;
       default:
         return 0;
     }
@@ -116,8 +111,6 @@ export class LightController extends Controller {
         return this.stateObj
           ? this.stateObj.attributes.max_color_temp_kelvin
           : 0;
-      case "color_temp_mired":
-        return this.stateObj ? this.stateObj.attributes.max_mireds : 0;
       case "red":
       case "green":
       case "blue":
@@ -200,12 +193,11 @@ export class LightController extends Controller {
         attr = "effect";
         break;
       case "color_temp":
-        attr = "kelvin";
-        break;
-      case "color_temp_mired":
-        attr = "color_temp";
+        attr = "color_temp_kelvin";
         break;
     }
+
+    console.log(attr, value);
 
     if (on) {
       this._hass.callService("light", "turn_on", {
@@ -225,7 +217,6 @@ export class LightController extends Controller {
         "component.light.entity_component._.state.off"
       );
     switch (this.attribute) {
-      case "color_temp_mired":
       case "brightness":
         return `${this.value}`;
       case "color_temp":
@@ -281,11 +272,11 @@ export class LightController extends Controller {
           return true;
         return false;
       case "color_temp":
-        if ("color_temp" in this.stateObj.attributes || support_temp)
-          return true;
-        return false;
-      case "color_temp_mired":
-        if ("color_temp" in this.stateObj.attributes || support_temp)
+        if (
+          "color_temp" in this.stateObj.attributes ||
+          "color_temp_kelvin" in this.stateObj.attributes ||
+          support_temp
+        )
           return true;
         return false;
       case "white_value":
@@ -326,8 +317,6 @@ export class LightController extends Controller {
   get background(): string | undefined {
     if (this.attribute === "hue")
       return "linear-gradient(to right,red,yellow,green,cyan,blue,magenta,red)";
-    if (this.attribute === "color_temp_mired")
-      return "linear-gradient(to right,rgb(166,209,255),rgb(255,255,255),rgb(255,160,0))";
     if (this.attribute === "color_temp")
       return "linear-gradient(to left,rgb(166,209,255),rgb(255,255,255),rgb(255,160,0))";
     if (this.attribute === "red")

@@ -17,6 +17,9 @@ class SliderEntityRow extends LitElement {
   @query("ha-slider") _slider?;
 
   setConfig(config: ControllerConfig) {
+    if (config.attribute === "color_temp_mired")
+      throw Error("color_temp_mired has been removed");
+
     this._config = config;
     if (!config.entity) throw new Error(`No entity specified.`);
     const domain = config.entity.split(".")[0];
