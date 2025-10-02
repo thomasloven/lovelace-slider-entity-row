@@ -57,6 +57,10 @@ class SliderEntityRowEditor extends LitElement {
             name: "step",
             selector: { number: { min: -1e32, max: 1e32, mode: "box" } },
           },
+          {
+            name: "gamma",
+            selector: { number: { min: 0, max: 10, step: 0.1, mode: "box" } },
+          },
         ],
       },
       {

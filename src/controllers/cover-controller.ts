@@ -1,5 +1,4 @@
 import { Controller } from "./controller";
-import { html } from "lit";
 
 export class CoverController extends Controller {
   _max;
@@ -66,10 +65,10 @@ export class CoverController extends Controller {
 
   renderToggle(hass: any) {
     const stateObj = hass.states[this.stateObj.entity_id];
-    console.log("Toggle", hass);
-    return html`
-    <ha-cover-controls .hass=${hass} .stateObj=${stateObj}></ha-cover_controls>
-    `;
+    const ctrl = document.createElement("ha-cover-controls") as any;
+    ctrl.hass = hass;
+    ctrl.stateObj = stateObj;
+    return ctrl;
   }
 
   get hasSlider() {
