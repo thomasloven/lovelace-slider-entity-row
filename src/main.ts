@@ -103,6 +103,12 @@ class SliderEntityRow extends LitElement {
               ${this._config.colorize && c.background
                 ? html`
                     <style>
+                      ha-slider::part(track) {
+                        background: ${c.background};
+                      }
+                      ha-slider::part(indicator) {
+                        background: transparent;
+                      }
                       ha-slider {
                         --paper-slider-container-color: ${c.background};
                         --_inactive-track-color: ${c.background};
